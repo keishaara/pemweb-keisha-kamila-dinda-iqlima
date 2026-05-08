@@ -14,8 +14,8 @@
                 <a href="#">Fitur</a>
                 <a href="kegiatan.html">Kegiatan</a>
                 <a href="#">Tentang</a>
-                <a href="login.html" class="btn btn-outline btn-small">Masuk</a>
-                <a href="register.html" class="btn btn-primary btn-small">Daftar Gratis</a>
+                <a href="login.html" class="btn btn-outline btn-small active">Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-small active">Daftar Gratis</a>
             </div>
         </nav>
 

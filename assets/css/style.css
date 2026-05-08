@@ -107,7 +107,7 @@ ul {
 }
 
 
-.btn {
+ .btn {
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
     font-weight: 600;
@@ -120,17 +120,21 @@ ul {
 
 .btn:hover {
     transform: translateY(-2px);
-}
+} 
 
-.btn-primary {
+ .btn-primary {
     background: #2E4C82;
     color: white;
     box-shadow: 0 4px 12px rgba(46, 76, 130, 0.2);
 }
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(46, 76, 130, 0.1);
+} 
 
 .btn-primary:hover {
     background: #1E3A5F;
-}
+} 
 
 .btn-outline {
     background: transparent;

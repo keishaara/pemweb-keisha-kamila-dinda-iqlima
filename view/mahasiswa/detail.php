@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Event - Evently</title>
+   <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="layout">
+     <aside class="sidebar">
+            <div class="logo"><img src="assets/img/icon.png" alt="Evently"> Evently</div>
+            <div class="menu-category">Menu</div>
+            <a href="user_dashboard.html" class="menu-item active"><img src="assets/img/icon-home2.png" alt="Home"> Beranda</a>
+            <a href="kegiatan.html" class="menu-item"><img src="assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
+            <a href="e-tiket.html" class="menu-item"><img src="assets/img/icon-ticket.png" alt="E-Tiket"> E-Tiket</a>
+            <div class="menu-category">Akun</div>
+            <a href="profil.html" class="menu-item"><img src="assets/img/icon-user2.png" alt="Profil"> Profil Saya</a>
+            <a href="login.html" class="menu-item"><img src="assets/img/icon-logout.png" alt="Logout"> Keluar</a>
+        </aside>
+
+    <main class="content">
+
+        <div class="detail-card">
+            <div class="detail-header">
+                <a href="kegiatan.html" class="btn-outline" style="text-decoration: none; display: inline-block;">Kembali</a>
+                <button class="btn-outline">Bagikan</button>
+            </div>
+
+            <div class="banner">
+                💻
+            </div>
+
+            <div class="tags">
+                <span>Workshop</span>
+                <span>UI/UX Design</span>
+                <span class="green">Sertifikat</span>
+            </div>
+
+            <h2>Workshop UI/UX Design for Beginners [Batch 3]</h2>
+
+            <div class="detail-grid">
+
+                <div class="left">
+
+                    <div class="info-box">
+                        <div>📅</div>
+                        <div>
+                            <p>Tanggal dan Waktu</p>
+                            <strong>Kamis, 15 Mei 2026<br>09.00 - 15.00</strong>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div>📍</div>
+                        <div>
+                            <p>Lokasi</p>
+                            <strong>Aula Teknik Lt. 3,<br>Gedung B</strong>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div>👥</div>
+                        <div>
+                            <p>Peserta</p>
+                            <strong>Maks. 50 Orang</strong>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div>🎓</div>
+                        <div>
+                            <p>Penyelenggara</p>
+                            <strong>UKM Desain</strong>
+                        </div>
+                    </div>
+
+                    <div class="description">
+                        <h4>Tentang Event</h4>
+                        <p>
+                            Workshop ini dirancang khusus untuk mahasiswa yang ingin memulai perjalanan di dunia UI/UX Design.
+                            Kamu akan belajar langsung dari praktisi industri mengenai prinsip dasar desain, penggunaan Figma,
+                            serta membuat prototype.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="right">
+
+                    <div class="price-box">
+                        <p>HARGA PENDAFTARAN</p>
+                        <h2>Rp 150.000</h2>
+
+                        <div class="progress">
+                            <div class="bar"></div>
+                        </div>
+
+                        <small>34 orang telah mendaftar</small>
+
+                       <button class="btn-primary" onclick="window.location='data_diri.html'">
+                        Daftar Sekarang
+                      </button>
+                      <button class="btn-secondary">Simpan Event</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
