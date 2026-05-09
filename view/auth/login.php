@@ -1,21 +1,59 @@
+<?php
+session_start();
+require_once __DIR__ . '/../../config/koneksi.php';
+
+if (isset($_SESSION['user_id'])) {
+    $target = ($_SESSION['role'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/profil.php';
+    header("Location: $target");
+    exit;
+}
+
+$error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $identifier = trim($_POST['identifier']);
+    $password   = $_POST['password'];
+    $role       = $_POST['role'];
+
+    if (!empty($identifier) && !empty($password) && !empty($role)) {
+        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
+        mysqli_stmt_bind_param($stmt, "sss", $identifier, $identifier, $role);
+        mysqli_stmt_execute($stmt);
+        $res  = mysqli_stmt_get_result($stmt);
+        
+        if ($user = mysqli_fetch_assoc($res)) {
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id']      = $user['id'];
+                $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+                $_SESSION['role']         = $user['tipe_akun'];
+                
+                $target = ($user['tipe_akun'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/profil.php';
+                header("Location: $target");
+                exit;
+            } else { $error = "Kata sandi salah."; }
+        } else { $error = "Akun tidak ditemukan atau role tidak sesuai."; }
+    } else { $error = "Semua field wajib diisi."; }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Login - Evently</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
     <div class="split-screen">
         <div class="form-side">
-            <a href="index.html" class="logo"><img src="assets/img/icon.png" alt="Evently"> Evently</a>
+            <a href="../public/index.php" class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</a>
             <h2>Selamat Datang Kembali</h2>
             <p class="text-muted mb-3">Masuk ke akun kamu untuk menemukan kegiatan kampus terbaru.</p>
 
-            <form method="POST">
+            <?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error); ?></div><?php endif; ?>
+
+            <form method="POST" action="">
                 <div class="form-group">
                     <label class="form-label">Email atau NPM</label>
-                    <input type="text" name="email" class="form-control" placeholder="npm@unila.ac.id / NPM" required>
+                    <input type="text" name="identifier" class="form-control" placeholder="npm@unila.ac.id / NPM" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Kata Sandi</label>
@@ -27,23 +65,18 @@
                         <option value="" selected disabled>Pilih role</option>
                         <option value="admin">Admin</option>
                         <option value="organisasi">Organisasi</option>
-                        <option value="user">User</option>
+                        <option value="mahasiswa">Mahasiswa</option>
                     </select>
                 </div>
                 <div class="auth-remember">
                     <label class="d-flex align-center gap-1" style="cursor:pointer;">
-                        <input type="checkbox"> Ingat Saya
+                        <input type="checkbox" name="remember"> Ingat Saya
                     </label>
                     <a href="#" class="auth-forgot">Lupa kata sandi?</a>
                 </div>
 
-                <div class="form-group" style="display: grid; gap: 10px; margin-top: 10px;">
-                    <button type="submit" formaction="admin_dashboard.html" formmethod="get" class="btn btn-primary btn-block">Masuk ke Admin</button>
-                    <button type="submit" formaction="org_dashboard.html" formmethod="get" class="btn btn-primary btn-block">Masuk ke Organisasi</button>
-                    <button type="submit" formaction="user_dashboard.html" formmethod="get" class="btn btn-primary btn-block">Masuk ke User</button>
-                </div>
-
-                <p class="auth-footer">Belum punya akun? <a href="register.html">Daftar gratis</a></p>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top:15px;">Masuk</button>
+                <p class="auth-footer">Belum punya akun? <a href="register.php">Daftar gratis</a></p>
             </form>
         </div>
         <div class="img-side"></div>
