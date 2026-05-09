@@ -1,18 +1,64 @@
+<?php
+session_start();
+require_once __DIR__ . '/../../config/koneksi.php';
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: ../mahasiswa/profil.php"); exit;
+}
+
+$msg = ''; $msgType = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $tipe  = $_POST['tipe'];
+    $nama  = trim($_POST['nama']);
+    $npm   = trim($_POST['npm']);
+    $email = trim($_POST['email']);
+    $prodi = trim($_POST['prodi']);
+    $wa    = trim($_POST['wa']);
+    $pass  = $_POST['password'];
+    $pass2 = $_POST['konfirmasi_password'];
+
+    if (empty($nama) || empty($npm) || empty($email) || empty($pass)) {
+        $msg = "Data bertanda (*) wajib diisi."; $msgType = 'error';
+    } elseif ($pass !== $pass2) {
+        $msg = "Konfirmasi kata sandi tidak cocok."; $msgType = 'error';
+    } else {
+        $cek = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ? OR npm = ?");
+        mysqli_stmt_bind_param($cek, "ss", $email, $npm);
+        mysqli_stmt_execute($cek); mysqli_stmt_store_result($cek);
+        if (mysqli_stmt_num_rows($cek) > 0) {
+            $msg = "Email atau NPM sudah terdaftar."; $msgType = 'error';
+        } else {
+            $hash = password_hash($pass, PASSWORD_DEFAULT);
+            $ins  = mysqli_prepare($conn, "INSERT INTO users (tipe_akun, nama_lengkap, npm, email, prodi, whatsapp, password) VALUES (?,?,?,?,?,?,?)");
+            mysqli_stmt_bind_param($ins, "sssssss", $tipe, $nama, $npm, $email, $prodi, $wa, $hash);
+            if (mysqli_stmt_execute($ins)) {
+                $msg = "Registrasi berhasil! Silakan login."; $msgType = 'success';
+            } else {
+                $msg = "Gagal mendaftar: " . mysqli_error($conn); $msgType = 'error';
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Daftar - Evently</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
     <div class="split-screen">
         <div class="form-side">
-            <a href="index.html" class="logo"><img src="assets/img/icon.png" alt="Evently"> Evently</a>
+            <a href="../public/index.php" class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</a>
             <h2>Buat akun baru</h2>
             <p class="text-muted mb-3">Bergabung dengan kami di Evently</p>
 
-            <form method="POST">
+            <?php if ($msg): ?>
+                <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>"><?= htmlspecialchars($msg); ?></div>
+            <?php endif; ?>
+
+            <form method="POST" action="">
                 <div class="form-group">
                     <label class="form-label">Pilih Tipe Akun</label>
                     <select name="tipe" class="form-control" required>
@@ -20,7 +66,6 @@
                         <option value="organisasi">Organisasi</option>
                     </select>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Nama Lengkap*</label>
@@ -31,12 +76,10 @@
                         <input type="text" name="npm" class="form-control" placeholder="NPM / ID Organisasi" required>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">Email Kampus*</label>
                     <input type="email" name="email" class="form-control" placeholder="npm@unila.ac.id" required>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Program Studi</label>
@@ -47,7 +90,6 @@
                         <input type="text" name="wa" class="form-control" placeholder="08xxxxxxxx">
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Kata Sandi*</label>
@@ -58,9 +100,8 @@
                         <input type="password" name="konfirmasi_password" class="form-control" placeholder="Ulangi Sandi" required>
                     </div>
                 </div>
-
-                <button type="submit" name="daftar" class="btn btn-primary btn-block">Buat Akun</button>
-                <p class="auth-footer">Sudah punya akun? <a href="login.html">Masuk</a></p>
+                <button type="submit" class="btn btn-primary btn-block">Buat Akun</button>
+                <p class="auth-footer">Sudah punya akun? <a href="login.php">Masuk</a></p>
             </form>
         </div>
         <div class="img-side"></div>
