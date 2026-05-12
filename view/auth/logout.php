@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=index.html">
-    <title>Logout - Redirect</title>
-</head>
-<body>
-    <script>
-        window.location.href = 'index.html';
-    </script>
-    <p>Redirecting to home page...</p>
-</body>
-</html>
+<?php
+session_start();
+
+$_SESSION = array();
+
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+        $params["path"], $params["domain"],
+        $params["secure"], $params["httponly"]
+    );
+}
+
+session_destroy();
+
+header("Location: ../auth/login.php");
+exit;
+?>

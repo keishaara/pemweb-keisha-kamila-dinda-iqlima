@@ -4,43 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buat Acara - Evently</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body>
     <div class="org-layout">
         <aside class="org-sidebar">
-            <a href="index.html" class="org-logo">
-                <img src="assets/img/icon.png" alt="Evently">
+            <a href="index.php" class="org-logo">
+                <img src="../../assets/img/icon.png" alt="Evently">
                 <span>Evently</span>
             </a>
 
             <div class="org-menu-category">Menu Organisasi</div>
 
-            <a href="org_dashboard.html" class="org-menu-item">
-                <img src="assets/img/icon-home2.png" alt="Dashboard">
+            <a href="org_dashboard.php" class="org-menu-item">
+                <img src="../../assets/img/icon-home2.png" alt="Dashboard">
                 <span>Dashboard</span>
             </a>
-            <a href="org_kelola_acara.html" class="org-menu-item">
-                <img src="assets/img/icon-ticket.png" alt="Kelola Acara">
+            <a href="org_kelola_acara.php" class="org-menu-item">
+                <img src="../../assets/img/icon-ticket.png" alt="Kelola Acara">
                 <span>Kelola Acara</span>
             </a>
-            <a href="org_data_peserta.html" class="org-menu-item">
-                <img src="assets/img/icon-user2.png" alt="Data Peserta">
+            <a href="org_data_peserta.php" class="org-menu-item">
+                <img src="../../assets/img/icon-user2.png" alt="Data Peserta">
                 <span>Data Peserta</span>
             </a>
-            <a href="org_buat_acara.html" class="org-menu-item active">
-                <img src="assets/img/icon-kegiatan2.png" alt="Buat Acara">
+            <a href="org_buat_acara.php" class="org-menu-item active">
+                <img src="../../assets/img/icon-kegiatan2.png" alt="Buat Acara">
                 <span>Buat Acara</span>
             </a>
 
             <div class="org-menu-category">Akun</div>
 
-            <a href="org_profile.html" class="org-menu-item">
-                <img src="assets/img/icon-profil-organisasi.png" alt="Profil">
+            <a href="org_profile.php" class="org-menu-item">
+                <img src="../../assets/img/icon-profil-organisasi.png" alt="Profil">
                 <span>Profil Organisasi</span>
             </a>
-            <a href="logout.html" class="org-menu-item">
-                <img src="assets/img/icon-logout.png" alt="Keluar">
+            <a href="logout.php" class="org-menu-item">
+                <img src="../../assets/img/icon-logout.png" alt="Keluar">
                 <span>Keluar</span>
             </a>
         </aside>

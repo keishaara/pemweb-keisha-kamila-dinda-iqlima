@@ -18,9 +18,9 @@ $msg = ''; $msgType = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['update_profil'])) {
         $nama = trim($_POST['nama']); $email = trim($_POST['email']);
-        $prodi = trim($_POST['prodi']); $wa = trim($_POST['wa']); $sem = trim($_POST['semester']);
-        $upd = mysqli_prepare($conn, "UPDATE users SET nama_lengkap=?, email=?, prodi=?, whatsapp=?, semester=? WHERE id=?");
-        mysqli_stmt_bind_param($upd, "sssssi", $nama, $email, $prodi, $wa, $sem, $uid);
+        $program_studi = trim($_POST['program_studi']); $wa = trim($_POST['wa']); $sem = trim($_POST['semester']);
+        $upd = mysqli_prepare($conn, "UPDATE users SET nama_lengkap=?, email=?, program_studi=?, no_whatsapp=?, semester=? WHERE id=?");
+        mysqli_stmt_bind_param($upd, "sssssi", $nama, $email, $program_studi, $wa, $sem, $uid);
         $msg = mysqli_stmt_execute($upd) ? "Profil berhasil diperbarui." : "Gagal update profil.";
         $msgType = strpos($msg, 'berhasil') !== false ? 'success' : 'error';
         mysqli_stmt_execute($stmt); $user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <aside class="sidebar">
             <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
             <div class="menu-category">Menu</div>
-            <a href="../public/index.php" class="menu-item"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
-            <a href="../public/kegiatan.php" class="menu-item"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
+            <a href="user_dashboard.php" class="menu-item"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
+            <a href="kegiatan_mhs.php" class="menu-item"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
             <a href="e-tiket.php" class="menu-item"><img src="../../assets/img/icon-ticket.png" alt="E-Tiket"> E-Tiket</a>
             <div class="menu-category">Akun</div>
             <a href="profil.php" class="menu-item active"><img src="../../assets/img/icon-user2.png" alt="Profil"> Profil Saya</a>
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="profile-avatar"><?= strtoupper(substr($user['nama_lengkap'], 0, 2)); ?></div>
                 <div class="profile-info">
                     <h2><?= htmlspecialchars($user['nama_lengkap']); ?></h2>
-                    <p>NPM: <?= htmlspecialchars($user['npm']); ?> | <?= htmlspecialchars($user['prodi'] ?? '-'); ?> | Semester <?= htmlspecialchars($user['semester'] ?? '-'); ?></p>
+                    <p>NPM: <?= htmlspecialchars($user['npm']); ?> | <?= htmlspecialchars($user['program_studi'] ?? '-'); ?> | Semester <?= htmlspecialchars($user['semester'] ?? '-'); ?></p>
                 </div>
             </div>
 
@@ -93,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label class="form-label">No. Whatsapp</label>
-                            <input type="text" name="wa" class="form-control" value="<?= htmlspecialchars($user['whatsapp'] ?? ''); ?>">
+                            <input type="text" name="wa" class="form-control" value="<?= htmlspecialchars($user['no_whatsapp'] ?? ''); ?>">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Program Studi</label>
-                            <input type="text" name="prodi" class="form-control" value="<?= htmlspecialchars($user['prodi'] ?? ''); ?>">
+                            <input type="text" name="program_studi" class="form-control" value="<?= htmlspecialchars($user['program_studi'] ?? ''); ?>">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Semester</label>

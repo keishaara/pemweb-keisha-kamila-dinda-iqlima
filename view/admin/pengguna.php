@@ -1,5 +1,10 @@
 <?php
-require_once __DIR__ . '/../../presenter/admin_presenter.php';
+session_start();
+require_once __DIR__ . '/../../controllers/AdminController.php';
+
+$controller = new AdminController();
+$allUsers = $controller->getAllUsers();
+$totalUsersCount = $controller->getTotalUsers();
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +13,6 @@ require_once __DIR__ . '/../../presenter/admin_presenter.php';
 <head>
     <meta charset="UTF-8">
     <title>Manajemen Pengguna - Evently</title>
-
     <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 
@@ -63,141 +67,84 @@ require_once __DIR__ . '/../../presenter/admin_presenter.php';
             <div class="page-header">
 
                 <h2 style="font-size: 28px; color: #335485; font-family: serif;">
-
                     Manajemen Pengguna
-
                 </h2>
 
                 <p class="verif-subtitle">
-
-                    <?= $totalUsers['total']; ?> pengguna terdaftar
-
+                    <?= $totalUsersCount; ?> pengguna terdaftar
                 </p>
 
             </div>
 
-            <!-- CONTROL -->
             <div class="user-controls">
 
                 <div class="search-wrapper">
-
                     <button type="submit" class="btn btn-primary">
                         Cari
                     </button>
-
                     <input 
                         type="text"
                         class="search-input"
                         placeholder="Cari pengguna..."
                     >
-
                 </div>
 
                 <select class="filter-select">
-
-                    <option>
-                        Semua Role
-                    </option>
-
+                    <option>Semua Role</option>
                 </select>
 
                 <select class="filter-select">
-
-                    <option>
-                        Semua Status
-                    </option>
-
+                    <option>Semua Status</option>
                 </select>
 
             </div>
 
-            <!-- TABLE -->
             <div class="user-table-card">
 
                 <table class="table-container-simple">
 
                     <thead>
-
                         <tr>
-
                             <th>NAMA</th>
                             <th>EMAIL</th>
                             <th>ROLE</th>
                             <th>STATUS</th>
-                            <th style="text-align:center;">
-                                AKSI
-                            </th>
-
+                            <th style="text-align:center;">AKSI</th>
                         </tr>
-
                     </thead>
 
                     <tbody>
-
-                        <?php foreach($allUsers as $user): ?>
-
-                        <tr>
-
-                            <td>
-
-                                <b>
-                                    <?= $user['nama_lengkap']; ?>
-                                </b>
-
-                            </td>
-
-                            <td>
-
-                                <?= $user['email']; ?>
-
-                            </td>
-
-                            <td>
-
-                                <?php if($user['tipe_akun'] == 'mahasiswa'): ?>
-
-                                    <span class="role-pill role-mhs">
-
-                                        Mahasiswa
-
-                                    </span>
-
-                                <?php else: ?>
-
-                                    <span class="role-pill role-org">
-
-                                        Organisasi
-
-                                    </span>
-
-                                <?php endif; ?>
-
-                            </td>
-
-                            <td>
-
-                                <span class="status-pill aktif">
-
-                                    Aktif
-
-                                </span>
-
-                            </td>
-
-                            <td align="center">
-
-                                <button class="btn-table-action btn-nonaktif">
-
-                                    Nonaktifkan
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                        <?php endforeach; ?>
-
+                        <?php if(!empty($allUsers)): ?>
+                            <?php foreach($allUsers as $user): ?>
+                            <tr>
+                                <td>
+                                    <b><?= htmlspecialchars($user['nama_lengkap']); ?></b>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($user['email']); ?>
+                                </td>
+                                <td>
+                                    <?php if($user['tipe_akun'] == 'mahasiswa'): ?>
+                                        <span class="role-pill role-mhs">Mahasiswa</span>
+                                    <?php else: ?>
+                                        <span class="role-pill role-org">Organisasi</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <span class="status-pill aktif">Aktif</span>
+                                </td>
+                                <td align="center">
+                                    <button class="btn-table-action btn-nonaktif">
+                                        Nonaktifkan
+                                    </button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5" align="center">Tidak ada data pengguna.</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
 
                 </table>

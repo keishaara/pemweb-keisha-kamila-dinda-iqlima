@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama  = trim($_POST['nama']);
     $npm   = trim($_POST['npm']);
     $email = trim($_POST['email']);
-    $prodi = trim($_POST['prodi']);
+    $program_studi = trim($_POST['program_studi']);
     $wa    = trim($_POST['wa']);
     $pass  = $_POST['password'];
     $pass2 = $_POST['konfirmasi_password'];
@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg = "Email atau NPM sudah terdaftar."; $msgType = 'error';
         } else {
             $hash = password_hash($pass, PASSWORD_DEFAULT);
-            $ins  = mysqli_prepare($conn, "INSERT INTO users (tipe_akun, nama_lengkap, npm, email, prodi, whatsapp, password) VALUES (?,?,?,?,?,?,?)");
-            mysqli_stmt_bind_param($ins, "sssssss", $tipe, $nama, $npm, $email, $prodi, $wa, $hash);
+            $ins  = mysqli_prepare($conn, "INSERT INTO users (tipe_akun, nama_lengkap, npm, email, program_studi, no_whatsapp, password) VALUES (?,?,?,?,?,?,?)");
+            mysqli_stmt_bind_param($ins, "sssssss", $tipe, $nama, $npm, $email, $program_studi, $wa, $hash);
             if (mysqli_stmt_execute($ins)) {
                 $msg = "Registrasi berhasil! Silakan login."; $msgType = 'success';
             } else {
@@ -82,8 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label">Program Studi</label>
-                        <input type="text" name="prodi" class="form-control" placeholder="Pilih Prodi">
+                        <label class="form-label">Prodi</label>
+                        <input type="text" name="program_studi" class="form-control" placeholder="Pilih Prodi">
                     </div>
                     <div class="form-group">
                         <label class="form-label">No. Whatsapp</label>

@@ -20,7 +20,7 @@ session_start();
                 <a href="#">Tentang</a>
                 <?php if (!isset($_SESSION['user_id'])): ?>        
                 <?php else: ?>
-                    <a href="<?= ($_SESSION['role'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/profil.php'; ?>" class="btn btn-outline btn-small active">Dashboard</a>
+                    <a href="<?= ($_SESSION['role'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/user_dashboard.php'; ?>" class="btn btn-outline btn-small active">Dashboard</a>
                 <?php endif; ?>
             </div>
         </nav>

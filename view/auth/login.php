@@ -3,7 +3,13 @@ session_start();
 require_once __DIR__ . '/../../config/koneksi.php';
 
 if (isset($_SESSION['user_id'])) {
-    $target = ($_SESSION['role'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/profil.php';
+    if ($_SESSION['role'] === 'admin') {
+        $target = '../admin/dashboard.php';
+    } elseif ($_SESSION['role'] === 'organisasi') {
+        $target = '../organizer/org_dashboard.php';
+    } else {
+        $target = '../mahasiswa/user_dashboard.php';
+    }
     header("Location: $target");
     exit;
 }
@@ -26,7 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
                 $_SESSION['role']         = $user['tipe_akun'];
                 
-                $target = ($user['tipe_akun'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/profil.php';
+                if ($user['tipe_akun'] === 'admin') {
+                    $target = '../admin/dashboard.php';
+                } elseif ($user['tipe_akun'] === 'organisasi') {
+                    $target = '../organizer/org_dashboard.php';
+                } else {
+                    $target = '../mahasiswa/user_dashboard.php';
+                }
+                
                 header("Location: $target");
                 exit;
             } else { $error = "Kata sandi salah."; }
@@ -34,6 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else { $error = "Semua field wajib diisi."; }
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>

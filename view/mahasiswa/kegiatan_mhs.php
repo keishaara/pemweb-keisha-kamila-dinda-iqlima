@@ -43,10 +43,12 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
         <aside class="sidebar">
             <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
             <div class="menu-category">Menu</div>
-            <a href="index.php" class="menu-item"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
-            <a href="kegiatan.php" class="menu-item active"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
+            <a href="user_dashboard.php" class="menu-item"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
+            <a href="kegiatan_mhs.php" class="menu-item active"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
+            <a href="e-tiket.php" class="menu-item"><img src="../../assets/img/icon-ticket.png" alt="E-Tiket"> E-Tiket</a>
             <div class="menu-category">Akun</div>
             <a href="../mahasiswa/profil.php" class="menu-item"><img src="../../assets/img/icon-user2.png" alt="Profil"> Profil Saya</a>
+            <a href="../auth/logout.php" class="menu-item"><img src="../../assets/img/icon-logout.png" alt="Keluar"> Keluar</a>
         </aside>
 
         <main class="main-content">
