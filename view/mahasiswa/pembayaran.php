@@ -39,20 +39,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $buktiTransfer = $namaFile;
     }
 
-    $_SESSION['payment'] = [
+   $kodeBooking = 'EVT-' . strtoupper(substr(md5(time()), 0, 8));
 
-        'event_id' => $event['id'],
+    $query = mysqli_query(
 
-        'user_id' => $user['id'],
+        $conn,
 
-        'metode_pembayaran' => $metode,
+        "INSERT INTO bookings
+        (
+            event_id,
+            user_id,
+            kode_booking,
+            status,
+            created_at
+        )
 
-        'bukti_transfer' => $buktiTransfer
-    ];
+        VALUES
+        (
+            '{$event['id']}',
+            '{$user['id']}',
+            '$kodeBooking',
+            'active'
+            ,NOW()
+        )"
+    );
 
-    header("Location: e-tiket.php");
+    if($query){
+
+        header("Location: e-tiket.php");
+
 
     exit;
+    }
 }
 
 ?>

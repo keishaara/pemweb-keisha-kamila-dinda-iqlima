@@ -120,7 +120,7 @@ $event = $data['event'];
                             <input
                                 type="text"
                                 class="field-input"
-                                value="<?= htmlspecialchars($user['jurusan']) ?>"
+                                value="<?= htmlspecialchars($user['program_studi']) ?>"
                                 readonly>
                         </div>
 
@@ -130,7 +130,7 @@ $event = $data['event'];
                             <input
                                 type="text"
                                 class="field-input"
-                                value="<?= htmlspecialchars($user['semester']) ?>"
+                                value="<?= htmlspecialchars($user['semester'] ?? '') ?>"
                                 readonly>
                         </div>
 
@@ -155,7 +155,7 @@ $event = $data['event'];
                         <input
                             type="tel"
                             class="field-input"
-                            value="<?= htmlspecialchars($user['no_hp']) ?>"
+                            value="<?= htmlspecialchars($user['no_whatsapp']) ?>"
                             readonly>
 
                     </div>

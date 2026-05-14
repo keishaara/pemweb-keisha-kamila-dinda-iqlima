@@ -19,7 +19,20 @@ $query_stats = mysqli_query($conn, "
     JOIN events e ON b.event_id = e.id
     WHERE b.user_id = '$user_id'
 ");
+
 $stats = mysqli_fetch_assoc($query_stats);
+
+$query_saved = mysqli_query(
+
+    $conn,
+
+    "SELECT COUNT(*) as total_saved
+     FROM saved_events
+     WHERE user_id = '$user_id'"
+);
+
+$saved = mysqli_fetch_assoc($query_saved);
+
 
 $sql_event = "SELECT e.*, c.nama_kategori 
               FROM bookings b
@@ -74,7 +87,7 @@ $res_event = mysqli_query($conn, $sql_event);
                 <div class="stat-card">
                     <div class="stat-icon stat-icon-yellow"><img src="../../assets/img/icon-star.png" alt="Star"></div>
                     <div class="stat-info">
-                        <h3>0</h3>
+                        <h3><?= $saved['total_saved']; ?></h3>
                         <p>Disimpan</p>
                     </div>
                 </div>

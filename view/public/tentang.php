@@ -38,27 +38,27 @@
         <h2>The Founders</h2>
         <div class="team-grid">
             <div class="team-card">
-                <img src="../../assets/img/icon-user.png" alt="Keisha">
+                <img src="../../assets/img/img-keisha.JPG" alt="Keisha">
                 <h3>Keisha Aurel Ratu Assyifa</h3>
                 <p class="npm">2417051015</p>
             </div>
 
             <div class="team-card">
-                <img src="../../assets/img/icon-user.png" alt="Kamila">
+                <img src="../../assets/img/img-kamila.jpeg" alt="Kamila">
                 <h3>Kamila Putri Hasan</h3>
                 <p class="npm">2417051026</p>
             </div>
 
             <div class="team-card">
-                <img src="../../assets/img/icon-user.png" alt="Dinda">
+                <img src="../../assets/img/img-dinda.jpeg" alt="Dinda">
                 <h3>Dinda Shaumi Salsabila</h3>
-                <p class="npm">2417051044</p>
+                <p class="npm">2417051033</p>
             </div>
 
             <div class="team-card">
-                <img src="../../assets/img/icon-user.png" alt="Iqlima">
+                <img src="../../assets/img/img-iqlima.jpeg" alt="Iqlima">
                 <h3>Iqlima Juliana</h3>
-                <p class="npm">2417051001</p>
+                <p class="npm">2417051048</p>
             </div>
         </div>
     </section>

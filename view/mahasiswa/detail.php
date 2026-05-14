@@ -7,6 +7,36 @@ require_once __DIR__ . '/../../controllers/MahasiswaController.php';
 $controller = new MahasiswaController();
 $event = $controller->detailEvent();
 $id_event = $_GET['id'];
+if(isset($_POST['simpan_event'])){
+
+    require_once __DIR__ . '/../../config/koneksi.php';
+
+    $user_id = $_SESSION['user_id'];
+
+    $cek = mysqli_query(
+
+        $conn,
+
+        "SELECT * FROM saved_events
+         WHERE user_id = '$user_id'
+         AND event_id = '$id_event'"
+    );
+
+    if(mysqli_num_rows($cek) == 0){
+
+        mysqli_query(
+
+            $conn,
+
+            "INSERT INTO saved_events
+            (user_id, event_id)
+
+            VALUES
+
+            ('$user_id', '$id_event')"
+        );
+    }
+}
 
 ?>
 
@@ -86,11 +116,11 @@ $id_event = $_GET['id'];
             <div class="tags">
 
                 <span>
-                    <?= htmlspecialchars($event['kategori']) ?>
+                    <?= htmlspecialchars($event['kategori_id']) ?>
                 </span>
 
                 <span>
-                    <?= htmlspecialchars($event['topik']) ?>
+                    <?= htmlspecialchars($event['deskripsi']) ?>
                 </span>
 
                 <span class="green">
@@ -100,7 +130,7 @@ $id_event = $_GET['id'];
             </div>
 
             <h2>
-                <?= htmlspecialchars($event['nama_event']) ?>
+                <?= htmlspecialchars($event['judul_event']) ?>
             </h2>
 
             <div class="detail-grid">
@@ -149,7 +179,7 @@ $id_event = $_GET['id'];
                             <p>Peserta</p>
 
                             <strong>
-                                Maks. <?= htmlspecialchars($event['kuota']) ?> Orang
+                                Maks 50 Orang
                             </strong>
 
                         </div>
@@ -198,11 +228,6 @@ $id_event = $_GET['id'];
                             <div class="bar"></div>
                         </div>
 
-                        <small>
-                            <?= htmlspecialchars($event['jumlah_pendaftar']) ?>
-                            orang telah mendaftar
-                        </small>
-
                         <button
                             class="btn-primary"
                             onclick="window.location='data_diri.php?event_id=<?= $event['id'] ?>'">
@@ -211,9 +236,19 @@ $id_event = $_GET['id'];
 
                         </button>
 
-                        <button class="btn-secondary">
-                            Simpan Event
-                        </button>
+                       <form method="POST">
+
+                            <button
+                                type="submit"
+                                name="simpan_event"
+                                class="btn-secondary"
+                            >
+
+                                Simpan Event
+
+                            </button>
+
+                        </form>
 
                     </div>
 
