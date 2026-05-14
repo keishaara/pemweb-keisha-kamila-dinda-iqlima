@@ -15,9 +15,9 @@ session_start();
         <nav class="navbar">
             <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
             <div class="nav-links">
-                <a href="#">Fitur</a>
+                <a href="fitur.php">Fitur</a>
                 <a href="kegiatan.php">Kegiatan</a>
-                <a href="#">Tentang</a>
+                <a href="tentang.php">Tentang</a>
                 <?php if (!isset($_SESSION['user_id'])): ?>        
                 <?php else: ?>
                     <a href="<?= ($_SESSION['role'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/user_dashboard.php'; ?>" class="btn btn-outline btn-small active">Dashboard</a>
