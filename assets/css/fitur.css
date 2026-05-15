@@ -1,0 +1,483 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background-color: #f6f8fb;
+    color: #1e293b;
+    overflow-x: hidden;
+}
+
+
+.features-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(circle at 80% 20%, rgba(220, 230, 242, 0.6) 0%, transparent 40%),
+        radial-gradient(circle at 15% 70%, rgba(235, 240, 248, 0.7) 0%, transparent 45%);
+    padding-bottom: 100px;
+}
+
+.navbar {
+    width: 100%;
+    background: transparent;
+    padding: 20px 0;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #182c4f;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background: #182c4f;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-menu a:hover, .nav-menu a.active {
+    color: #182c4f;
+    font-weight: 600;
+}
+
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.btn-masuk {
+    text-decoration: none;
+    color: #1e293b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    background: #eef2f6;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.btn-masuk:hover {
+    background: #e2e8f0;
+}
+
+.btn-daftar {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 22px;
+    background: #182c4f;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(24, 44, 79, 0.15);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn-daftar:hover {
+    background: #11203b;
+    transform: translateY(-1px);
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 50px auto 0 auto;
+    padding: 0 24px;
+}
+
+.content-header {
+    max-width: 700px;
+    margin-bottom: 50px;
+}
+
+.sub-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #3b82f6;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.content-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #182c4f;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.content-header p {
+    font-size: 1.15rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+}
+
+.feature-item {
+    background: #ffffff;
+    padding: 36px;
+    border-radius: 24px;
+    box-shadow: 0 10px 35px rgba(24, 44, 79, 0.02);
+    border: 1px solid rgba(24, 44, 79, 0.02);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(24, 44, 79, 0.06);
+}
+
+.icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.icon-box img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.bg-blue { background: rgba(59, 130, 246, 0.1); }
+.bg-pink { background: rgba(244, 63, 94, 0.1); }
+.bg-cyan { background: rgba(6, 182, 212, 0.1); }
+.bg-green { background: rgba(34, 197, 94, 0.1); }
+.bg-purple { background: rgba(168, 85, 247, 0.1); }
+.bg-orange { background: rgba(249, 115, 22, 0.1); }
+
+.feature-item h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #182c4f;
+    margin-bottom: 12px;
+}
+
+.feature-item p {
+    font-size: 0.95rem;
+    color: #7e8b9b;
+    line-height: 1.6;
+}
+
+@media (max-width: 992px) {
+    .content-header h1 { font-size: 2.5rem; }
+    .nav-menu { display: none; }
+}
+
+@media (max-width: 576px) {
+    .content-header h1 { font-size: 2rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .feature-item { padding: 28px; }
+    .nav-auth .btn-masuk { display: none; }
+}
+
+/* ==========================================================================
+   SECTION 2: KEGIATAN TERBARU (JANGAN SAMPAI KETINGGALAN)
+   ========================================================================== */
+.section-events {
+    max-width: 1200px;
+    margin: 100px auto 0 auto;
+    padding: 0 24px;
+}
+
+.section-container {
+    width: 100%;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.event-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(24, 44, 79, 0.02);
+    border: 1px solid rgba(24, 44, 79, 0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(24, 44, 79, 0.06);
+}
+
+.event-banner {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-bg-blue { background-color: #dbeafe; }
+.card-bg-green { background-color: #dcfce7; }
+.card-bg-pink { background-color: #ffe4e6; }
+.card-bg-yellow { background-color: #fef9c3; }
+
+.emoji-icon {
+    font-size: 2.5rem;
+}
+
+.event-body {
+    padding: 24px;
+}
+
+.event-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.tag-blue { color: #2563eb; }
+.tag-green { color: #16a34a; }
+.tag-pink { color: #db2777; }
+.tag-yellow { color: #ca8a04; }
+
+.event-body h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #182c4f;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.event-org {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+.event-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 14px;
+}
+
+.event-date {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.status-badge.gratis {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.status-badge.berbayar {
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+
+.action-center {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-view-all {
+    display: inline-block;
+    padding: 12px 28px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    color: #182c4f;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.btn-view-all:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+
+/* ==========================================================================
+   SECTION 3: SATU PLATFORM, TIGA PERAN
+   ========================================================================== */
+.section-roles {
+    max-width: 1200px;
+    margin: 120px auto 0 auto;
+    padding: 0 24px;
+}
+
+.roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.role-card {
+    background: #eef4fc;
+    padding: 40px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(24, 44, 79, 0.01);
+}
+
+.role-card.role-admin {
+    background: #1e3a61;
+}
+
+.role-badge-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #475569;
+    margin-bottom: 12px;
+}
+
+.role-badge-text.text-light {
+    color: #93c5fd;
+}
+
+.role-card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #182c4f;
+    margin-bottom: 24px;
+}
+
+.role-card h2.text-light {
+    color: #ffffff;
+}
+
+.role-features {
+    list-style: none;
+    margin-bottom: 36px;
+    flex-grow: 1; 
+}
+
+.role-features li {
+    font-size: 0.95rem;
+    color: #475569;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.role-features.text-light li {
+    color: #cbd5e1;
+}
+
+.check-icon {
+    color: #2563eb;
+    font-weight: 700;
+}
+
+.check-icon.white-check {
+    color: #38bdf8;
+}
+
+.btn-role {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.btn-blue-dark {
+    background: #182c4f;
+    color: #ffffff;
+}
+
+.btn-blue-dark:hover {
+    background: #11203b;
+}
+
+.btn-admin-outline {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-admin-outline:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+    .section-events, .section-roles { 
+        margin-top: 80px; 
+    }
+    .role-card { 
+        padding: 30px; 
+    }
+}

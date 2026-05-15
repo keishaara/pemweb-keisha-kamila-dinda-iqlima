@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "evently_db";
+$database = "evently";
 
 $conn = mysqli_connect($host, $user, $password, $database);
 
