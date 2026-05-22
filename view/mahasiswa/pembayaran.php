@@ -3,6 +3,7 @@
 session_start();
 
 require_once __DIR__ . '/../../controllers/MahasiswaController.php';
+require_once __DIR__ . '/../../config/koneksi.php';
 
 $controller = new MahasiswaController();
 
