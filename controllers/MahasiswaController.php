@@ -30,7 +30,14 @@ class MahasiswaController {
             exit;
         }
         $userId  = $_SESSION['user_id'];
-        $eventId = $_GET['event_id'] ?? 1;
+
+        if (isset($_REQUEST['id'])) {
+            $_SESSION['current_event_id'] = $_REQUEST['id'];
+        } elseif (isset($_REQUEST['event_id'])) {
+            $_SESSION['current_event_id'] = $_REQUEST['event_id'];
+        }
+
+        $eventId = $_SESSION['current_event_id'] ?? 1;
 
         return [
             'user'  => $this->model->getUserById($userId),

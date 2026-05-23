@@ -517,8 +517,8 @@ ul {
 
 .content {
     flex: 1;
-    margin-left: 230px;
-    padding: 20px 30px;
+    margin-left: 250px;
+    padding: 40 px;
     min-height: 100vh;
 }
 
@@ -2667,8 +2667,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 36px;
-    max-width: 440px;
+    margin: 0 auto 40px;
+    max-width: 500px;
 }
 
 .stepper-line {
@@ -2922,14 +2922,15 @@ body {
 
 .etiket-preview {
     background: #3d5a80;
-    border-radius: 18px;
-    padding: 26px 30px;
-    margin-bottom: 28px;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(61, 90, 128, 0.1);
 }
 
 .etiket-preview::before {
@@ -2958,6 +2959,7 @@ body {
     color: white;
     margin-bottom: 4px;
     line-height: 1.3;
+    margin-bottom: 8px;
 }
 
 .etiket-subtitle {
@@ -2976,7 +2978,7 @@ body {
     display: flex;
     align-items: flex-end;
     flex-wrap: wrap;
-    gap: 32px;
+    gap: 40px;
 }
 
 .etiket-field span {
@@ -3013,162 +3015,158 @@ body {
 
 .payment-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px;
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px;
+    margin-bottom: 30px;
     align-items: start;
+}
+
+.payment-grid .card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.payment-grid .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 20px;
 }
 
 .method-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .method-item {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border: 1.5px solid #e5e7eb;
-    background: #f8f9fb;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1.5px solid #edf2f7;
+    background: #f8fafc;
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
+    transition: all 0.2s ease;
 }
 
 .method-item:hover {
-    border-color: #3d5a80;
-    background: #eef2f8;
+    border-color: #335485;
+    background: #f1f5f9;
 }
 
 .method-item.selected {
-    border-color: #3d5a80;
-    background: #eef2f8;
-}
-
-.method-radio {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 2px solid #d1d5db;
-    flex-shrink: 0;
-    transition: all 0.2s;
-}
-
-.method-item.selected .method-radio {
-    border-color: #3d5a80;
-    background: #3d5a80;
-    box-shadow: inset 0 0 0 3px white;
-}
-
-.method-info {
-    flex: 1;
-}
-
-.method-info strong {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1a1a2e;
-    display: block;
-    margin-bottom: 2px;
-}
-
-.method-info span {
-    font-size: 12px;
-    color: #9ca3af;
-}
-
-.method-icon {
-    font-size: 26px;
+    border-color: #335485;
+    background: #eef5ff;
 }
 
 .rekening-box {
-    background: #eef2f8;
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
+    background: #f0fff4; 
+    border: 1px solid #c6f6d5;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
     text-align: center;
 }
 
 .rekening-box span {
     font-size: 11px;
     font-weight: 600;
-    color: #9ca3af;
+    color: #718096;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.5px;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .rekening-box strong {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
-    color: #1a1a2e;
+    color: #276749;
     display: block;
-    margin-bottom: 4px;
-    letter-spacing: 1px;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
 }
 
 .rekening-box p {
     font-size: 13px;
-    color: #6b7280;
+    color: #4a5568;
+    margin: 0;
 }
 
 .upload-label {
     font-size: 13px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: #2d3748;
     margin-bottom: 10px;
     display: block;
 }
 
 .upload-area {
-    border: 2px dashed #c5d0de;
-    border-radius: 12px;
-    padding: 30px 20px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    padding: 35px 20px;
     text-align: center;
-    background: #f8f9fb;
+    background: #f8fafc;
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
+    display: block;
+    transition: all 0.2s ease;
 }
 
 .upload-area:hover {
-    border-color: #3d5a80;
-    background: #eef2f8;
+    border-color: #335485;
+    background: #eef5ff;
 }
 
 .upload-area p {
     font-size: 13px;
-    color: #9ca3af;
-    line-height: 1.7;
-}
-
-.upload-area input[type="file"] {
-    display: none;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0;
 }
 
 .btn-submit {
     width: 100%;
-    padding: 15px;
-    background: #3d5a80;
+    padding: 16px;
+    background: #335485;
     color: white;
     border: none;
     border-radius: 14px;
     font-size: 15px;
     font-weight: 700;
-    font-family: 'Segoe UI', sans-serif;
     cursor: pointer;
-    letter-spacing: 0.3px;
-    transition: background 0.2s, transform 0.1s;
-    margin-top: 4px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(51, 84, 133, 0.2);
 }
 
 .btn-submit:hover {
-    background: #2e4464;
+    background: #253e63;
+    transform: translateY(-1px);
 }
 
-.btn-submit:active {
-    transform: scale(0.99);
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    .payment-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+    .etiket-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .etiket-code {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
 }
 
 .modal-pop {
