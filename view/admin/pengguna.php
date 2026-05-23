@@ -3,6 +3,8 @@ session_start();
 require_once __DIR__ . '/../../controllers/AdminController.php';
 
 $controller = new AdminController();
+$controller->prosesToggleStatusPengguna();
+
 $allUsers = $controller->getAllUsers();
 $totalUsersCount = $controller->getTotalUsers();
 ?>
@@ -14,6 +16,8 @@ $totalUsersCount = $controller->getTotalUsers();
     <meta charset="UTF-8">
     <title>Manajemen Pengguna - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+    </style>
 </head>
 
 <body>
@@ -130,13 +134,29 @@ $totalUsersCount = $controller->getTotalUsers();
                                         <span class="role-pill role-org">Organisasi</span>
                                     <?php endif; ?>
                                 </td>
+                                
                                 <td>
-                                    <span class="status-pill aktif">Aktif</span>
+                                    <?php if(($user['status'] ?? 'Aktif') === 'Aktif'): ?>
+                                        <span class="status-pill aktif">Aktif</span>
+                                    <?php else: ?>
+                                        <span class="status-pill nonaktif">Nonaktif</span>
+                                    <?php endif; ?>
                                 </td>
+                                
                                 <td align="center">
-                                    <button class="btn-table-action btn-nonaktif">
-                                        Nonaktifkan
-                                    </button>
+                                    <?php if(($user['status'] ?? 'Aktif') === 'Aktif'): ?>
+                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=Aktif" 
+                                           class="btn-table-action btn-nonaktif" 
+                                           onclick="return confirm('Apakah Anda yakin ingin menonaktifkan pengguna ini?')">
+                                            Nonaktifkan
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=Nonaktif" 
+                                           class="btn-table-action btn-nonaktif btn-aktifkan" 
+                                           onclick="return confirm('Apakah Anda yakin ingin mengaktifkan kembali pengguna ini?')">
+                                            Aktifkan
+                                        </a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

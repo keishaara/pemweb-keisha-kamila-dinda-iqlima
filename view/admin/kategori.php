@@ -3,6 +3,14 @@ session_start();
 require_once __DIR__ . '/../../controllers/AdminController.php';
 
 $controller = new AdminController();
+$controller->prosesHapusKategori();
+$controller->prosesTambahKategori();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
+    $id_edit = intval($_POST['id_kategori']);
+    $controller->prosesEditKategori($id_edit);
+}
+
 $kategori = $controller->getKategori();
 ?>
 
@@ -13,6 +21,8 @@ $kategori = $controller->getKategori();
     <meta charset="UTF-8">
     <title>Kelola Kategori - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <style>
+    </style>
 </head>
 
 <body>
@@ -59,7 +69,7 @@ $kategori = $controller->getKategori();
 
             <div class="category-header">
                 <h2>Kelola Kategori</h2>
-                <button class="btn-tambah-kat">+ Tambah Kategori</button>
+                <button class="btn-tambah-kat" onclick="bukaModal()">+ Tambah Kategori</button>
             </div>
 
             <div class="category-grid">
@@ -86,7 +96,13 @@ $kategori = $controller->getKategori();
                             </div>
                         </div>
 
-                        <button class="btn-edit-kat">Edit</button>
+                        <div class="action-flex">
+                            <button type="button" class="btn-edit-kat-btn" 
+                                    onclick="bukaModalEdit(<?= $kat['id']; ?>, <?= htmlspecialchars(json_encode($kat['nama_kategori'])); ?>, <?= htmlspecialchars(json_encode($kat['deskripsi'] ?? '')); ?>)">
+                                Edit
+                            </button>
+                            <a href="kategori.php?action=hapus&id=<?= $kat['id']; ?>" class="btn-delete-kat" onclick="return confirm('Hapus kategori ini?')">Hapus</a>
+                        </div>
                     </div>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -97,6 +113,60 @@ $kategori = $controller->getKategori();
         </main>
 
     </div>
+
+    <div id="modalTambah" class="modal">
+        <div class="modal-content">
+            <h3>Tambah Kategori Baru</h3>
+            <form method="POST" action="">
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; font-size:13px; margin-bottom:4px;">Nama Kategori</label>
+                    <input type="text" name="nama_kategori" class="field-input" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" required>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; font-size:13px; margin-bottom:4px;">Deskripsi / Keterangan</label>
+                    <textarea name="deskripsi" class="field-textarea" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; height:80px;" required></textarea>
+                </div>
+                <div class="btn-group">
+                    <button type="submit" name="submit_tambah" class="btn-submit" style="background:#3d5a80; color:white; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Simpan</button>
+                    <button type="button" onclick="tutupModal()" style="background:#e0e0e0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalEdit" class="modal">
+        <div class="modal-content">
+            <h3>Edit Kategori</h3>
+            <form method="POST" action="">
+                <input type="hidden" name="id_kategori" id="edit_id_kategori">
+                
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; font-size:13px; margin-bottom:4px;">Nama Kategori</label>
+                    <input type="text" name="nama_kategori" id="edit_nama_kategori" class="field-input" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" required>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; font-size:13px; margin-bottom:4px;">Deskripsi / Keterangan</label>
+                    <textarea name="deskripsi" id="edit_deskripsi" class="field-textarea" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; height:80px;" required></textarea>
+                </div>
+                <div class="btn-group">
+                    <button type="submit" name="submit_edit" class="btn-submit" style="background:#3d5a80; color:white; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Simpan Perubahan</button>
+                    <button type="button" onclick="tutupModalEdit()" style="background:#e0e0e0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function bukaModal() { document.getElementById('modalTambah').style.display = 'flex'; }
+        function tutupModal() { document.getElementById('modalTambah').style.display = 'none'; }
+        function bukaModalEdit(id, nama, deskripsi) {
+            document.getElementById('edit_id_kategori').value = id;
+            document.getElementById('edit_nama_kategori').value = nama;
+            document.getElementById('edit_deskripsi').value = deskripsi;
+            document.getElementById('modalEdit').style.display = 'flex';
+        }
+        function tutupModalEdit() { document.getElementById('modalEdit').style.display = 'none'; }
+    </script>
 
 </body>
 </html>

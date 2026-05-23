@@ -4063,3 +4063,87 @@ body {
         padding: 30px;
     }
 }
+.modal { 
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.5); 
+    align-items: center; 
+    justify-content: center;
+}
+.modal-content { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 12px; 
+    width: 400px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+}
+
+.btn-group { 
+    display: flex; 
+    gap: 10px; 
+    margin-top: 15px; 
+}
+
+.btn-delete-kat { 
+    background: #ef4444; 
+    color: white; 
+    border: none; 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    text-decoration: none; 
+    font-size: 13px; 
+    font-weight: 600; 
+    display: inline-block; 
+    text-align: center;
+}
+
+.btn-edit-kat-link { 
+    background: #3d5a80; 
+    color: white; 
+    border: none; 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    text-decoration: none; 
+    font-size: 13px; 
+    font-weight: 600; 
+    display: inline-block; 
+    text-align: center;
+}
+
+.action-flex { 
+    display: flex; 
+    gap: 8px; 
+    margin-top: 10px; 
+}
+        
+.btn-edit-kat-btn { 
+    background: #3d5a80; 
+    color: white; 
+    border: none; 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 13px; 
+    font-weight: 600; 
+    display: inline-block; 
+    text-align: center; }
+
+a.btn-table-action {
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-aktifkan {
+            background-color: #10b981 !important;
+            color: white !important;
+        }
+        .status-pill.nonaktif {
+            background-color: #fef2f2 !important;
+            color: #ef4444 !important;
+        }

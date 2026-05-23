@@ -71,4 +71,37 @@ class AdminModel {
 
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
     }
-}
+
+    public function insertKategori($nama, $deskripsi) {
+        $nama = mysqli_real_escape_string($this->conn, $nama);
+        $deskripsi = mysqli_real_escape_string($this->conn, $deskripsi);
+        return mysqli_query($this->conn, "INSERT INTO categories (nama_kategori, deskripsi) VALUES ('$nama', '$deskripsi')");
+    }
+
+    public function getCategoryById($id) {
+        $id = intval($id);
+        $query = mysqli_query($this->conn, "SELECT * FROM categories WHERE id = '$id'");
+        return mysqli_fetch_assoc($query);
+    }
+
+    public function updateKategori($id, $nama, $deskripsi) {
+        $id = intval($id);
+        $nama = mysqli_real_escape_string($this->conn, $nama);
+        $deskripsi = mysqli_real_escape_string($this->conn, $deskripsi);
+        return mysqli_query($this->conn, "UPDATE categories SET nama_kategori = '$nama', deskripsi = '$deskripsi' WHERE id = '$id'");
+    }
+
+    public function deleteKategori($id) {
+        $id = intval($id);
+        mysqli_query($this->conn, "UPDATE events SET kategori_id = NULL WHERE kategori_id = '$id'");
+        return mysqli_query($this->conn, "DELETE FROM categories WHERE id = '$id'");
+    }
+
+    public function toggleUserStatus($id, $currentStatus) {
+        $id = intval($id);
+        $newStatus = ($currentStatus === 'Aktif') ? 'Nonaktif' : 'Aktif';
+        $newStatus = mysqli_real_escape_string($this->conn, $newStatus);
+        return mysqli_query($this->conn, "UPDATE users SET status = '$newStatus' WHERE id = '$id'");
+    }
+} 
+?>
