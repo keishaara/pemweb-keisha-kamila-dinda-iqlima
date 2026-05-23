@@ -58,6 +58,7 @@ $res_event = mysqli_query($conn, $sql_event);
             <a href="dashboard_mhs.php" class="menu-item active"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
             <a href="kegiatan_mhs.php" class="menu-item"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
             <a href="e-tiket.php" class="menu-item"><img src="../../assets/img/icon-ticket.png" alt="E-Tiket"> E-Tiket</a>
+            <a href="saved_events.php" class="menu-item"><img src="../../assets/img/icon-star.png" alt="Disimpan"> Disimpan</a>
             <div class="menu-category">Akun</div>
             <a href="profil.php" class="menu-item"><img src="../../assets/img/icon-user2.png" alt="Profil"> Profil Saya</a>
             <a href="../auth/logout.php" class="menu-item"><img src="../../assets/img/icon-logout.png" alt="Keluar"> Keluar</a>
