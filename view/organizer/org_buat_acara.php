@@ -1,3 +1,39 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../auth/login.php?msg=wajib_login");
+    exit();
+}
+
+require_once __DIR__ . '/../../controllers/OrganizerController.php';
+$controller = new OrganizerController();
+$event_id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$is_edit = ($event_id !== null);
+
+if ($is_edit) {
+    $event = $controller->detailAcara($event_id);
+
+    if (!$event) {
+        header("Location: org_kelola_acara.php");
+        exit();
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($is_edit) {
+        $controller->prosesEditAcara($event_id);
+    } else {
+        if ($controller->prosesTambahAcara($_POST, $_FILES)) {
+            header("Location: org_kelola_acara.php?status=success"); 
+            exit();
+        } else {
+            $error_msg = "Gagal menambahkan acara. Silakan coba lagi.";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -52,74 +88,82 @@
                     <p>Lengkapi data acara sebelum dikirim untuk verifikasi.</p>
                 </div>
 
+                <?php if (isset($error_msg)): ?>
+                    <div style="color: red; margin-bottom: 15px;"><?= $error_msg ?></div>
+                <?php endif; ?>
+
                 <section class="org-card">
-                    <div class="org-form-grid">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="org-form-grid">
+                            <div class="org-form-group org-full">
+                                <label>Nama Acara</label>
+                                <input type="text" name="judul_event" class="org-input" placeholder="Contoh: Workshop UI/UX" required>
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Kategori</label>
+                                <select name="kategori_id" class="org-select" required>
+                                    <option value="1">Seminar</option>
+                                    <option value="2">Workshop</option>
+                                    <option value="3">Pelatihan</option>
+                                    <option value="4">Diskusi</option>
+                                </select>
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Jenis Acara</label>
+                                <select name="jenis_acara" class="org-select" required>
+                                    <option value="Online">Online</option>
+                                    <option value="Offline">Offline</option>
+                                </select>
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Tanggal Mulai</label>
+                                <input type="date" name="tanggal" class="org-input" required>
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Tanggal Selesai</label>
+                                <input type="date" name="tanggal_selesai" class="org-input">
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Jam</label>
+                                <input type="time" name="waktu" class="org-input" required>
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Lokasi</label>
+                                <input type="text" name="lokasi" class="org-input" placeholder="Ruang Seminar A / Zoom" required>
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Kuota Peserta</label>
+                                <input type="number" name="kuota" class="org-input" placeholder="50">
+                            </div>
+                        </div>
+
                         <div class="org-form-group org-full">
-                            <label>Nama Acara</label>
-                            <input type="text" class="org-input" placeholder="Contoh: Workshop UI/UX">
+                            <label>Deskripsi Acara</label>
+                            <textarea name="deskripsi" class="org-textarea" rows="6" placeholder="Tuliskan deskripsi acara secara lengkap..." required></textarea>
                         </div>
 
-                        <div class="org-form-group">
-                            <label>Kategori</label>
-                            <select class="org-select">
-                                <option>Seminar</option>
-                                <option>Workshop</option>
-                                <option>Pelatihan</option>
-                                <option>Diskusi</option>
-                            </select>
+                        <div class="org-form-group org-full">
+                            <label>Poster Acara</label>
+                            <div class="org-upload-box" style="position: relative; cursor: pointer;">
+                                <input type="file" name="poster" accept="image/*" style="position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor: pointer;">
+                                <p>Unggah poster acara di sini</p>
+                                <span>PNG, JPG maksimal 2MB</span>
+                            </div>
                         </div>
 
-                        <div class="org-form-group">
-                            <label>Jenis Acara</label>
-                            <select class="org-select">
-                                <option>Online</option>
-                                <option>Offline</option>
-                            </select>
+                        <div class="org-form-actions">
+                            <button type="submit" class="org-btn org-btn-primary">Kirim untuk Verifikasi</button>
+                            <button type="button" class="org-btn org-btn-outline">Simpan Draft</button>
                         </div>
-
-                        <div class="org-form-group">
-                            <label>Tanggal Mulai</label>
-                            <input type="date" class="org-input">
-                        </div>
-
-                        <div class="org-form-group">
-                            <label>Tanggal Selesai</label>
-                            <input type="date" class="org-input">
-                        </div>
-
-                        <div class="org-form-group">
-                            <label>Jam</label>
-                            <input type="time" class="org-input">
-                        </div>
-
-                        <div class="org-form-group">
-                            <label>Lokasi</label>
-                            <input type="text" class="org-input" placeholder="Ruang Seminar A / Zoom">
-                        </div>
-
-                        <div class="org-form-group">
-                            <label>Kuota Peserta</label>
-                            <input type="number" class="org-input" placeholder="50">
-                        </div>
-                    </div>
-
-                    <div class="org-form-group org-full">
-                        <label>Deskripsi Acara</label>
-                        <textarea class="org-textarea" rows="6" placeholder="Tuliskan deskripsi acara secara lengkap..."></textarea>
-                    </div>
-
-                    <div class="org-form-group org-full">
-                        <label>Poster Acara</label>
-                        <div class="org-upload-box">
-                            <p>Unggah poster acara di sini</p>
-                            <span>PNG, JPG maksimal 2MB</span>
-                        </div>
-                    </div>
-
-                    <div class="org-form-actions">
-                        <button class="org-btn org-btn-primary">Kirim untuk Verifikasi</button>
-                        <button class="org-btn org-btn-outline">Simpan Draft</button>
-                    </div>
+                    </form>
                 </section>
             </div>
         </main>

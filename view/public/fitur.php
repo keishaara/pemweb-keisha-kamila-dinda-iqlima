@@ -184,7 +184,7 @@ function getKategoriStyle($kategori) {
                             <li><span class="check-icon white-check">✓</span> Pantau akun pengguna</li>
                             <li><span class="check-icon white-check">✓</span> Jaga kualitas & keamanan data</li>
                         </ul>
-                        <a href="../admin/dashboard.php" class="btn-role btn-admin-outline">Masuk sebagai Admin</a>
+                        <a href="../auth/register.php" class="btn-role btn-admin-outline">Masuk sebagai Admin</a>
                     </div>
                 </div>
             </div>

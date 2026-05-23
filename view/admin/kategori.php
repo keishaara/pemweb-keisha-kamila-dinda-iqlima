@@ -68,7 +68,6 @@ $kategori = $controller->getKategori();
                     <div class="cat-card">
                         <div class="cat-icon">
                             <?php 
-                                // Cek apakah nama file ada di DB, jika tidak pakai icon default
                                 $iconName = !empty($kat['icon']) ? $kat['icon'] : 'icon-kegiatan.png';
                             ?>
                             <img 

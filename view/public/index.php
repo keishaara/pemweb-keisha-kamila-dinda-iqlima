@@ -17,11 +17,8 @@ session_start();
             <div class="nav-links">
                 <a href="fitur.php">Fitur</a>
                 <a href="kegiatan.php">Kegiatan</a>
-                <a href="tentang.php">Tentang</a>
-                <?php if (!isset($_SESSION['user_id'])): ?>        
-                <?php else: ?>
-                    <a href="<?= ($_SESSION['role'] === 'admin') ? '../admin/dashboard.php' : '../mahasiswa/user_dashboard.php'; ?>" class="btn btn-outline btn-small active">Dashboard</a>
-                <?php endif; ?>
+                <a href="tentang.php">Tentang</a>      
+
             </div>
         </nav>
 

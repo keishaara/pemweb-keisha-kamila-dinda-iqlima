@@ -3,10 +3,8 @@ session_start();
 require_once __DIR__ . '/../../controllers/AdminController.php';
 
 $controller = new AdminController();
-
-// Mengambil data dari controller
-$totalUsersData = $controller->getTotalUsers(); // Mengambil angka total
-$totalOrgData = $controller->getTotalOrganisasi(); // Mengambil angka total
+$totalUsersData = $controller->getTotalUsers(); 
+$totalOrgData = $controller->getTotalOrganisasi(); 
 $latestUsers = $controller->getLatestUsers();
 $verifikasiAcara = $controller->getVerifikasiAcara();
 ?>
