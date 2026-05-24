@@ -27,7 +27,7 @@ session_start();
             <h1>Semua Kegiatan<br>Kampus, Satu <span>Tempat</span></h1>
             <p>Evently menyatukan informasi seminar, workshop, dan event organisasi kampus dalam satu platform terpusat yang mudah diakses.</p>
             <div class="hero-buttons">
-                <a href="../auth/register.php" class="btn btn-primary">Mulai Sekarang</a>
+                <a href="../auth/login.php" class="btn btn-primary">Mulai Sekarang</a>
                 <a href="kegiatan.php" class="btn btn-outline">Lihat Kegiatan</a>
             </div>
 
