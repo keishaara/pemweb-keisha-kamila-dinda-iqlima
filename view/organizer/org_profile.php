@@ -2,6 +2,11 @@
 
 session_start();
 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
+    header("Location: ../auth/index.php");
+    exit;
+}
+
 require_once __DIR__ . '/../../controllers/OrganizerController.php';
 
 $controller = new OrganizerController();
