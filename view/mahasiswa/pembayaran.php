@@ -8,6 +8,11 @@ $data = $controller->dataDiri();
 $user  = $data['user'];
 $event = $data['event'];
 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
+    header("Location: ../auth/index.php");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran'])) {
     $metode = $_POST['metode_pembayaran'] ?? '';
     $buktiTransfer = '';

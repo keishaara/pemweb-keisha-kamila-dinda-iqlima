@@ -2,8 +2,9 @@
 session_start();
 require_once __DIR__ . '/../../config/koneksi.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: ../auth/login.php'); exit;
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
+    header("Location: ../auth/index.php");
+    exit;
 }
 
 $uid = $_SESSION['user_id'];

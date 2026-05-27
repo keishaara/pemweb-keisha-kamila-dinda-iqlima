@@ -2,6 +2,11 @@
 session_start();
 require_once __DIR__ . '/../../controllers/MahasiswaController.php';
 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
+    header("Location: ../auth/index.php");
+    exit;
+}
+
 $controller = new MahasiswaController();
 $data = $controller->dataDiri();
 $user  = $data['user'];

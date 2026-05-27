@@ -2,6 +2,11 @@
 session_start();
 require_once __DIR__ . '/../../config/koneksi.php';
 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
+    header("Location: ../auth/index.php");
+    exit;
+}
+
 $search  = isset($_GET['q']) ? trim($_GET['q']) : '';
 $cat_id  = isset($_GET['cat_id']) ? trim($_GET['cat_id']) : '';
 $is_free = isset($_GET['free']) ? true : false;
