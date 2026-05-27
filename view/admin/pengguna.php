@@ -2,6 +2,11 @@
 session_start();
 require_once __DIR__ . '/../../controllers/AdminController.php';
 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../auth/index.php");
+    exit;
+}
+
 $controller = new AdminController();
 $controller->prosesToggleStatusPengguna();
 

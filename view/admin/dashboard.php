@@ -2,6 +2,11 @@
 session_start();
 require_once __DIR__ . '/../../controllers/AdminController.php';
 
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../auth/index.php");
+    exit;
+}
+
 $controller = new AdminController();
 $totalUsersData = $controller->getTotalUsers(); 
 $totalOrgData = $controller->getTotalOrganisasi(); 
@@ -133,5 +138,19 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
             </div>
         </main>
     </div>
+
+    <script>
+        history.pushState(null, null, window.location.href);
+
+        window.addEventListener('popstate', function (event) {
+            const yakinLogout = confirm("Apakah Anda ingin logout?");
+            
+            if (yakinLogout) {
+                window.location.href = '../auth/logout.php'; 
+            } else {
+                history.pushState(null, null, window.location.href);
+            }
+        });
+    </script>
 </body>
 </html>

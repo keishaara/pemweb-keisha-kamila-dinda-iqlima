@@ -132,5 +132,19 @@ $res_event = mysqli_query($conn, $sql_event);
             </div>
         </main>
     </div>
+
+    <script>
+        history.pushState(null, null, window.location.href);
+
+        window.addEventListener('popstate', function (event) {
+            const yakinLogout = confirm("Apakah Anda ingin logout?");
+            
+            if (yakinLogout) {
+                window.location.href = '../auth/logout.php'; 
+            } else {
+                history.pushState(null, null, window.location.href);
+            }
+        });
+    </script>
 </body>
 </html>
