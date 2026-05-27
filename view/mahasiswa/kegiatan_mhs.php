@@ -62,20 +62,36 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
                 <h2>Jelajahi Event</h2>
                 <p>Temukan kegiatan sesuai minatmu</p>
             </div>
+            
             <div class="search-bar">
-                <form method="GET" action="" style="display:flex; gap:10px; flex:1;">
+                <form method="GET" action="kegiatan_mhs.php" style="display:flex; gap:10px; flex:1;">
+                    <?php if ($cat_id): ?>
+                        <input type="hidden" name="cat_id" value="<?= htmlspecialchars($cat_id); ?>">
+                    <?php endif; ?>
+                    
+                    <?php if ($is_free): ?>
+                        <input type="hidden" name="free" value="1">
+                    <?php endif; ?>
+
                     <input type="text" name="q" placeholder="Cari event . ." value="<?= htmlspecialchars($search); ?>">
                     <button type="submit">Cari</button>
                 </form>
-                <button>Semua Tanggal ⌄</button>
+                
+                <?php if ($search || $cat_id || $is_free): ?>
+                    <a href="kegiatan_mhs.php" class="btn" style="background-color: #ef4444; color: white; text-decoration: none; padding: 10px 15px; border-radius: 6px; font-size: 14px;">Reset Filter</a>
+                <?php endif; ?>
             </div>
 
             <div class="filter-tags">
                 <a href="kegiatan_mhs.php" class="btn-filter <?= (!$cat_id && !$is_free) ? 'active' : ''; ?>">Semua</a>
-                <a href="?cat_id=2" class="btn-filter <?= $cat_id == '2' ? 'active' : ''; ?>">Workshop</a>
-                <a href="?cat_id=4" class="btn-filter <?= $cat_id == '4' ? 'active' : ''; ?>">Musik</a>
-                <a href="?cat_id=5" class="btn-filter <?= $cat_id == '5' ? 'active' : ''; ?>">Volunteer</a>
-                <a href="?free=1" class="btn-filter <?= $is_free ? 'active' : ''; ?>">Gratis</a>
+                
+                <a href="?cat_id=2<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '2' ? 'active' : ''; ?>">Workshop</a>
+                
+                <a href="?cat_id=4<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '4' ? 'active' : ''; ?>">Musik</a>
+                
+                <a href="?cat_id=5<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '5' ? 'active' : ''; ?>">Volunteer</a>
+                
+                <a href="?free=1<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $is_free ? 'active' : ''; ?>">Gratis</a>
             </div>
 
             <div class="card-grid">
@@ -85,7 +101,12 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
                     <?php foreach($events as $ev): ?>
                     <div class="event-card">
                         <span class="badge">Populer</span>
-                        <div class="icon"><img src="../../assets/img/icon-music.png" alt="Icon"></div>
+                        
+                        <div class="icon">
+                            <img src="../../assets/img/icon-<?= strtolower($ev['nama_kategori'] ?? 'workshop') ?>.png" 
+                                 onerror="this.src='../../assets/img/icon-workshop.png'" alt="Icon">
+                        </div>
+                        
                         <div class="event-body">
                             <p class="category"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')); ?></p>
                             <h4><?= htmlspecialchars($ev['judul_event']); ?></h4>

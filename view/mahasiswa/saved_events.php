@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
 
 $user_id = $_SESSION['user_id'];
 
-// Handle unsave from this page
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsave_event'])) {
     $event_id = intval($_POST['event_id']);
     $stmt = mysqli_prepare($conn, "DELETE FROM saved_events WHERE user_id = ? AND event_id = ?");

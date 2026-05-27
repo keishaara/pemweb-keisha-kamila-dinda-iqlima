@@ -13,11 +13,8 @@ $user  = $data['user'];
 $event = $data['event'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_data_diri'])) {
-    // 1. Simpan data tambahan/alasan ke session sementara (jika diperlukan)
     $_SESSION['alasan'] = $_POST['alasan'];
     $_SESSION['pengalaman'] = $_POST['pengalaman'];
-    
-    // 2. Langsung REDIRECT ke pembayaran.php membawa ID event
     header("Location: pembayaran.php?id=" . $event['id']);
     exit;
 }
