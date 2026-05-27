@@ -10,7 +10,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 $controller = new AdminController();
 $controller->prosesToggleStatusPengguna();
 
-$allUsers = $controller->getAllUsers();
+$keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+$role = isset($_GET['role']) ? trim($_GET['role']) : '';
+$status = isset($_GET['status']) ? trim($_GET['status']) : '';
+
+$allUsers = $controller->getAllUsers($keyword, $role, $status);
 $totalUsersCount = $controller->getTotalUsers();
 ?>
 
@@ -21,8 +25,6 @@ $totalUsersCount = $controller->getTotalUsers();
     <meta charset="UTF-8">
     <title>Manajemen Pengguna - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <style>
-    </style>
 </head>
 
 <body>
@@ -74,18 +76,15 @@ $totalUsersCount = $controller->getTotalUsers();
         <main class="main-content">
 
             <div class="page-header">
-
                 <h2 style="font-size: 28px; color: #335485; font-family: serif;">
                     Manajemen Pengguna
                 </h2>
-
                 <p class="verif-subtitle">
                     <?= $totalUsersCount; ?> pengguna terdaftar
                 </p>
-
             </div>
 
-            <div class="user-controls">
+            <form method="GET" action="" class="user-controls">
 
                 <div class="search-wrapper">
                     <button type="submit" class="btn btn-primary">
@@ -93,20 +92,27 @@ $totalUsersCount = $controller->getTotalUsers();
                     </button>
                     <input 
                         type="text"
+                        name="search"
                         class="search-input"
                         placeholder="Cari pengguna..."
+                        value="<?= htmlspecialchars($keyword); ?>"
                     >
                 </div>
 
-                <select class="filter-select">
-                    <option>Semua Role</option>
+                <select name="role" class="filter-select" onchange="this.form.submit()">
+                    <option value="">Semua Role</option>
+                    <option value="admin" <?= $role === 'admin' ? 'selected' : ''; ?>>Admin</option>
+                    <option value="organisasi" <?= $role === 'organisasi' ? 'selected' : ''; ?>>Organisasi</option>
+                    <option value="mahasiswa" <?= $role === 'mahasiswa' ? 'selected' : ''; ?>>Mahasiswa</option>
                 </select>
 
-                <select class="filter-select">
-                    <option>Semua Status</option>
+                <select name="status" class="filter-select" onchange="this.form.submit()">
+                    <option value="">Semua Status</option>
+                    <option value="Aktif" <?= $status === 'Aktif' ? 'selected' : ''; ?>>Aktif</option>
+                    <option value="Nonaktif" <?= $status === 'Nonaktif' ? 'selected' : ''; ?>>Nonaktif</option>
                 </select>
 
-            </div>
+            </form>
 
             <div class="user-table-card">
 
@@ -124,7 +130,10 @@ $totalUsersCount = $controller->getTotalUsers();
 
                     <tbody>
                         <?php if(!empty($allUsers)): ?>
-                            <?php foreach($allUsers as $user): ?>
+                            <?php foreach($allUsers as $user): 
+                                $isAktif = ($user['status'] ?? 'Aktif') === 'Aktif';
+                                $roleClass = 'role-' . ($user['tipe_akun'] === 'mahasiswa' ? 'mhs' : ($user['tipe_akun'] === 'admin' ? 'admin' : 'org'));
+                            ?>
                             <tr>
                                 <td>
                                     <b><?= htmlspecialchars($user['nama_lengkap']); ?></b>
@@ -133,35 +142,21 @@ $totalUsersCount = $controller->getTotalUsers();
                                     <?= htmlspecialchars($user['email']); ?>
                                 </td>
                                 <td>
-                                    <?php if($user['tipe_akun'] == 'mahasiswa'): ?>
-                                        <span class="role-pill role-mhs">Mahasiswa</span>
-                                    <?php else: ?>
-                                        <span class="role-pill role-org">Organisasi</span>
-                                    <?php endif; ?>
+                                    <span class="role-pill <?= $roleClass; ?>"><?= ucfirst($user['tipe_akun']); ?></span>
                                 </td>
                                 
                                 <td>
-                                    <?php if(($user['status'] ?? 'Aktif') === 'Aktif'): ?>
-                                        <span class="status-pill aktif">Aktif</span>
-                                    <?php else: ?>
-                                        <span class="status-pill nonaktif">Nonaktif</span>
-                                    <?php endif; ?>
+                                    <span class="status-pill <?= $isAktif ? 'aktif' : 'nonaktif'; ?>">
+                                        <?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>
+                                    </span>
                                 </td>
                                 
                                 <td align="center">
-                                    <?php if(($user['status'] ?? 'Aktif') === 'Aktif'): ?>
-                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=Aktif" 
-                                           class="btn-table-action btn-nonaktif" 
-                                           onclick="return confirm('Apakah Anda yakin ingin menonaktifkan pengguna ini?')">
-                                            Nonaktifkan
-                                        </a>
-                                    <?php else: ?>
-                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=Nonaktif" 
-                                           class="btn-table-action btn-nonaktif btn-aktifkan" 
-                                           onclick="return confirm('Apakah Anda yakin ingin mengaktifkan kembali pengguna ini?')">
-                                            Aktifkan
-                                        </a>
-                                    <?php endif; ?>
+                                    <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>" 
+                                       class="btn-table-action btn-nonaktif <?= !$isAktif ? 'btn-aktifkan' : ''; ?>" 
+                                       onclick="return confirm('Apakah Anda yakin ingin <?= $isAktif ? 'menonaktifkan' : 'mengaktifkan kembali'; ?> pengguna ini?')">
+                                        <?= $isAktif ? 'Nonaktifkan' : 'Aktifkan'; ?>
+                                    </a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -27,8 +27,8 @@ class AdminController {
         return $this->model->getVerifikasiAcara();
     }
 
-    public function getAllUsers() {
-        return $this->model->getAllUsers();
+    public function getAllUsers($keyword = '', $role = '', $status = '') {
+        return $this->model->getAllUsers($keyword, $role, $status);
     }
 
     public function getKategori() {
@@ -45,7 +45,11 @@ class AdminController {
     }
 
     public function pengguna() {
-        $allUsers = $this->model->getAllUsers();
+        $keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+        $role = isset($_GET['role']) ? trim($_GET['role']) : '';
+        $status = isset($_GET['status']) ? trim($_GET['status']) : '';
+        
+        $allUsers = $this->model->getAllUsers($keyword, $role, $status);
         $totalUsers = $this->getTotalUsers();
         
         require_once __DIR__ . '/../view/admin/pengguna.php';
@@ -100,6 +104,25 @@ class AdminController {
             $currentStatus = $_GET['current'];
             $this->model->toggleUserStatus($id, $currentStatus);
             header("Location: pengguna.php");
+            exit;
+        }
+    }
+
+    public function prosesVerifikasiAcara() {
+        if (isset($_GET['action']) && isset($_GET['id'])) {
+            $id = intval($_GET['id']);
+            $action = $_GET['action'];
+            
+            if ($action === 'setuju') {
+                $status = 'approved';
+            } elseif ($action === 'tolak') {
+                $status = 'rejected';
+            } else {
+                return;
+            }
+            
+            $this->model->updateStatusEvent($id, $status);
+            header("Location: verifikasi.php");
             exit;
         }
     }

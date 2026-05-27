@@ -10,11 +10,38 @@ class AdminModel {
         $this->conn = $conn;
     }
 
-    public function getAllUsers() {
+    public function getAllUsers($keyword = '', $role = '', $status = '') {
+        $conditions = [];
+        
+        if (!empty($keyword)) {
+            $keyword_safe = mysqli_real_escape_string($this->conn, $keyword);
+            $conditions[] = "(nama_lengkap LIKE '%$keyword_safe%' OR email LIKE '%$keyword_safe%')";
+        }
+        
+        if (!empty($role)) {
+            $role_safe = mysqli_real_escape_string($this->conn, $role);
+            $conditions[] = "tipe_akun = '$role_safe'";
+        }
+        
+        if (!empty($status)) {
+            $status_safe = mysqli_real_escape_string($this->conn, $status);
+            if ($status_safe === 'Aktif') {
+                $conditions[] = "(status = 'Aktif' OR status IS NULL OR status = '')";
+            } else {
+                $conditions[] = "status = '$status_safe'";
+            }
+        }
+        
+        $whereClause = "";
+        if (count($conditions) > 0) {
+            $whereClause = "WHERE " . implode(" AND ", $conditions);
+        }
+        
         $query = mysqli_query(
             $this->conn,
-            "SELECT * FROM users"
+            "SELECT * FROM users $whereClause ORDER BY id DESC"
         );
+        
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
     }
 
@@ -103,5 +130,12 @@ class AdminModel {
         $newStatus = mysqli_real_escape_string($this->conn, $newStatus);
         return mysqli_query($this->conn, "UPDATE users SET status = '$newStatus' WHERE id = '$id'");
     }
+
+    public function updateStatusEvent($id, $status) {
+        $id = intval($id);
+        $status = mysqli_real_escape_string($this->conn, $status);
+        return mysqli_query($this->conn, "UPDATE events SET status = '$status' WHERE id = '$id'");
+    }
+    
 } 
 ?>

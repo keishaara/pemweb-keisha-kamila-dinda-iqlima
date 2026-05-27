@@ -75,7 +75,7 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
 
                 <div class="stat-card">
                     <div class="stat-icon"><img src="../../assets/img/dsa3.png" alt="Verifikasi"></div>
-                    <h3><?= count(array_filter($verifikasiAcara, fn($e) => $e['status'] == 'Menunggu')); ?></h3>
+                    <h3><?= count(array_filter($verifikasiAcara, fn($e) => $e['status'] == 'pending')); ?></h3>
                     <p>Menunggu Verifikasi</p>
                     <div class="stat-trend negative">Perlu tindakan admin</div>
                 </div>
