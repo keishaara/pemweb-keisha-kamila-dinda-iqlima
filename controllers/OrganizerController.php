@@ -27,10 +27,16 @@ class OrganizerController {
         return $this->model->getKelolaAcara($organizerId);
     }
 
-    public function dataPeserta()
+    public function dataPeserta($keyword = '', $eventId = '')
     {
         $organizerId = $_SESSION['user_id'] ?? 0;
-        return $this->model->getPesertaByOrganizer($organizerId);
+        return $this->model->getPesertaByOrganizer($organizerId, $keyword, $eventId);
+    }
+
+    public function getEvents()
+    {
+        $organizerId = $_SESSION['user_id'] ?? 0;
+        return $this->model->getEventsByOrganizer($organizerId);
     }
 
     public function profile()

@@ -44,41 +44,45 @@ class AuthController {
                             $user['password']
                         )
                     ) {
-                        $_SESSION['user_id']
-                            = $user['id'];
-
-                        $_SESSION['nama_lengkap']
-                            = $user['nama_lengkap'];
-
-                        $_SESSION['role']
-                            = $user['tipe_akun'];
-
-                        if (
-                            $user['tipe_akun']
-                            == 'admin'
-                        ) {
-
-                            header(
-                                "Location:index.php?page=dashboard"
-                            );
-
-                        } elseif (
-                            $user['tipe_akun']
-                            == 'mahasiswa'
-                        ) {
-
-                            header(
-                                "Location:index.php?page=profil"
-                            );
-
+                        if (($user['status'] ?? 'Aktif') === 'Nonaktif') {
+                            $error = "Akun Anda telah dinonaktifkan oleh admin.";
                         } else {
+                            $_SESSION['user_id']
+                                = $user['id'];
 
-                            header(
-                                "Location:index.php?page=org_dashboard"
-                            );
+                            $_SESSION['nama_lengkap']
+                                = $user['nama_lengkap'];
+
+                            $_SESSION['role']
+                                = $user['tipe_akun'];
+
+                            if (
+                                $user['tipe_akun']
+                                == 'admin'
+                            ) {
+
+                                header(
+                                    "Location:index.php?page=dashboard"
+                                );
+
+                            } elseif (
+                                $user['tipe_akun']
+                                == 'mahasiswa'
+                            ) {
+
+                                header(
+                                    "Location:index.php?page=profil"
+                                );
+
+                            } else {
+
+                                header(
+                                    "Location:index.php?page=org_dashboard"
+                                );
+                            }
+
+                            exit;
                         }
-
-                        exit;
 
                     } else {
 

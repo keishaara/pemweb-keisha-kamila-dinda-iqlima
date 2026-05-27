@@ -30,13 +30,17 @@ class OrganizerModel {
     }
 
     public function getEventTerbaru($id) {
-        $stmt = mysqli_prepare($this->conn, "SELECT * FROM events WHERE user_id = ? ORDER BY id DESC LIMIT 3");
-        mysqli_stmt_bind_param($stmt, "i", $id);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        $query = mysqli_query($this->conn, "
+            SELECT e.*, 
+                   (SELECT COUNT(*) FROM bookings WHERE event_id = e.id) as jumlah_peserta 
+            FROM events e 
+            WHERE e.user_id = '$id' 
+            ORDER BY e.id DESC 
+            LIMIT 5
+        ");
         
         $data = [];
-        while ($row = mysqli_fetch_assoc($result)) {
+        while ($row = mysqli_fetch_assoc($query)) {
             $data[] = $row;
         }
         return $data;
@@ -71,7 +75,18 @@ class OrganizerModel {
     return $data;
     }
 
-    public function getPesertaByOrganizer($organizerId) {
+    public function getPesertaByOrganizer($organizerId, $keyword = '', $eventId = '') {
+        $searchQuery = "";
+        if (!empty($keyword)) {
+            $keyword_safe = mysqli_real_escape_string($this->conn, $keyword);
+            $searchQuery .= " AND (u.nama_lengkap LIKE '%$keyword_safe%' OR u.npm LIKE '%$keyword_safe%' OR e.judul_event LIKE '%$keyword_safe%')";
+        }
+
+        if (!empty($eventId)) {
+            $eventId_safe = intval($eventId);
+            $searchQuery .= " AND e.id = '$eventId_safe'";
+        }
+
         $query = mysqli_query($this->conn, "
             SELECT 
                 u.nama_lengkap, 
@@ -82,7 +97,7 @@ class OrganizerModel {
             FROM bookings b
             JOIN events e ON b.event_id = e.id
             JOIN users u ON b.user_id = u.id
-            WHERE e.user_id = '$organizerId'
+            WHERE e.user_id = '$organizerId' $searchQuery
             ORDER BY b.id DESC
         ");
 
@@ -136,7 +151,7 @@ class OrganizerModel {
     
     return mysqli_stmt_execute($stmt_event);
 }
-// Ambil 1 data event untuk ditampilkan kembali di form
+
 public function getEventById($eventId, $userId) {
     $stmt = mysqli_prepare($this->conn, "SELECT * FROM events WHERE id = ? AND user_id = ?");
     mysqli_stmt_bind_param($stmt, "ii", $eventId, $userId);
@@ -165,6 +180,15 @@ public function getEventById($eventId, $userId) {
             $userId
         );
         return mysqli_stmt_execute($stmt);
+    }
+
+    public function getEventsByOrganizer($organizerId) {
+        $query = mysqli_query($this->conn, "SELECT id, judul_event FROM events WHERE user_id = '$organizerId' ORDER BY judul_event ASC");
+        $data = [];
+        while ($row = mysqli_fetch_assoc($query)) {
+            $data[] = $row;
+        }
+        return $data;
     }
 
 }

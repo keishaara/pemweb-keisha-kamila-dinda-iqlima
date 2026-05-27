@@ -21,17 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role       = $_POST['role'];
 
     if (!empty($identifier) && !empty($password) && !empty($role)) {
-        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
+        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun, status FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
         mysqli_stmt_bind_param($stmt, "sss", $identifier, $identifier, $role);
         mysqli_stmt_execute($stmt);
         $res  = mysqli_stmt_get_result($stmt);
         
         if ($user = mysqli_fetch_assoc($res)) {
-            if (password_verify($password, $user['password'])) {
+            if (($user['status'] ?? 'Aktif') === 'Nonaktif') {
+                $error = "Akun Anda telah dinonaktifkan oleh admin.";
+            } elseif (password_verify($password, $user['password'])) {
                 $_SESSION['user_id']      = $user['id'];
                 $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+                $_SESSION['email']        = $user['email'];
                 $_SESSION['role']         = $user['tipe_akun'];
-                
+
                 if ($user['tipe_akun'] === 'admin') {
                     $target = '../admin/dashboard.php';
                 } elseif ($user['tipe_akun'] === 'organisasi') {
@@ -39,12 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $target = '../mahasiswa/user_dashboard.php';
                 }
-                
                 header("Location: $target");
                 exit;
-            } else { $error = "Kata sandi salah."; }
-        } else { $error = "Akun tidak ditemukan atau role tidak sesuai."; }
-    } else { $error = "Semua field wajib diisi."; }
+            } else {
+                $error = "Kata sandi salah.";
+            }
+        } else {
+            $error = "Akun tidak ditemukan atau role tidak sesuai.";
+        }
+    } else {
+        $error = "Semua field wajib diisi.";
+    }
 }
 ?>
 

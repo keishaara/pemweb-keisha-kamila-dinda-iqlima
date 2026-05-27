@@ -8,8 +8,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
     exit;
 }
 
+$keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+$eventId = isset($_GET['event_id']) ? trim($_GET['event_id']) : '';
+
 $controller = new OrganizerController();
-$pesertaList = $controller->dataPeserta();
+$pesertaList = $controller->dataPeserta($keyword, $eventId);
+$eventsList = $controller->getEvents();
 ?>
 
 <!DOCTYPE html>
@@ -67,15 +71,21 @@ $pesertaList = $controller->dataPeserta();
                 </div>
 
                 <section class="org-card">
-                    <div class="org-table-top">
+                    <form action="" method="GET" class="org-table-top">
                         <div class="org-search-box">
-                            <input type="text" placeholder="Cari peserta...">
+                            <input type="text" name="search" placeholder="Cari peserta..." value="<?= htmlspecialchars($keyword); ?>">
                         </div>
 
-                        <select class="org-select">
-                            <option>Semua Event</option>
+                        <select name="event_id" class="org-select" onchange="this.form.submit()">
+                            <option value="">Semua Event</option>
+                            <?php foreach ($eventsList as $event): ?>
+                                <option value="<?= $event['id']; ?>" <?= $eventId == $event['id'] ? 'selected' : ''; ?>>
+                                    <?= htmlspecialchars($event['judul_event']); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
-                    </div>
+                        <button type="submit" style="display: none;"></button>
+                    </form>
 
                     <table class="org-table">
                         <thead>
