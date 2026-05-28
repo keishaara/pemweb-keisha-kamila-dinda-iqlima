@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role       = $_POST['role'];
 
     if (!empty($identifier) && !empty($password) && !empty($role)) {
-        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun, status FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
+        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
         mysqli_stmt_bind_param($stmt, "sss", $identifier, $identifier, $role);
         mysqli_stmt_execute($stmt);
         $res  = mysqli_stmt_get_result($stmt);
@@ -72,8 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="text-muted mb-3">Masuk ke akun kamu untuk menemukan kegiatan kampus terbaru.</p>
 
             <?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error); ?></div><?php endif; ?>
+            <div id="clientError" class="auth-error" style="display:none;"></div>
 
-            <form method="POST" action="">
+            <form id="loginForm" method="POST" action="">
                 <div class="form-group">
                     <label class="form-label">Email atau NPM</label>
                     <input type="text" name="identifier" class="form-control" placeholder="npm@unila.ac.id / NPM" required>
@@ -104,5 +105,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="img-side"></div>
     </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const clientError = document.getElementById('clientError');
+
+        function showClientError(message) {
+            clientError.textContent = message;
+            clientError.style.display = 'block';
+        }
+
+        function clearClientError() {
+            clientError.textContent = '';
+            clientError.style.display = 'none';
+        }
+
+        loginForm.addEventListener('submit', function (event) {
+            clearClientError();
+
+            const identifier = loginForm.elements['identifier'].value.trim();
+            const password = loginForm.elements['password'].value;
+            const role = loginForm.elements['role'].value;
+
+            if (!identifier) {
+                showClientError('Email atau NPM wajib diisi.');
+                event.preventDefault();
+                return;
+            }
+
+            if (!password) {
+                showClientError('Kata sandi wajib diisi.');
+                event.preventDefault();
+                return;
+            }
+
+            if (password.length < 6) {
+                showClientError('Kata sandi minimal 6 karakter.');
+                event.preventDefault();
+                return;
+            }
+
+            if (!role) {
+                showClientError('Pilih role terlebih dahulu.');
+                event.preventDefault();
+                return;
+            }
+
+            if (identifier.includes('@')) {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(identifier)) {
+                    showClientError('Format email tidak valid.');
+                    event.preventDefault();
+                    return;
+                }
+            } else {
+                const npmPattern = /^[A-Za-z0-9]+$/;
+                if (!npmPattern.test(identifier)) {
+                    showClientError('NPM harus diisi tanpa spasi atau karakter khusus.');
+                    event.preventDefault();
+                    return;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
