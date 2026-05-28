@@ -73,10 +73,20 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                     <div class="verif-info">
                         <div class="verif-tags">
                             <?php 
-                                $statusClass = (strtolower($acara['status']) == 'disetujui') ? 'disetujui' : 'menunggu';
+                                $status = strtolower($acara['status'] ?? 'pending');
+                                if ($status === 'approved') {
+                                    $statusClass = 'disetujui';
+                                    $statusLabel = 'Disetujui';
+                                } elseif ($status === 'rejected') {
+                                    $statusClass = 'ditolak';
+                                    $statusLabel = 'Ditolak';
+                                } else {
+                                    $statusClass = 'menunggu';
+                                    $statusLabel = 'Menunggu';
+                                }
                             ?>
                             <span class="status-pill <?= $statusClass ?>" style="border:none;">
-                                <?= htmlspecialchars(ucfirst($acara['status'] ?? 'Menunggu')); ?>
+                                <?= htmlspecialchars($statusLabel); ?>
                             </span>
                             <span class="tag-kategori">
                                 <?= htmlspecialchars($acara['nama_kategori'] ?? 'Umum'); ?>
