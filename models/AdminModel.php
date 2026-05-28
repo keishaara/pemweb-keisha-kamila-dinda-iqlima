@@ -10,6 +10,11 @@ class AdminModel {
         $this->conn = $conn;
     }
 
+    public function hasUserStatusColumn() {
+        $result = mysqli_query($this->conn, "SHOW COLUMNS FROM users LIKE 'status'");
+        return $result && mysqli_num_rows($result) > 0;
+    }
+
     public function getAllUsers($keyword = '', $role = '', $status = '') {
         $conditions = [];
         
@@ -23,7 +28,7 @@ class AdminModel {
             $conditions[] = "tipe_akun = '$role_safe'";
         }
         
-        if (!empty($status)) {
+        if ($this->hasUserStatusColumn() && !empty($status)) {
             $status_safe = mysqli_real_escape_string($this->conn, $status);
             if ($status_safe === 'Aktif') {
                 $conditions[] = "(status = 'Aktif' OR status IS NULL OR status = '')";
@@ -78,7 +83,7 @@ class AdminModel {
                 categories.nama_kategori
             FROM events
             LEFT JOIN categories ON events.kategori_id = categories.id
-            WHERE events.status NOT IN ('approved', 'rejected') 
+            WHERE events.status = 'pending'
             ORDER BY events.created_at DESC"
         );
 
@@ -125,6 +130,10 @@ class AdminModel {
     }
 
     public function toggleUserStatus($id, $currentStatus) {
+        if (!$this->hasUserStatusColumn()) {
+            return true;
+        }
+
         $id = intval($id);
         $newStatus = ($currentStatus === 'Aktif') ? 'Nonaktif' : 'Aktif';
         $newStatus = mysqli_real_escape_string($this->conn, $newStatus);
