@@ -15,6 +15,7 @@ $role = isset($_GET['role']) ? trim($_GET['role']) : '';
 $status = isset($_GET['status']) ? trim($_GET['status']) : '';
 
 $allUsers = $controller->getAllUsers($keyword, $role, $status);
+$hasStatusColumn = $controller->usersHaveStatusColumn();
 $totalUsersCount = $controller->getTotalUsers();
 ?>
 
@@ -106,11 +107,13 @@ $totalUsersCount = $controller->getTotalUsers();
                     <option value="mahasiswa" <?= $role === 'mahasiswa' ? 'selected' : ''; ?>>Mahasiswa</option>
                 </select>
 
-                <select name="status" class="filter-select" onchange="this.form.submit()">
-                    <option value="">Semua Status</option>
-                    <option value="Aktif" <?= $status === 'Aktif' ? 'selected' : ''; ?>>Aktif</option>
-                    <option value="Nonaktif" <?= $status === 'Nonaktif' ? 'selected' : ''; ?>>Nonaktif</option>
-                </select>
+                <?php if ($hasStatusColumn): ?>
+                    <select name="status" class="filter-select" onchange="this.form.submit()">
+                        <option value="">Semua Status</option>
+                        <option value="Aktif" <?= $status === 'Aktif' ? 'selected' : ''; ?>>Aktif</option>
+                        <option value="Nonaktif" <?= $status === 'Nonaktif' ? 'selected' : ''; ?>>Nonaktif</option>
+                    </select>
+                <?php endif; ?>
 
             </form>
 
@@ -123,7 +126,9 @@ $totalUsersCount = $controller->getTotalUsers();
                             <th>NAMA</th>
                             <th>EMAIL</th>
                             <th>ROLE</th>
-                            <th>STATUS</th>
+                            <?php if ($hasStatusColumn): ?>
+                                <th>STATUS</th>
+                            <?php endif; ?>
                             <th style="text-align:center;">AKSI</th>
                         </tr>
                     </thead>
@@ -131,7 +136,7 @@ $totalUsersCount = $controller->getTotalUsers();
                     <tbody>
                         <?php if(!empty($allUsers)): ?>
                             <?php foreach($allUsers as $user): 
-                                $isAktif = ($user['status'] ?? 'Aktif') === 'Aktif';
+                                $isAktif = $hasStatusColumn ? (($user['status'] ?? 'Aktif') === 'Aktif') : true;
                                 $roleClass = 'role-' . ($user['tipe_akun'] === 'mahasiswa' ? 'mhs' : ($user['tipe_akun'] === 'admin' ? 'admin' : 'org'));
                             ?>
                             <tr>
@@ -144,25 +149,29 @@ $totalUsersCount = $controller->getTotalUsers();
                                 <td>
                                     <span class="role-pill <?= $roleClass; ?>"><?= ucfirst($user['tipe_akun']); ?></span>
                                 </td>
-                                
-                                <td>
-                                    <span class="status-pill <?= $isAktif ? 'aktif' : 'nonaktif'; ?>">
-                                        <?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>
-                                    </span>
-                                </td>
-                                
+                                <?php if ($hasStatusColumn): ?>
+                                    <td>
+                                        <span class="status-pill <?= $isAktif ? 'aktif' : 'nonaktif'; ?>">
+                                            <?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>
+                                        </span>
+                                    </td>
+                                <?php endif; ?>
                                 <td align="center">
-                                    <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>" 
-                                       class="btn-table-action btn-nonaktif <?= !$isAktif ? 'btn-aktifkan' : ''; ?>" 
-                                       onclick="return confirm('Apakah Anda yakin ingin <?= $isAktif ? 'menonaktifkan' : 'mengaktifkan kembali'; ?> pengguna ini?')">
-                                        <?= $isAktif ? 'Nonaktifkan' : 'Aktifkan'; ?>
-                                    </a>
+                                    <?php if ($hasStatusColumn): ?>
+                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>" 
+                                           class="btn-table-action btn-nonaktif <?= !$isAktif ? 'btn-aktifkan' : ''; ?>" 
+                                           onclick="return confirm('Apakah Anda yakin ingin <?= $isAktif ? 'menonaktifkan' : 'mengaktifkan kembali'; ?> pengguna ini?')">
+                                            <?= $isAktif ? 'Nonaktifkan' : 'Aktifkan'; ?>
+                                        </a>
+                                    <?php else: ?>
+                                        -
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" align="center">Tidak ada data pengguna.</td>
+                                <td colspan="<?= $hasStatusColumn ? 5 : 4 ?>" align="center">Tidak ada data pengguna.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
