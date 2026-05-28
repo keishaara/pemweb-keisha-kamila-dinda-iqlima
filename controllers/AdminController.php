@@ -31,9 +31,13 @@ class AdminController {
         return $this->model->getAllUsers($keyword, $role, $status);
     }
 
+    public function usersHaveStatusColumn() {
+        return $this->model->hasUserStatusColumn();
+    }
+
     public function getKategori() {
-    return $this->model->getKategori();
-}
+        return $this->model->getKategori();
+    }
 
     public function dashboard() {
         $totalUsers = $this->getTotalUsers();
