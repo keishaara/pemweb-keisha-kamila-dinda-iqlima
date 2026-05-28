@@ -55,7 +55,7 @@ $res_event = mysqli_query($conn, $sql_event);
         <aside class="sidebar">
             <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
             <div class="menu-category">Menu</div>
-            <a href="dashboard_mhs.php" class="menu-item active"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
+            <a href="user_dashboard.php" class="menu-item active"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
             <a href="kegiatan_mhs.php" class="menu-item"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
             <a href="e-tiket.php" class="menu-item"><img src="../../assets/img/icon-ticket.png" alt="E-Tiket"> E-Tiket</a>
             <div class="menu-category">Akun</div>
