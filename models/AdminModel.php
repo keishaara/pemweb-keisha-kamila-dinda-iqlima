@@ -93,7 +93,20 @@ class AdminModel {
 
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
     }
-
+    
+    
+    public function getLatestEvents() {
+        $query = mysqli_query(
+            $this->conn,
+            "SELECT events.*, categories.nama_kategori 
+            FROM events 
+            LEFT JOIN categories ON events.kategori_id = categories.id 
+            ORDER BY events.created_at DESC 
+            LIMIT 5"
+        );
+        return mysqli_fetch_all($query, MYSQLI_ASSOC);
+    }
+    
     public function getKategori() {
         $query = mysqli_query($this->conn, "SELECT * FROM categories ORDER BY nama_kategori ASC");
         
@@ -144,6 +157,18 @@ class AdminModel {
         $id = intval($id);
         $status = mysqli_real_escape_string($this->conn, $status);
         return mysqli_query($this->conn, "UPDATE events SET status = '$status' WHERE id = '$id'");
+    }
+
+    
+    public function getAllEvents() {
+        $query = mysqli_query(
+            $this->conn,
+            "SELECT events.*, categories.nama_kategori 
+            FROM events 
+            LEFT JOIN categories ON events.kategori_id = categories.id 
+            ORDER BY events.created_at DESC"
+        );
+        return mysqli_fetch_all($query, MYSQLI_ASSOC);
     }
     
 } 

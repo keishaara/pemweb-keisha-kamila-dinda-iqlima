@@ -52,6 +52,10 @@ $totalUsersCount = $controller->getTotalUsers();
                 <img src="../../assets/img/icon-ticket.png" alt="Verifikasi">
                 Verifikasi Acara
             </a>
+            <a href="semua_acara.php" class="menu-item">
+                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                Semua Acara
+            </a>
 
             <a href="pengguna.php" class="menu-item active">
                 <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
@@ -77,7 +81,7 @@ $totalUsersCount = $controller->getTotalUsers();
         <main class="main-content">
 
             <div class="page-header">
-                <h2 style="font-size: 28px; color: #335485; font-family: serif;">
+                <h2>
                     Manajemen Pengguna
                 </h2>
                 <p class="verif-subtitle">

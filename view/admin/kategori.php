@@ -51,6 +51,10 @@ $kategori = $controller->getKategori();
                 <img src="../../assets/img/icon-ticket.png" alt="Verifikasi">
                 Verifikasi Acara
             </a>
+            <a href="semua_acara.php" class="menu-item">
+                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                Semua Acara
+            </a>
 
             <a href="pengguna.php" class="menu-item">
                 <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
@@ -73,7 +77,10 @@ $kategori = $controller->getKategori();
         <main class="main-content">
 
             <div class="category-header">
-                <h2>Kelola Kategori</h2>
+                <div class="page-header">
+                    <h2>Kelola Kategori</h2>
+                    <p class="subtitle">Tambahkan, edit, atau hapus kategori acara sesuai kebutuhan.</p>
+                </div>
                 <button class="btn-tambah-kat" onclick="bukaModal()">+ Tambah Kategori</button>
             </div>
 

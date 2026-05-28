@@ -26,6 +26,10 @@ class AdminController {
     public function getVerifikasiAcara() {
         return $this->model->getVerifikasiAcara();
     }
+   
+    public function getLatestEvents() {
+        return $this->model->getLatestEvents();
+    }
 
     public function getAllUsers($keyword = '', $role = '', $status = '') {
         return $this->model->getAllUsers($keyword, $role, $status);
@@ -129,5 +133,9 @@ class AdminController {
             header("Location: verifikasi.php");
             exit;
         }
+    }
+
+    public function getAllEvents() {
+    return $this->model->getAllEvents();
     }
 }

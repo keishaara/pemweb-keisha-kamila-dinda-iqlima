@@ -36,6 +36,10 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                 <img src="../../assets/img/icon-ticket2.png" alt="Verifikasi">
                 Verifikasi Acara
             </a>
+            <a href="semua_acara.php" class="menu-item">
+                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                Semua Acara
+            </a>
             <a href="pengguna.php" class="menu-item">
                 <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
                 Pengguna

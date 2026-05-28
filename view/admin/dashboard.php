@@ -9,9 +9,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
 $controller = new AdminController();
 $totalUsersData = $controller->getTotalUsers(); 
+$latestEvents = $controller->getLatestEvents();
 $totalOrgData = $controller->getTotalOrganisasi(); 
 $latestUsers = $controller->getLatestUsers();
 $verifikasiAcara = $controller->getVerifikasiAcara();
+$semuaAcara = $controller->getAllEvents();
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +38,10 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
             <a href="verifikasi.php" class="menu-item">
                 <img src="../../assets/img/icon-ticket.png" alt="Verifikasi">
                 Verifikasi Acara
+            </a>
+            <a href="semua_acara.php" class="menu-item">
+                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                Semua Acara
             </a>
             <a href="pengguna.php" class="menu-item">
                 <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
@@ -99,7 +105,7 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach(array_slice($verifikasiAcara, 0, 3) as $event): ?>
+                            <?php foreach(array_slice($semuaAcara, 0, 3) as $event): ?>
                             <tr>
                                 <td><?= htmlspecialchars($event['judul_event']); ?></td>
                                 <td>
