@@ -69,8 +69,8 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                 <div class="stat-card">
                     <div class="stat-icon"><img src="../../assets/img/dsa2.png" alt="Acara"></div>
                     <h3><?= count($verifikasiAcara); ?></h3>
-                    <p>Total Acara</p>
-                    <div class="stat-trend">Data seluruh acara</div>
+                    <p>Acara Menunggu</p>
+                    <div class="stat-trend">Jumlah acara yang perlu diverifikasi</div>
                 </div>
 
                 <div class="stat-card">
@@ -103,9 +103,21 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                             <tr>
                                 <td><?= htmlspecialchars($event['judul_event']); ?></td>
                                 <td>
-                                    <?php $statusClass = ($event['status'] == 'Disetujui') ? 'disetujui' : 'menunggu'; ?>
+                                    <?php
+                                        $eventStatus = strtolower($event['status'] ?? 'pending');
+                                        if ($eventStatus === 'approved') {
+                                            $statusClass = 'disetujui';
+                                            $statusLabel = 'Disetujui';
+                                        } elseif ($eventStatus === 'rejected') {
+                                            $statusClass = 'ditolak';
+                                            $statusLabel = 'Ditolak';
+                                        } else {
+                                            $statusClass = 'menunggu';
+                                            $statusLabel = 'Menunggu';
+                                        }
+                                    ?>
                                     <span class="status-pill <?= $statusClass ?>">
-                                        <?= $event['status']; ?>
+                                        <?= htmlspecialchars($statusLabel); ?>
                                     </span>
                                 </td>
                             </tr>
