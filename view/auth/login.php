@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $role       = $_POST['role'];
 
     if (!empty($identifier) && !empty($password) && !empty($role)) {
-        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
+        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun, status FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
         mysqli_stmt_bind_param($stmt, "sss", $identifier, $identifier, $role);
         mysqli_stmt_execute($stmt);
         $res  = mysqli_stmt_get_result($stmt);
@@ -55,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">

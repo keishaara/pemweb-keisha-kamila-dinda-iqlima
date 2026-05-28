@@ -26,8 +26,6 @@ $kategori = $controller->getKategori();
     <meta charset="UTF-8">
     <title>Kelola Kategori - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <style>
-    </style>
 </head>
 
 <body>
@@ -83,6 +81,13 @@ $kategori = $controller->getKategori();
                 </div>
                 <button class="btn-tambah-kat" onclick="bukaModal()">+ Tambah Kategori</button>
             </div>
+
+            <?php if (isset($_SESSION['kat_error'])): ?>
+                <div style="margin-bottom: 20px; padding: 12px 15px; background-color: #fef2f2; color: #ef4444; border-radius: 6px; border: 1px solid #fee2e2; font-size: 14px; font-weight: bold;">
+                    <?= $_SESSION['kat_error']; ?>
+                </div>
+                <?php unset($_SESSION['kat_error']); ?>
+            <?php endif; ?>
 
             <div class="category-grid">
                 <?php if (!empty($kategori)): ?>

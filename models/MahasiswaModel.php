@@ -27,7 +27,8 @@ class MahasiswaModel {
                 tipe_akun,
                 jurusan,
                 semester,
-                no_hp
+                no_hp,
+                status
              FROM users
              WHERE (email = ? OR npm = ?)
              AND tipe_akun = ?"
@@ -62,7 +63,6 @@ class MahasiswaModel {
         $result = mysqli_stmt_get_result($stmt);
         return mysqli_fetch_assoc($result);
     }
-
     public function getEventById(int $id)
     {
         $stmt = mysqli_prepare(

@@ -1,15 +1,15 @@
 <?php
 session_start();
+require_once __DIR__ . '/../../config/koneksi.php';
 require_once __DIR__ . '/../../controllers/AdminController.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../auth/index.php");
+    header("Location: ../auth/login.php");
     exit;
 }
 
 $controller = new AdminController();
 $controller->prosesVerifikasiAcara();
-
 $verifikasiAcara = $controller->getVerifikasiAcara();
 ?>
 
@@ -62,6 +62,13 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                     <?= count($verifikasiAcara); ?> acara memerlukan tindakan
                 </p>
             </div>
+
+            <?php if (isset($_SESSION['db_error'])): ?>
+                <div style="margin-bottom: 20px; padding: 12px 15px; background-color: #fef2f2; color: #ef4444; border-radius: 6px; border: 1px solid #fee2e2; font-size: 14px; font-weight: bold;">
+                    <?= $_SESSION['db_error']; ?>
+                </div>
+                <?php unset($_SESSION['db_error']); ?>
+            <?php endif; ?>
 
             <?php if (empty($verifikasiAcara)): ?>
                 <div class="verif-card" style="justify-content: center;">
@@ -116,8 +123,8 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                     </div>
 
                     <div class="verif-actions">
-                        <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=tolak" class="btn-verif btn-tolak" style="text-decoration: none; text-align: center;">Tolak</a>
-                        <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=setuju" class="btn-verif btn-setujui" style="text-decoration: none; text-align: center;">Setujui</a>
+                        <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=tolak" class="btn-verif btn-tolak" style="text-decoration: none; text-align: center;" onclick="return confirm('Apakah Anda yakin ingin MENOLAK acara ini?')">Tolak</a>
+                        <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=setuju" class="btn-verif btn-setujui" style="text-decoration: none; text-align: center;" onclick="return confirm('Apakah Anda yakin ingin MENYETUJUI acara ini?')">Setujui</a>
                     </div>
                 </div>
                 <?php endforeach; ?>

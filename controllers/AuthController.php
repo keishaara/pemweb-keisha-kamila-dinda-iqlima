@@ -27,6 +27,7 @@ class AuthController {
             $identifier = trim($_POST['identifier']);
             $password = $_POST['password'];
             $role = $_POST['role'];
+            
             if (
                 !empty($identifier) &&
                 !empty($password) &&
@@ -37,6 +38,7 @@ class AuthController {
                     $identifier,
                     $role
                 );
+                
                 if ($user = mysqli_fetch_assoc($result)) {
                     if (
                         password_verify(
@@ -47,70 +49,51 @@ class AuthController {
                         if (($user['status'] ?? 'Aktif') === 'Nonaktif') {
                             $error = "Akun Anda telah dinonaktifkan oleh admin.";
                         } else {
-                            $_SESSION['user_id']
-                                = $user['id'];
-
-                            $_SESSION['nama_lengkap']
-                                = $user['nama_lengkap'];
-
-                            $_SESSION['role']
-                                = $user['tipe_akun'];
+                            $_SESSION['user_id'] = $user['id'];
+                            $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+                            $_SESSION['role'] = $user['tipe_akun'];
 
                             if (
                                 $user['tipe_akun']
                                 == 'admin'
                             ) {
-
                                 header(
                                     "Location:index.php?page=dashboard"
                                 );
-
                             } elseif (
                                 $user['tipe_akun']
                                 == 'mahasiswa'
                             ) {
-
                                 header(
                                     "Location:index.php?page=profil"
                                 );
-
                             } else {
-
                                 header(
                                     "Location:index.php?page=org_dashboard"
                                 );
                             }
-
                             exit;
                         }
 
                     } else {
-
                         $error = "Kata sandi salah.";
                     }
 
                 } else {
-
-                    $error =
-                        "Akun tidak ditemukan atau role tidak sesuai.";
+                    $error = "Akun tidak ditemukan atau role tidak sesuai.";
                 }
 
             } else {
-
-                $error =
-                    "Semua field wajib diisi.";
+                $error = "Semua field wajib diisi.";
             }
         }
-        require_once __DIR__ .
-            '/../views/auth/login.php';
+        require_once __DIR__ . '/../views/auth/login.php';
     }
 
     public function logout() {
-
         session_destroy();
-
         header("Location:index.php?page=login");
-
         exit;
-    }
-}
+    }   
+} 
+?>

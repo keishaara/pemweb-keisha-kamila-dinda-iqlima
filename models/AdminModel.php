@@ -7,6 +7,10 @@ class AdminModel {
 
     public function __construct() {
         global $conn;
+        if (!isset($conn)) {
+            require_once __DIR__ . '/../config/koneksi.php';
+        }
+        
         $this->conn = $conn;
     }
 
@@ -144,19 +148,15 @@ class AdminModel {
 
     public function toggleUserStatus($id, $currentStatus) {
         if (!$this->hasUserStatusColumn()) {
-            return true;
+            return false; 
         }
 
         $id = intval($id);
-        $newStatus = ($currentStatus === 'Aktif') ? 'Nonaktif' : 'Aktif';
+        $statusClean = trim($currentStatus);
+        $newStatus = ($statusClean === 'Aktif') ? 'Nonaktif' : 'Aktif';
         $newStatus = mysqli_real_escape_string($this->conn, $newStatus);
-        return mysqli_query($this->conn, "UPDATE users SET status = '$newStatus' WHERE id = '$id'");
-    }
 
-    public function updateStatusEvent($id, $status) {
-        $id = intval($id);
-        $status = mysqli_real_escape_string($this->conn, $status);
-        return mysqli_query($this->conn, "UPDATE events SET status = '$status' WHERE id = '$id'");
+        return mysqli_query($this->conn, "UPDATE users SET status = '$newStatus' WHERE id = '$id'");
     }
 
     
@@ -170,6 +170,21 @@ class AdminModel {
         );
         return mysqli_fetch_all($query, MYSQLI_ASSOC);
     }
-    
+    public function login($identifier, $role) {
+        $identifier = mysqli_real_escape_string($this->conn, $identifier);
+        $role = mysqli_real_escape_string($this->conn, $role);
+
+        $query = "SELECT id, nama_lengkap, email, npm, password, tipe_akun, status 
+                  FROM users 
+                  WHERE (email = '$identifier' OR npm = '$identifier') 
+                  AND tipe_akun = '$role'";
+                  
+        return mysqli_query($this->conn, $query);
+    }
+    public function updateStatusEvent($id, $status) {
+        $id = intval($id);
+        $status = mysqli_real_escape_string($this->conn, $status);
+        return mysqli_query($this->conn, "UPDATE events SET status = '$status' WHERE id = '$id'");
+    }
 } 
 ?>

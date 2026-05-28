@@ -75,8 +75,23 @@ class AdminController {
 
     public function prosesTambahKategori() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_tambah'])) {
-            $nama = $_POST['nama_kategori'];
-            $deskripsi = $_POST['deskripsi'];
+            $nama      = trim(htmlspecialchars($_POST['nama_kategori']));
+            $deskripsi = trim(htmlspecialchars($_POST['deskripsi']));
+            
+            if (empty($nama) || empty($deskripsi)) {
+                $_SESSION['kat_error'] = "Semua kolom kategori wajib diisi.";
+                header("Location: kategori.php");
+                exit;
+            }
+            $conn = $GLOBALS['conn']; 
+            $nama_clean = mysqli_real_escape_string($conn, $nama);
+            $check = mysqli_query($conn, "SELECT id FROM categories WHERE nama_kategori = '$nama_clean'");
+            
+            if (mysqli_num_rows($check) > 0) {
+                $_SESSION['kat_error'] = "Kategori dengan nama '$nama' sudah ada di platform Evently.";
+                header("Location: kategori.php");
+                exit;
+            }
             $this->model->insertKategori($nama, $deskripsi);
             header("Location: kategori.php?status=success");
             exit;
@@ -89,8 +104,26 @@ class AdminController {
 
     public function prosesEditKategori($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
-            $nama = $_POST['nama_kategori'];
-            $deskripsi = $_POST['deskripsi'];
+            $nama      = trim(htmlspecialchars($_POST['nama_kategori']));
+            $deskripsi = trim(htmlspecialchars($_POST['deskripsi']));
+            
+            if (empty($nama) || empty($deskripsi)) {
+                $_SESSION['kat_error'] = "Semua kolom perubahan kategori wajib diisi.";
+                header("Location: kategori.php");
+                exit;
+            }
+
+            $conn = $GLOBALS['conn'];
+            $id = intval($id);
+            $nama_clean = mysqli_real_escape_string($conn, $nama);
+
+            $check = mysqli_query($conn, "SELECT id FROM categories WHERE nama_kategori = '$nama_clean' AND id != $id");            
+            if (mysqli_num_rows($check) > 0) {
+                $_SESSION['kat_error'] = "Gagal memperbarui! Nama kategori '$nama' sudah digunakan oleh kategori lain.";
+                header("Location: kategori.php");
+                exit;
+            }
+
             $this->model->updateKategori($id, $nama, $deskripsi);
             header("Location: kategori.php?status=updated");
             exit;
@@ -110,7 +143,11 @@ class AdminController {
         if (isset($_GET['action']) && $_GET['action'] === 'toggle_status' && isset($_GET['id']) && isset($_GET['current'])) {
             $id = intval($_GET['id']);
             $currentStatus = $_GET['current'];
-            $this->model->toggleUserStatus($id, $currentStatus);
+
+            $eksekusi = $this->model->toggleUserStatus($id, $currentStatus);
+            if (!$eksekusi) {
+                die("Gagal memperbarui status di database! Kemungkinan nama kolom salah atau koneksi terputus.");
+            }
             header("Location: pengguna.php");
             exit;
         }
@@ -128,14 +165,39 @@ class AdminController {
             } else {
                 return;
             }
+            $eksekusi = $this->model->updateStatusEvent($id, $status);
             
-            $this->model->updateStatusEvent($id, $status);
+            if (!$eksekusi) {
+                $dbError = isset($GLOBALS['conn']) ? mysqli_error($GLOBALS['conn']) : 'Query gagal dieksekusi';
+                $_SESSION['db_error'] = "Gagal Update! Pesan Error: " . $dbError;
+                header("Location: verifikasi.php");
+                exit;
+            }
+            
+            unset($_SESSION['db_error']);
             header("Location: verifikasi.php");
             exit;
         }
+    }
+
+    private function updateEventStatus($id, $status) {
+        $methods = [
+            'updateStatusEvent',
+            'updateEventStatus',
+            'setStatusEvent',
+            'setEventStatus',
+        ];
+
+        foreach ($methods as $method) {
+            if (method_exists($this->model, $method)) {
+                return $this->model->{$method}($id, $status);
+            }
+        }
+        return false;
     }
 
     public function getAllEvents() {
     return $this->model->getAllEvents();
     }
 }
+?>

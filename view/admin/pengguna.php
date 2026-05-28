@@ -1,9 +1,10 @@
 <?php
 session_start();
+require_once __DIR__ . '/../../config/koneksi.php';
 require_once __DIR__ . '/../../controllers/AdminController.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../auth/index.php");
+    header("Location: ../auth/login.php");
     exit;
 }
 
@@ -162,7 +163,7 @@ $totalUsersCount = $controller->getTotalUsers();
                                 <?php endif; ?>
                                 <td align="center">
                                     <?php if ($hasStatusColumn): ?>
-                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>" 
+                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>"
                                            class="btn-table-action btn-nonaktif <?= !$isAktif ? 'btn-aktifkan' : ''; ?>" 
                                            onclick="return confirm('Apakah Anda yakin ingin <?= $isAktif ? 'menonaktifkan' : 'mengaktifkan kembali'; ?> pengguna ini?')">
                                             <?= $isAktif ? 'Nonaktifkan' : 'Aktifkan'; ?>
@@ -179,14 +180,9 @@ $totalUsersCount = $controller->getTotalUsers();
                             </tr>
                         <?php endif; ?>
                     </tbody>
-
                 </table>
-
             </div>
-
         </main>
-
     </div>
-
 </body>
 </html>

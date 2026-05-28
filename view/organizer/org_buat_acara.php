@@ -28,7 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: org_kelola_acara.php?status=success"); 
             exit();
         } else {
-            $error_msg = "Gagal menambahkan acara. Silakan coba lagi.";
+            if (!isset($_SESSION['form_errors'])) {
+                $_SESSION['form_errors'] = ["Gagal menambahkan acara. Silakan periksa kembali data Anda."];
+            }
         }
     }
 }
@@ -88,8 +90,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p><?= $is_edit ? 'Perbarui informasi data acara Anda di bawah ini.' : 'Lengkapi data acara sebelum dikirim untuk verifikasi.' ?></p>
                 </div>
 
-                <?php if (isset($error_msg)): ?>
-                    <div style="color: red; margin-bottom: 15px;"><?= $error_msg ?></div>
+                <?php if (isset($_SESSION['form_errors'])): ?>
+                    <div class="org-alert org-alert-danger">
+                        <b>Gagal Memproses Data Form:</b>
+                        <ul style="margin-left: 20px; margin-top: 5px; padding-left: 0; list-style-type: square;">
+                            <?php foreach ($_SESSION['form_errors'] as $err): ?>
+                                <li><?= htmlspecialchars($err); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php unset($_SESSION['form_errors']); ?>
                 <?php endif; ?>
 
                 <section class="org-card">
@@ -142,6 +152,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="org-form-group">
                                 <label>Kuota Peserta</label>
                                 <input type="number" name="kuota" class="org-input" placeholder="50" value="<?= $is_edit ? htmlspecialchars($event['kuota'] ?? '') : '' ?>">
+                            </div>
+
+                            <div class="org-form-group">
+                                <label>Harga Pendaftaran (Rp)</label>
+                                <input type="number" name="harga" class="org-input" placeholder="Contoh: 15000 (Isi 0 jika gratis)" value="<?= $is_edit ? htmlspecialchars($event['harga'] ?? '0') : '0' ?>" min="0" required>
                             </div>
                         </div>
 

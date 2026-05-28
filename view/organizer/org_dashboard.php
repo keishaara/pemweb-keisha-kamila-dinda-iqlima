@@ -3,9 +3,18 @@
 session_start();
 
 require_once __DIR__ . '/../../controllers/OrganizerController.php';
+require_once __DIR__ . '/../../models/OrganizerModel.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
-    header("Location: ../auth/index.php");
+    header("Location: ../auth/login.php");
+    exit;
+}
+$organizerModel = new OrganizerModel();
+$dataAkun = $organizerModel->getOrganizerById($_SESSION['user_id']);
+
+if (($dataAkun['status'] ?? 'Aktif') === 'Nonaktif') {
+    session_destroy();
+    header("Location: ../auth/login.php");
     exit;
 }
 
@@ -230,9 +239,7 @@ $agenda = $data['agenda'];
 
                     <a href="org_kelola_acara.php"
                        class="org-btn org-btn-outline org-btn-full">
-
                         Lihat Semua
-
                     </a>
                 </aside>
             </div>
