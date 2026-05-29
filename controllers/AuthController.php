@@ -52,6 +52,7 @@ class AuthController {
                             $_SESSION['user_id'] = $user['id'];
                             $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
                             $_SESSION['role'] = $user['tipe_akun'];
+                            $_SESSION['last_activity'] = time();
 
                             if (
                                 $user['tipe_akun']

@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
                 $_SESSION['email']        = $user['email'];
                 $_SESSION['role']         = $user['tipe_akun'];
+                $_SESSION['last_activity'] = time();
 
                 if ($user['tipe_akun'] === 'admin') {
                     $target = '../admin/dashboard.php';
@@ -167,5 +168,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
     </script>
+
+    <?php if (isset($_GET['status']) && $_GET['status'] === 'timeout'): ?>
+        <script>
+            alert('Sesi Anda telah berakhir karena tidak ada aktivitas selama 30 menit. Silakan login kembali.');
+        </script>
+    <?php endif; ?>
 </body>
 </html>

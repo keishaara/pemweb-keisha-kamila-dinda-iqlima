@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../controllers/MahasiswaController.php';
+require_once __DIR__ . '/../../config/session.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
     header("Location: ../auth/index.php");

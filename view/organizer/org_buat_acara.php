@@ -7,6 +7,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
 }
 
 require_once __DIR__ . '/../../controllers/OrganizerController.php';
+require_once __DIR__ . '/../../config/session.php';
+
 $controller = new OrganizerController();
 $event_id = isset($_GET['id']) ? intval($_GET['id']) : null;
 $is_edit = ($event_id !== null);
@@ -77,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="../../assets/img/icon-profil-organisasi.png" alt="Profil">
                 <span>Profil Organisasi</span>
             </a>
-            <a href="logout.php" class="org-menu-item">
+            <a href="../auth/logout.php" class="org-menu-item">
                 <img src="../../assets/img/icon-logout.png" alt="Keluar">
                 <span>Keluar</span>
             </a>

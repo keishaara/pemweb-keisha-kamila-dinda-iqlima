@@ -2,6 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../controllers/MahasiswaController.php';
 require_once __DIR__ . '/../../config/koneksi.php';
+require_once __DIR__ . '/../../config/session.php';
 
 $controller = new MahasiswaController();
 $data = $controller->dataDiri();

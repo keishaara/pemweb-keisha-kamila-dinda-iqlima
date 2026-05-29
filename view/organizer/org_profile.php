@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
 }
 
 require_once __DIR__ . '/../../controllers/OrganizerController.php';
+require_once __DIR__ . '/../../config/session.php';
 
 $controller = new OrganizerController();
 

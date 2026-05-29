@@ -4,6 +4,7 @@ session_start();
 
 require_once __DIR__ . '/../../controllers/OrganizerController.php';
 require_once __DIR__ . '/../../models/OrganizerModel.php';
+require_once __DIR__ . '/../../config/session.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
     header("Location: ../auth/login.php");
