@@ -53,7 +53,7 @@ $semuaAcara = $controller->getAllEvents();
                 Kategori
             </a>
             <div class="menu-category">Sistem</div>
-            <a href="../auth/logout.php" class="menu-item">
+            <a href="../auth/logout.php" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
                 <img src="../../assets/img/icon-logout.png" alt="Logout">
                 Keluar
             </a>

@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+
 $_SESSION = array();
 
 if (ini_get("session.use_cookies")) {
@@ -13,6 +15,10 @@ if (ini_get("session.use_cookies")) {
 
 session_destroy();
 
-header("Location: ../auth/login.php");
+if ($role === 'admin') {
+    header("Location: ../admin/login_admin.php");
+} else {
+    header("Location: ../auth/login.php");
+}
 exit;
 ?>

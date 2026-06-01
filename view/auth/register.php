@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>"><?= htmlspecialchars($msg); ?></div>
             <?php endif; ?>
 
-            <form method="POST" action="">
+            <form id="registerForm" method="POST" action="">
                 <div class="form-group">
                     <label class="form-label">Pilih Tipe Akun</label>
                     <select name="tipe" class="form-control" required>
@@ -106,5 +106,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="img-side"></div>
     </div>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            var form = event.target;
+            var nama = form.nama.value.trim();
+            var npm = form.npm.value.trim();
+            var email = form.email.value.trim();
+            var password = form.password.value;
+            var confirmPassword = form.konfirmasi_password.value;
+            var wa = form.wa.value.trim();
+            var errorMessage = '';
+
+            if (!nama || !npm || !email || !password || !confirmPassword) {
+                errorMessage = 'Data bertanda (*) wajib diisi.';
+            } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+                errorMessage = 'Format email tidak valid.';
+            } else if (password.length < 8) {
+                errorMessage = 'Kata sandi harus minimal 8 karakter.';
+            } else if (password !== confirmPassword) {
+                errorMessage = 'Konfirmasi kata sandi tidak cocok.';
+            } else if (wa && !/^\d{10,15}$/.test(wa)) {
+                errorMessage = 'Nomor Whatsapp tidak valid.';
+            }
+            if (errorMessage) {
+                event.preventDefault();
+                alert(errorMessage);
+            }
+        });
+    </script>
 </body>
 </html>
