@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
+
+require_once __DIR__ . '/../../controllers/MahasiswaController.php';
 require_once __DIR__ . '/../../config/session.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
@@ -8,33 +9,17 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
     exit;
 }
 
-$search  = isset($_GET['q']) ? trim($_GET['q']) : '';
-$cat_id  = isset($_GET['cat_id']) ? trim($_GET['cat_id']) : '';
-$is_free = isset($_GET['free']) ? true : false;
+$controller = new MahasiswaController();
 
-$sql = "SELECT e.*, c.nama_kategori 
-        FROM events e 
-        LEFT JOIN categories c ON e.kategori_id = c.id 
-        WHERE e.status = 'approved'";
+$search  = $_GET['q'] ?? '';
+$cat_id  = $_GET['cat_id'] ?? '';
+$is_free = isset($_GET['free']);
 
-if ($search) {
-    $search_safe = mysqli_real_escape_string($conn, $search);
-    $sql .= " AND (e.judul_event LIKE '%$search_safe%' OR e.penyelenggara LIKE '%$search_safe%')";
-}
-
-if ($cat_id) {
-    $cat_id_safe = mysqli_real_escape_string($conn, $cat_id);
-    $sql .= " AND e.kategori_id = '$cat_id_safe'";
-}
-
-if ($is_free) {
-    $sql .= " AND e.harga = 0";
-}
-
-$sql .= " ORDER BY e.tanggal DESC";
-
-$res    = mysqli_query($conn, $sql);
-$events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
+$events = $controller->getEvents(
+    $search,
+    $cat_id,
+    $is_free
+);
 ?>
 
 <!DOCTYPE html>

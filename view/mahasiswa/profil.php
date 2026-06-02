@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
+
+require_once __DIR__ . '/../../controllers/MahasiswaController.php';
 require_once __DIR__ . '/../../config/session.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
@@ -8,38 +9,73 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
     exit;
 }
 
+$controller = new MahasiswaController();
+
 $uid = $_SESSION['user_id'];
-$stmt = mysqli_prepare($conn, "SELECT * FROM users WHERE id = ?");
-mysqli_stmt_bind_param($stmt, "i", $uid);
-mysqli_stmt_execute($stmt);
-$user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
 
-if (!$user) { session_destroy(); header('Location: ../auth/login.php'); exit; }
+$user = $controller->getProfile($uid);
 
-$msg = ''; $msgType = '';
+$msg = '';
+$msgType = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     if (isset($_POST['update_profil'])) {
-        $nama = trim($_POST['nama']); $email = trim($_POST['email']);
-        $program_studi = trim($_POST['program_studi']); $wa = trim($_POST['wa']); $sem = trim($_POST['semester']);
-        $upd = mysqli_prepare($conn, "UPDATE users SET nama_lengkap=?, email=?, program_studi=?, no_whatsapp=?, semester=? WHERE id=?");
-        mysqli_stmt_bind_param($upd, "sssssi", $nama, $email, $program_studi, $wa, $sem, $uid);
-        $msg = mysqli_stmt_execute($upd) ? "Profil berhasil diperbarui." : "Gagal update profil.";
-        $msgType = strpos($msg, 'berhasil') !== false ? 'success' : 'error';
-        mysqli_stmt_execute($stmt); $user = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
-    } elseif (isset($_POST['ganti_sandi'])) {
-        $old = $_POST['pass_lama']; $new = $_POST['pass_baru']; $conf = $_POST['konfirmasi'];
-        if ($new !== $conf) { $msg = "Konfirmasi sandi tidak cocok."; $msgType = 'error'; }
-        elseif (!password_verify($old, $user['password'])) { $msg = "Sandi lama salah."; $msgType = 'error'; }
-        else {
-            $hash = password_hash($new, PASSWORD_DEFAULT);
-            $updP = mysqli_prepare($conn, "UPDATE users SET password=? WHERE id=?");
-            mysqli_stmt_bind_param($updP, "si", $hash, $uid);
-            $msg = mysqli_stmt_execute($updP) ? "Kata sandi berhasil diubah." : "Gagal mengubah sandi.";
-            $msgType = strpos($msg, 'berhasil') !== false ? 'success' : 'error';
+
+        $success = $controller->updateProfile(
+            $uid,
+            trim($_POST['nama']),
+            trim($_POST['email']),
+            trim($_POST['program_studi']),
+            trim($_POST['wa']),
+            trim($_POST['semester'])
+        );
+
+        $msg = $success
+            ? "Profil berhasil diperbarui."
+            : "Gagal update profil.";
+
+        $msgType = $success
+            ? "success"
+            : "error";
+
+        $user = $controller->getProfile($uid);
+    }
+
+    elseif (isset($_POST['ganti_sandi'])) {
+
+        $old  = $_POST['pass_lama'];
+        $new  = $_POST['pass_baru'];
+        $conf = $_POST['konfirmasi'];
+
+        if ($new !== $conf) {
+
+            $msg = "Konfirmasi sandi tidak cocok.";
+            $msgType = "error";
+
+        } elseif (!password_verify($old, $user['password'])) {
+
+            $msg = "Sandi lama salah.";
+            $msgType = "error";
+
+        } else {
+
+            $success = $controller->changePassword(
+                $uid,
+                $new
+            );
+
+            $msg = $success
+                ? "Kata sandi berhasil diubah."
+                : "Gagal mengubah sandi.";
+
+            $msgType = $success
+                ? "success"
+                : "error";
         }
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>

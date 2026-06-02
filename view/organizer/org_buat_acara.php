@@ -23,6 +23,9 @@ if ($is_edit) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo '<pre>';
+    print_r($_POST);
+    echo '</pre>';   
     if ($is_edit) {
         $controller->prosesEditAcara($event_id);
     } else {
@@ -60,16 +63,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="../../assets/img/icon-home2.png" alt="Dashboard">
                 <span>Dashboard</span>
             </a>
-            <a href="org_kelola_acara.php" class="org-menu-item <?= $is_edit ? 'active' : '' ?>">
-                <img src="../../assets/img/icon-ticket.png" alt="Kelola Acara">
+            <a href="org_kelola_acara.php"
+                class="org-menu-item <?= $is_edit ? 'active' : '' ?>">
+                <img src="../../assets/img/<?= $is_edit ? 'icon-ticket2.png' : 'icon-ticket.png' ?>" alt="Kelola Acara">
                 <span>Kelola Acara</span>
             </a>
             <a href="org_data_peserta.php" class="org-menu-item">
                 <img src="../../assets/img/icon-user2.png" alt="Data Peserta">
                 <span>Data Peserta</span>
             </a>
-            <a href="org_buat_acara.php" class="org-menu-item <?= !$is_edit ? 'active' : '' ?>">
-                <img src="../../assets/img/icon-kegiatan2.png" alt="Buat Acara">
+            <a href="org_buat_acara.php"
+                class="org-menu-item <?= !$is_edit ? 'active' : '' ?>">
+                <img src="../../assets/img/<?= !$is_edit ? 'icon-kegiatan2.png' : 'icon-kegiatan.png' ?>" alt="Buat Acara">
                 <span>Buat Acara</span>
             </a>
 
@@ -110,61 +115,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="org-form-grid">
                             <div class="org-form-group org-full">
                                 <label>Nama Acara</label>
-                                <input type="text" name="judul_event" class="org-input" placeholder="Contoh: Workshop UI/UX" value="<?= $is_edit ? htmlspecialchars($event['judul_event'] ?? '') : '' ?>" required>
+                                <input type="text" name="judul_event" class="org-input" placeholder="Contoh: Workshop UI/UX" value="<?= htmlspecialchars($_POST['judul_event'] ?? ($is_edit ? ($event['judul_event'] ?? '') : '')) ?>" required>
                             </div>
-
                             <div class="org-form-group">
                                 <label>Kategori</label>
+                              <?php
+                                $selectedKategori = $_POST['kategori_id']
+                                    ?? ($is_edit ? ($event['kategori_id'] ?? '') : '');
+                                ?>
+
                                 <select name="kategori_id" class="org-select" required>
-                                    <option value="1" <?= $is_edit && ($event['kategori_id'] ?? '') == '1' ? 'selected' : '' ?>>Seminar</option>
-                                    <option value="2" <?= $is_edit && ($event['kategori_id'] ?? '') == '2' ? 'selected' : '' ?>>Workshop</option>
-                                    <option value="3" <?= $is_edit && ($event['kategori_id'] ?? '') == '3' ? 'selected' : '' ?>>Pelatihan</option>
-                                    <option value="4" <?= $is_edit && ($event['kategori_id'] ?? '') == '4' ? 'selected' : '' ?>>Diskusi</option>
+                                    <option value="1" <?= $selectedKategori == '1' ? 'selected' : '' ?>>Seminar</option>
+                                    <option value="2" <?= $selectedKategori == '2' ? 'selected' : '' ?>>Workshop</option>
+                                    <option value="3" <?= $selectedKategori == '3' ? 'selected' : '' ?>>Pelatihan</option>
+                                    <option value="4" <?= $selectedKategori == '4' ? 'selected' : '' ?>>Diskusi</option>
                                 </select>
                             </div>
 
                             <div class="org-form-group">
                                 <label>Jenis Acara</label>
                                 <select name="jenis_acara" class="org-select" required>
-                                    <option value="Online" <?= $is_edit && ($event['jenis_acara'] ?? '') == 'Online' ? 'selected' : '' ?>>Online</option>
-                                    <option value="Offline" <?= $is_edit && ($event['jenis_acara'] ?? '') == 'Offline' ? 'selected' : '' ?>>Offline</option>
+                                    <option value="Online" <?= ($_POST['jenis_acara'] ?? ($is_edit ? $event['jenis_acara'] : '')) == 'Online' ? 'selected' : '' ?>>Online</option>
+                                    <option value="Offline" <?= ($_POST['jenis_acara'] ?? ($is_edit ? $event['jenis_acara'] : '')) == 'Offline' ? 'selected' : '' ?>>Offline</option>
                                 </select>
                             </div>
 
                             <div class="org-form-group">
                                 <label>Tanggal Mulai</label>
-                                <input type="date" name="tanggal" class="org-input" value="<?= $is_edit ? htmlspecialchars($event['tanggal'] ?? '') : '' ?>" required>
+                                <input type="date" name="tanggal" class="org-input" value="<?= htmlspecialchars($_POST['tanggal'] ?? ($is_edit ? ($event['tanggal'] ?? '') : '')) ?>" required>
                             </div>
 
                             <div class="org-form-group">
                                 <label>Tanggal Selesai</label>
-                                <input type="date" name="tanggal_selesai" class="org-input" value="<?= $is_edit ? htmlspecialchars($event['tanggal_selesai'] ?? '') : '' ?>">
+                                <input type="date" name="tanggal_selesai" class="org-input" value="<?= htmlspecialchars($_POST['tanggal_selesai'] ?? ($is_edit ? ($event['tanggal_selesai'] ?? '') : '')) ?>">
                             </div>
 
                             <div class="org-form-group">
                                 <label>Jam</label>
-                                <input type="time" name="waktu" class="org-input" value="<?= $is_edit ? htmlspecialchars($event['waktu'] ?? '') : '' ?>" required>
+                                <input type="time" name="waktu" class="org-input" value="<?= htmlspecialchars($_POST['waktu'] ?? ($is_edit ? ($event['waktu'] ?? '') : '')) ?>" required>
                             </div>
 
                             <div class="org-form-group">
                                 <label>Lokasi</label>
-                                <input type="text" name="lokasi" class="org-input" placeholder="Ruang Seminar A / Zoom" value="<?= $is_edit ? htmlspecialchars($event['lokasi'] ?? '') : '' ?>" required>
+                                <input type="text" name="lokasi" class="org-input" placeholder="Ruang Seminar A / Zoom" value="<?= htmlspecialchars($_POST['lokasi'] ?? ($is_edit ? ($event['lokasi'] ?? '') : '')) ?>" required>
                             </div>
 
                             <div class="org-form-group">
                                 <label>Kuota Peserta</label>
-                                <input type="number" name="kuota" class="org-input" placeholder="50" value="<?= $is_edit ? htmlspecialchars($event['kuota'] ?? '') : '' ?>">
+                                <input type="number" name="kuota" class="org-input" placeholder="50" min = "1" value="<?= htmlspecialchars($_POST['kuota'] ?? ($is_edit ? ($event['kuota'] ?? '') : '')) ?>">
                             </div>
 
                             <div class="org-form-group">
                                 <label>Harga Pendaftaran (Rp)</label>
-                                <input type="number" name="harga" class="org-input" placeholder="Contoh: 15000 (Isi 0 jika gratis)" value="<?= $is_edit ? htmlspecialchars($event['harga'] ?? '0') : '0' ?>" min="0" required>
+                                <input type="number" name="harga" class="org-input" placeholder="Contoh: 15000 (Isi 0 jika gratis)" value="<?= htmlspecialchars($_POST['harga'] ?? ($is_edit ? ($event['harga'] ?? '0') : '0')) ?>" min="0" required>
                             </div>
                         </div>
 
                         <div class="org-form-group org-full">
                             <label>Deskripsi Acara</label>
-                            <textarea name="deskripsi" class="org-textarea" rows="6" placeholder="Tuliskan deskripsi acara secara lengkap..." required><?= $is_edit ? htmlspecialchars($event['deskripsi'] ?? '') : '' ?></textarea>
+                            <textarea name="deskripsi" class="org-textarea" rows="6" placeholder="Tuliskan deskripsi acara secara lengkap..." required><?= htmlspecialchars($_POST['deskripsi'] ?? ($is_edit ? ($event['deskripsi'] ?? '') : '')) ?></textarea>
                         </div>
 
                         <div class="org-form-group org-full">
@@ -175,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span>PNG, JPG maksimal 2MB</span>
                             </div>
                             <?php if ($is_edit && !empty($event['poster'])): ?>
-                                <p style="font-size: 13px; color: #64748b; margin-top: 8px;">Poster saat ini: <strong><?= htmlspecialchars($event['poster']) ?></strong></p>
+                                <p>Poster saat ini: <strong><?= htmlspecialchars($event['poster']) ?></strong></p>
                             <?php endif; ?>
                         </div>
 

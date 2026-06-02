@@ -44,9 +44,118 @@ class MahasiswaController {
             'event' => $this->model->getEventById($eventId)
         ];
     }
-
+    public function getDashboardStats($userId)
+    {
+        return $this->model->getDashboardStats($userId);
+    }
+    public function getSavedCount($userId)
+    {
+        return $this->model->getSavedCount($userId);
+    }
+    public function getUpcomingEventsDashboard($userId)
+    {
+        return $this->model->getUpcomingEventsDashboard($userId);
+    }
     public function indexFeatures()
     {
         return $this->eventModel->getLatestEvents(4);
     }
+
+        public function cekEventDisimpan($userId, $eventId)
+    {
+        return $this->model->isEventSaved($userId, $eventId);
+    }
+
+    public function simpanEvent($userId, $eventId)
+    {
+        return $this->model->saveEvent($userId, $eventId);
+    }
+
+    public function getTicketsByUser($userId, $status = '')
+    {
+        return $this->model->getTicketsByUser($userId, $status);
+    }
+
+    public function getTicketByKode($kodeBooking)
+    {
+        return $this->model->getTicketByKode($kodeBooking);
+    }
+    public function getEvents($search = '', $catId = '', $isFree = false)
+    {
+        return $this->model->getEvents($search, $catId, $isFree);
+    }
+    public function getProfile($userId)
+    {
+        return $this->model->getUserById($userId);
+    }
+    public function updateProfile(
+        $userId,
+        $nama,
+        $email,
+        $programStudi,
+        $wa,
+        $semester
+    )
+    {
+        return $this->model->updateProfile(
+            $userId,
+            $nama,
+            $email,
+            $programStudi,
+            $wa,
+            $semester
+        );
+    }
+    public function changePassword(
+        $userId,
+        $newPassword
+    )
+    {
+        $hash = password_hash(
+            $newPassword,
+            PASSWORD_DEFAULT
+        );
+
+        return $this->model->updatePassword(
+            $userId,
+            $hash
+        );
+    }
+public function getSavedEvents($userId)
+{
+    return $this->model->getSavedEvents($userId);
+}
+public function removeSavedEvent(
+    $userId,
+    $eventId
+)
+{
+    return $this->model->removeSavedEvent(
+        $userId,
+        $eventId
+    );
+}
+public function createBooking(
+    $eventId,
+    $userId,
+    $kodeBooking,
+    $metode,
+    $buktiTransfer
+)
+{
+    return $this->model->createBooking(
+        $eventId,
+        $userId,
+        $kodeBooking,
+        $metode,
+        $buktiTransfer
+    );
+}
+public function isAlreadyRegistered($userId, $eventId)
+{
+    return $this->model->isAlreadyRegistered(
+        $userId,
+        $eventId
+    );
+}  
 }

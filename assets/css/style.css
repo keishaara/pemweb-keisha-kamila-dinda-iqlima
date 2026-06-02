@@ -922,6 +922,76 @@ ul {
     margin-right: 0.5rem;
 }
 
+.no-data{
+text-align: center; padding: 40px; color: #64748b;}
+
+.ticket-print-body{
+    background:#eef3ff;
+    padding:40px;
+    font-family:'Segoe UI',sans-serif;
+}
+
+    .ticket-print-card{
+    max-width:800px;
+    margin:auto;
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+.ticket-print-header{
+    background:#335485;
+    color:white;
+    padding:32px;
+    text-align:center;
+}
+
+.ticket-print-logo{
+    font-size:32px;
+    font-weight:700;
+}
+
+.ticket-print-code{
+    margin-top:10px;
+    font-size:18px;
+    letter-spacing:2px;
+}
+
+.ticket-print-status{
+    margin-top:15px;
+    display:inline-block;
+    padding:8px 16px;
+    background:#22c55e;
+    border-radius:20px;
+    font-size:14px;
+}
+
+.ticket-print-content{
+    padding:32px;
+}
+
+.ticket-print-row{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.ticket-print-row span{
+    color:#64748b;
+}
+
+.ticket-print-row strong{
+    color:#0f172a;
+}
+
+.no-event-message{
+    grid-column: 1/-1;
+    text-align: center;
+    color: #64748b;
+    padding: 20px;
+}
+
 
 @media (max-width: 1024px) {
     .stats-grid {
@@ -4238,3 +4308,4 @@ a.btn-table-action {
     background-color: #fef2f2 !important;
     color: #ef4444 !important;
 }
+

@@ -9,31 +9,34 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
 }
 
 $controller = new MahasiswaController();
-$event = $controller->detailEvent();
-$id_event = $_GET['id'];
-if(isset($_POST['simpan_event'])){
+$eventId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$userId = $_SESSION['user_id'];
 
-    require_once __DIR__ . '/../../config/koneksi.php';
-    $user_id = $_SESSION['user_id'];
-    $cek = mysqli_query(
-
-        $conn,
-        "SELECT * FROM saved_events
-         WHERE user_id = '$user_id'
-         AND event_id = '$id_event'"
-    );
-
-    if(mysqli_num_rows($cek) == 0){
-        mysqli_query(
-            $conn,
-            "INSERT INTO saved_events
-            (user_id, event_id)
-            VALUES
-            ('$user_id', '$id_event')"
-        );
-    }
+$event = $controller->detailEvent($eventId);
+if (!$event) {
+    die("Event tidak ditemukan.");
 }
+$user_id = $_SESSION['user_id'];
 
+$isRegistered =
+    $controller->isAlreadyRegistered(
+        $user_id,
+        $event['id']
+    );
+$isSaved = $controller->cekEventDisimpan($userId, $eventId);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
+    if ($controller->simpanEvent($userId, $eventId)) {
+        $_SESSION['success'] = "Event berhasil disimpan!";
+        $isSaved = true;
+    } else {
+        $_SESSION['success'] = "Event sudah ada di daftar tersimpan.";
+        $isSaved = true;
+    }
+
+    header("Location: detail.php?id=" . $eventId);
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,15 +61,43 @@ if(isset($_POST['simpan_event'])){
     </aside>
 
     <main class="content">
+       <?php if(isset($_SESSION['success'])): ?>
+
+        <div class="profile-message profile-success">
+            <?= $_SESSION['success']; ?>
+        </div>
+
+        <?php unset($_SESSION['success']); ?>
+
+        <?php endif; ?>
+
         <div class="detail-card">
             <div class="detail-header">
-                <a href="kegiatan_mhs.php"
-                   class="btn-outline"
-                   style="text-decoration: none; display: inline-block;">
+                <?php
+                if (isset($_GET['from'])) {
+
+                if ($_GET['from'] === 'ticket') {
+                    $backUrl = 'e-tiket.php';
+                }
+
+                elseif ($_GET['from'] === 'dashboard') {
+                    $backUrl = 'user_dashboard.php';
+                }
+
+                else {
+                    $backUrl = 'kegiatan_mhs.php';
+                }
+
+            } else {
+
+                $backUrl = 'kegiatan_mhs.php';
+            }
+                ?>
+
+                <a href="<?= $backUrl ?>"class="btn-outline">
                     Kembali
                 </a>
-
-                <button class="btn-outline">
+                <button onclick="copyLink()" class="btn-outline">
                     Bagikan
                 </button>
 
@@ -152,33 +183,106 @@ if(isset($_POST['simpan_event'])){
                     </div>
                 </div>
 
-                <div class="right">
-                    <div class="price-box">
-                        <p>HARGA PENDAFTARAN</p>
-                        <h2>
-                            Rp <?= number_format($event['harga'], 0, ',', '.') ?>
-                        </h2>
+                <?php
+                $isFromTicket = isset($_GET['from']) && $_GET['from'] === 'ticket';
+                $kodeBooking = $_GET['kode'] ?? '';
+                ?>
 
-                        <div class="progress">
-                            <div class="bar"></div>
+                <div class="right">
+
+                    <?php if (!$isFromTicket): ?>
+
+                        <div class="price-box">
+                            <p>HARGA PENDAFTARAN</p>
+
+                            <h2>
+                                Rp <?= number_format($event['harga'], 0, ',', '.') ?>
+                            </h2>
+
+                            <div class="progress">
+                                <div class="bar"></div>
+                            </div>
+
+                            <?php if($isRegistered): ?>
+
+                                <button
+                                    class="btn-primary"
+                                    disabled
+                                    style="opacity:.7;cursor:not-allowed;">
+                                    Sudah Terdaftar
+                                </button>
+
+                            <?php else: ?>
+
+                                <a href="data_diri.php?id=<?= $event['id'] ?>"
+                                class="btn-primary">
+                                    Daftar Sekarang
+                                </a>
+
+                            <?php endif; ?>
+
+                           <?php if ($isSaved): ?>
+
+                            <button class="btn-secondary" disabled>
+                                ✓ Tersimpan
+                            </button>
+
+                        <?php else: ?>
+
+                            <form method="POST">
+                                <button type="submit" name="simpan_event" class="btn-secondary">
+                                    Simpan Event
+                                </button>
+                            </form>
+
+                        <?php endif; ?>
                         </div>
 
-                        <a href="data_diri.php?id=<?= $event['id'] ?>" class="btn-primary">Daftar Sekarang</a>
+                        <?php else: ?>
 
-                       <form method="POST">
-                            <button
-                                type="submit"
-                                name="simpan_event"
-                                class="btn-secondary"
-                            > Simpan Event
-                            </button>
-                        </form>
+                            <div class="price-box">
+                                <p>STATUS TIKET</p>
+
+                                <h2 style="font-size: 20px;">
+                                    Terverifikasi
+                                </h2>
+
+                                <div class="progress">
+                                    <div class="bar"></div>
+                                </div>
+
+                                <p style="margin-top:15px;">KODE BOOKING</p>
+
+                                <strong>
+                                    <?= htmlspecialchars($kodeBooking) ?>
+                                </strong>
+                            </div>
+
+                        <?php endif; ?>
+
                     </div>
                 </div>
             </div>
         </div>
     </main>
 </div>
+    <script>
+        function copyLink() {
 
+            const tempInput = document.createElement("input");
+
+            tempInput.value = window.location.href;
+
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+
+            document.execCommand("copy");
+
+            document.body.removeChild(tempInput);
+
+            alert("Link event berhasil disalin!");
+        }
+    </script>
 </body>
 </html>

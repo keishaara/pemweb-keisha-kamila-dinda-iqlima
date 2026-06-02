@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
+
+require_once __DIR__ . '/../../controllers/MahasiswaController.php';
 require_once __DIR__ . '/../../config/session.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
@@ -8,25 +9,27 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
     exit;
 }
 
+$controller = new MahasiswaController();
+
 $user_id = $_SESSION['user_id'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['unsave_event'])) {
-    $event_id = intval($_POST['event_id']);
-    $stmt = mysqli_prepare($conn, "DELETE FROM saved_events WHERE user_id = ? AND event_id = ?");
-    mysqli_stmt_bind_param($stmt, "ii", $user_id, $event_id);
-    mysqli_stmt_execute($stmt);
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
+    && isset($_POST['unsave_event'])
+) {
+
+    $controller->removeSavedEvent(
+        $user_id,
+        intval($_POST['event_id'])
+    );
+
     header('Location: saved_events.php');
     exit;
 }
 
-$sql = "SELECT e.*, s.id as saved_id
-        FROM saved_events s
-        JOIN events e ON s.event_id = e.id
-        WHERE s.user_id = '$user_id'
-        ORDER BY e.tanggal DESC";
-
-$res = mysqli_query($conn, $sql);
-$saved = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
+$saved = $controller->getSavedEvents(
+    $user_id
+);
 ?>
 
 <!DOCTYPE html>

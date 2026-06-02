@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../controllers/MahasiswaController.php';
-require_once __DIR__ . '/../../config/koneksi.php';
 require_once __DIR__ . '/../../config/session.php';
 
 $controller = new MahasiswaController();
@@ -15,13 +14,24 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran'])) {
+
     $metode = $_POST['metode_pembayaran'] ?? '';
     $buktiTransfer = '';
 
-    if (isset($_FILES['bukti_transfer']) && $_FILES['bukti_transfer']['error'] === 0) {
-        $namaFile = time() . '_' . $_FILES['bukti_transfer']['name'];
-        $tmpFile  = $_FILES['bukti_transfer']['tmp_name'];
-        $folderUpload = '../../assets/uploads/';
+    if (
+        isset($_FILES['bukti_transfer']) &&
+        $_FILES['bukti_transfer']['error'] === 0
+    ) {
+
+        $namaFile =
+            time() . '_' .
+            $_FILES['bukti_transfer']['name'];
+
+        $tmpFile =
+            $_FILES['bukti_transfer']['tmp_name'];
+
+        $folderUpload =
+            '../../assets/uploads/';
 
         if (!is_dir($folderUpload)) {
             mkdir($folderUpload, 0777, true);
@@ -35,32 +45,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
         $buktiTransfer = $namaFile;
     }
 
-   $kodeBooking = 'EVT-' . strtoupper(substr(md5(time()), 0, 8));
-    $query = mysqli_query(
-        $conn,
-        "INSERT INTO bookings
-        (
-            event_id,
-            user_id,
-            kode_booking,
-            metode_pembayaran,
-            bukti_transfer,
-            status,
-            created_at
-        )
-        VALUES
-        (
-            '{$event['id']}',
-            '{$user['id']}',
-            '$kodeBooking',
-            '$metode',
-            '$buktiTransfer',
-            'active',
-            NOW()
-        )"
+    $kodeBooking =
+        'EVT-' .
+        strtoupper(substr(md5(time()), 0, 8));
+
+    $success = $controller->createBooking(
+        $event['id'],
+        $user['id'],
+        $kodeBooking,
+        $metode,
+        $buktiTransfer
     );
 
-    if($query){
+    if ($success) {
+
         header("Location: e-tiket.php");
         exit;
     }
