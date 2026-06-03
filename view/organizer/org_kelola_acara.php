@@ -90,6 +90,10 @@ $keyword = $_GET['search'] ?? '';
                 <div class="org-alert org-alert-danger">
                     <strong>Gagal!</strong> Terjadi kesalahan server saat mencoba menghapus acara.
                 </div>
+            <?php elseif (isset($_GET['status']) && $_GET['status'] === 'action_blocked'): ?>
+                <div class="org-alert org-alert-danger">
+                    <strong>Akses Ditolak!</strong> Acara yang sudah berstatus <b>Disetujui</b> tidak dapat diubah atau dihapus kembali demi validitas data peserta.
+                </div>
             <?php endif; ?>
 
             <section class="org-card">
@@ -152,14 +156,20 @@ $keyword = $_GET['search'] ?? '';
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="org_buat_acara.php?id=<?= $event['id'] ?? '' ?>" class="org-btn org-btn-small org-btn-outline">
-                                            Edit
-                                        </a>
+                                        <?php 
+                                        $statusAksi = strtolower($event['status'] ?? 'pending');
+
+                                        if ($statusAksi === 'approved' || $statusAksi === 'disetujui'): 
+                                        ?>
+                                            <span></span>
+                                        <?php else: ?>
+                                            <a href="org_buat_acara.php?id=<?= $event['id'] ?? '' ?>" class="org-btn org-btn-small org-btn-outline">Edit</a>
+                                        <?php endif; ?>
                                         
                                         <a href="org_kelola_acara.php?action=hapus&id=<?= $event['id'] ?? '' ?>"
                                            class="org-btn org-btn-small org-btn-danger"
                                            onclick="return confirm('Yakin ingin menghapus event ini?')">
-                                            Hapus
+                                           Hapus
                                         </a>
                                     </td>
                                 </tr>

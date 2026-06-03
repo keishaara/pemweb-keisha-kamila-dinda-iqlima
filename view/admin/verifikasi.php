@@ -124,8 +124,26 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                     </div>
 
                     <div class="verif-actions">
-                        <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=tolak" class="btn-verif btn-tolak" style="text-decoration: none; text-align: center;" onclick="return confirm('Apakah Anda yakin ingin MENOLAK acara ini?')">Tolak</a>
-                        <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=setuju" class="btn-verif btn-setujui" style="text-decoration: none; text-align: center;" onclick="return confirm('Apakah Anda yakin ingin MENYETUJUI acara ini?')">Setujui</a>
+                        <?php 
+                        $statusAksi = strtolower($acara['status'] ?? 'pending');
+                        if ($statusAksi === 'approved'): 
+                        ?>
+                            <span style></span>
+                        <?php else: ?>
+                            <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=tolak" 
+                               class="btn-verif btn-tolak" 
+                               style="text-decoration: none; text-align: center;" 
+                               onclick="return confirm('Apakah Anda yakin ingin MENOLAK acara ini?')">
+                               Tolak
+                            </a>
+                            
+                            <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=setuju" 
+                               class="btn-verif btn-setujui" 
+                               style="text-decoration: none; text-align: center;" 
+                               onclick="return confirm('Apakah Anda yakin ingin MENYETUJUI acara ini?')">
+                               Setujui
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <?php endforeach; ?>

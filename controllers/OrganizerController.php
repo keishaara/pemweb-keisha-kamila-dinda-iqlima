@@ -129,7 +129,7 @@ class OrganizerController {
         return $this->model->insertEvent($dataDB);
     }
 
-    public function hapusAcara() {
+   public function hapusAcara() {
         if (isset($_GET['action']) && $_GET['action'] === 'hapus' && isset($_GET['id'])) {
             $event_id = intval($_GET['id']);
             $user_id = $_SESSION['user_id'] ?? 0;
@@ -149,10 +149,18 @@ class OrganizerController {
         return $this->model->getEventById($eventId, $userId);
     }
 
-   public function prosesEditAcara($eventId) {
+    public function prosesEditAcara($eventId) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $_SESSION['user_id'] ?? 0;
             $errors = [];
+
+            $event = $this->model->getEventById($eventId, $userId);
+            $status = strtolower($event['status'] ?? 'pending');
+            if ($status === 'approved' || $status === 'disetujui') {
+                $_SESSION['form_errors'] = ["Acara ini sudah disetujui oleh admin dan tidak boleh diubah lagi."];
+                header("Location: org_kelola_acara.php?status=action_blocked");
+                exit();
+            }
 
             $judul_event = isset($_POST['judul_event']) ? trim(htmlspecialchars($_POST['judul_event'])) : '';
             $deskripsi   = isset($_POST['deskripsi']) ? trim(htmlspecialchars($_POST['deskripsi'])) : '';

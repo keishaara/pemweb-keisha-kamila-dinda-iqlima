@@ -13,11 +13,22 @@ $controller = new OrganizerController();
 $event_id = isset($_GET['id']) ? intval($_GET['id']) : null;
 $is_edit = ($event_id !== null);
 
+$controller = new OrganizerController();
+$event_id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$is_edit = ($event_id !== null);
+
 if ($is_edit) {
     $event = $controller->detailAcara($event_id);
 
     if (!$event) {
         header("Location: org_kelola_acara.php");
+        exit();
+    }
+
+    // PROTESI URL MANUAL: Jika acara terbukti sudah Approved, usir keluar!
+    $statusAcara = strtolower($event['status'] ?? 'pending');
+    if ($statusAcara === 'approved' || $statusAcara === 'disetujui') {
+        header("Location: org_kelola_acara.php?status=action_blocked");
         exit();
     }
 }

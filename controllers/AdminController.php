@@ -157,14 +157,15 @@ class AdminController {
         if (isset($_GET['action']) && isset($_GET['id'])) {
             $id = intval($_GET['id']);
             $action = $_GET['action'];
-            
+
             if ($action === 'setuju') {
                 $status = 'approved';
             } elseif ($action === 'tolak') {
                 $status = 'rejected';
             } else {
-                return;
+                return; 
             }
+
             $eksekusi = $this->model->updateStatusEvent($id, $status);
             
             if (!$eksekusi) {
@@ -175,7 +176,7 @@ class AdminController {
             }
             
             unset($_SESSION['db_error']);
-            header("Location: verifikasi.php");
+            header("Location: verifikasi.php?status=success");
             exit;
         }
     }
