@@ -191,4 +191,28 @@ public function getEventById($eventId, $userId) {
         return $data;
     }
 
+    public function updateOrganizerProfile($userId, $data) {
+        $sql = "UPDATE users SET 
+                    nama_lengkap = ?, 
+                    singkatan = ?, 
+                    email = ?, 
+                    no_whatsapp = ?, 
+                    deskripsi = ? 
+                WHERE id = ?";
+                
+        $stmt = mysqli_prepare($this->conn, $sql);
+        mysqli_stmt_bind_param(
+            $stmt, 
+            "sssssi", 
+            $data['nama_lengkap'], 
+            $data['singkatan'], 
+            $data['email'], 
+            $data['no_whatsapp'], 
+            $data['deskripsi'], 
+            $userId
+        );
+        
+        return mysqli_stmt_execute($stmt);
+    }
+
 }

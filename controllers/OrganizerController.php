@@ -197,5 +197,19 @@ class OrganizerController {
             }
         }
     }
+
+    public function prosesEditProfil($postData) {
+        $userId = $_SESSION['user_id'] ?? 0;
+        
+        $dataInput = [
+            'nama_lengkap' => $postData['nama_lengkap'] ?? '',
+            'singkatan'    => $postData['singkatan'] ?? '',
+            'email'        => $postData['email'] ?? '',
+            'no_whatsapp'  => $postData['whatsapp'] ?? '',
+            'deskripsi'    => $postData['deskripsi'] ?? ''
+        ];
+
+        return $this->model->updateOrganizerProfile($userId, $dataInput);
+    }
 }
 ?>
