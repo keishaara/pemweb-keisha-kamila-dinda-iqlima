@@ -57,11 +57,11 @@ class OrganizerController {
         $judul_event     = isset($post['judul_event']) ? trim(htmlspecialchars($post['judul_event'])) : '';
         $deskripsi       = isset($post['deskripsi']) ? trim(htmlspecialchars($post['deskripsi'])) : '';
         $tanggal         = isset($post['tanggal']) ? $post['tanggal'] : '';
-        $tanggal_selesai = isset($post['tanggal_selesai']) ? $post['tanggal_selesai'] : '';
+        $tanggal_selesai = isset($post['tanggal_selesai']) ? $post['tanggal_selesai'] : null;
         $waktu           = isset($post['waktu']) ? $post['waktu'] : '';
         $lokasi          = isset($post['lokasi']) ? trim(htmlspecialchars($post['lokasi'])) : '';
         $kuota           = isset($post['kuota']) ? intval($post['kuota']) : 0;
-        $kategori_id     = isset($post['kategori_id']) ? intval($post['kategori_id']) : 0;
+        $kategori_id     = isset($post['kategori_id']) ? intval($post['kategori_id']) : null;
         $jenis_acara     = isset($post['jenis_acara']) ? $post['jenis_acara'] : '';
         $harga           = isset($post['harga']) ? intval($post['harga']) : 0;
 
@@ -71,19 +71,7 @@ class OrganizerController {
         if (empty($waktu))           $errors[] = "Jam pelaksanaan acara wajib ditentukan.";
         if (empty($lokasi))          $errors[] = "Tempat/lokasi acara tidak boleh kosong.";
         if ($kuota <= 0)             $errors[] = "Kuota jumlah peserta wajib berupa angka positif di atas 0.";
-        if ($kategori_id <= 0)       $errors[] = "Pilihan kategori tidak valid.";
-        if ($jenis_acara !== 'Online' && $jenis_acara !== 'Offline') $errors[] = "Pilih jenis acara antara Online atau Offline.";
-        if ($harga < 0) {
-            $errors[] = "Harga pendaftaran tidak boleh bernilai negatif.";
-        }
-
-        $today = date('Y-m-d');
-        if ($tanggal < $today) {
-            $errors[] = "Tanggal pelaksanaan acara tidak boleh di masa lampau.";
-        }
-        if (!empty($tanggal_selesai) && $tanggal_selesai < $tanggal) {
-            $errors[] = "Tanggal selesai acara tidak valid karena mendahului tanggal mulai.";
-        }
+        if (empty($jenis_acara))     $errors[] = "Pilih jenis acara antara Online atau Offline.";
 
         $nama_poster = 'default.png'; 
         if (isset($files['poster']) && $files['poster']['error'] === 0) {
@@ -94,15 +82,19 @@ class OrganizerController {
                 $errors[] = "Format file gambar poster ditolak. Hanya diperbolehkan ekstensi PNG, JPG, dan JPEG.";
             }
             if ($fileSize > 2097152) { 
-                $errors[] = "Ukuran file gambar poster melampaui batas maksimal. Batas ukuran poster adalah 2MB.";
+                $errors[] = "Ukuran file gambar poster melampaui batas maksimal 2MB.";
             }
 
             if (empty($errors)) {
                 $nama_poster = time() . '_' . uniqid() . '.' . $ext;
-                move_uploaded_file($files['poster']['tmp_name'], __DIR__ . '/../../assets/img/' . $nama_poster);
+                $target_dir = __DIR__ . '/../assets/poster/';
+                
+                if (!is_dir($target_dir)) {
+                    mkdir($target_dir, 0755, true);
+                }
+                
+                move_uploaded_file($files['poster']['tmp_name'], $target_dir . $nama_poster);
             }
-        } else {
-            $errors[] = "File poster gambar acara wajib diunggah.";
         }
 
         if (!empty($errors)) {
@@ -126,6 +118,7 @@ class OrganizerController {
             'status'          => 'pending', 
             'user_id'         => $userId
         ];
+        
         return $this->model->insertEvent($dataDB);
     }
 
