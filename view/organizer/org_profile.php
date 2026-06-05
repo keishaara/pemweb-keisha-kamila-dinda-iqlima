@@ -12,6 +12,18 @@ require_once __DIR__ . '/../../config/session.php';
 
 $controller = new OrganizerController();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($controller->prosesEditProfil($_POST)) {
+        echo "<script>
+                alert('Profil berhasil diperbarui!'); 
+                window.location.href='org_profile.php';
+              </script>";
+        exit;
+    } else {
+        echo "<script>alert('Gagal memperbarui profil.');</script>";
+    }
+}
+
 $organizer = $controller->profile();
 
 ?>
@@ -102,22 +114,12 @@ $organizer = $controller->profile();
                     <div class="org-form-grid">
                         <div class="org-form-group">
                             <label>Nama Organisasi</label>
-                            <input
-                                type="text"
-                                name="nama_organisasi"
-                                class="org-input"
-                                value="<?= htmlspecialchars($organizer['nama_lengkap'] ?? '') ?>"
-                            >
+                            <input type="text" name="nama_lengkap" class="org-input" value="<?= htmlspecialchars($organizer['nama_lengkap'] ?? '') ?>">
                         </div>
 
                         <div class="org-form-group">
-                            <label>Singkatan</label>
-                            <input
-                                type="text"
-                                name="singkatan"
-                                class="org-input"
-                                value="<?= htmlspecialchars($organizer['singkatan'] ?? '') ?>"
-                            >
+                            <label>Singkatan Nama</label>
+                            <input type="text" name="singkatan" class="org-input" value="<?= htmlspecialchars($organizer['singkatan'] ?? '') ?>">
                         </div>
 
                         <div class="org-form-group">
