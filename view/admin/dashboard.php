@@ -15,6 +15,7 @@ $totalOrgData = $controller->getTotalOrganisasi();
 $latestUsers = $controller->getLatestUsers();
 $verifikasiAcara = $controller->getVerifikasiAcara();
 $semuaAcara = $controller->getAllEvents();
+// $totalMahasiswa = $controller->getTotalMahasiswa();
 ?>
 
 <!DOCTYPE html>
@@ -67,32 +68,32 @@ $semuaAcara = $controller->getAllEvents();
             </div>
 
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card" onclick="window.location.href='pengguna.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
                     <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
                     <h3><?= $totalUsersData; ?></h3>
                     <p>Total Pengguna</p>
                     <div class="stat-trend">Data pengguna terdaftar</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
-                    <h3><?= count($verifikasiAcara); ?></h3>
-                    <p>Acara Menunggu</p>
-                    <div class="stat-trend">Jumlah acara yang perlu diverifikasi</div>
+                <div class="stat-card" onclick="window.location.href='pengguna.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+                    <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3><?= $totalMahasiswa; ?></h3>
+                    <p>Mahasiswa Aktif</p>
+                    <div class="stat-trend">Total akun mahasiswa</div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-                    <h3><?= count(array_filter($verifikasiAcara, fn($e) => $e['status'] == 'pending')); ?></h3>
-                    <p>Menunggu Verifikasi</p>
-                    <div class="stat-trend negative">Perlu tindakan admin</div>
-                </div>
-
-                <div class="stat-card">
+                <div class="stat-card" onclick="window.location.href='pengguna.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
                     <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
                     <h3><?= $totalOrgData; ?></h3>
                     <p>Organisasi Aktif</p>
                     <div class="stat-trend">Total akun organisasi</div>
+                </div>
+
+                <div class="stat-card" onclick="window.location.href='verifikasi.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
+                    <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <h3><?= count(array_filter($verifikasiAcara, fn($e) => strtolower($e['status']) == 'pending')); ?></h3>
+                    <p>Menunggu Verifikasi</p>
+                    <div class="stat-trend negative">Perlu tindakan admin</div>
                 </div>
             </div>
 

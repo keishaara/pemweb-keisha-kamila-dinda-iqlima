@@ -143,49 +143,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
             <div class="payment-grid">
                 <div class="card">
                     <h3>Metode Pembayaran</h3>
-                    <div class="method-list">
-                        <label class="method-item selected" onclick="pilihMetode(this)">
+                        <label class="method-item selected" onclick="pilihMetode(this, 'tunai')">
                             <div class="method-radio"></div>
                             <div class="method-info">
-                                <strong>Transfer Bank BCA</strong>
+                                <strong>Tunai</strong>
+                                <span>Bayar langsung di tempat (Hari H)</span>
+                            </div>
+                            <span class="method-icon">💵</span>
+                            <input type="radio" name="metode_pembayaran" value="Tunai" checked hidden>
+                        </label>
+                        <label class="method-item" onclick="pilihMetode(this, 'transfer')">
+                            <div class="method-radio"></div>
+                            <div class="method-info">
+                                <strong>Transfer Bank</strong>
                                 <span>Konfirmasi manual dalam 24 jam</span>
                             </div>
                             <span class="method-icon">🏦</span>
-                            <input type="radio" name="metode_pembayaran" value="Transfer Bank BCA" checked hidden>
+                            <input type="radio" name="metode_pembayaran" value="Transfer Bank" hidden>
                         </label>
-                        <label class="method-item" onclick="pilihMetode(this)">
+                        <label class="method-item" onclick="pilihMetode(this, 'qris')">
                             <div class="method-radio"></div>
                             <div class="method-info">
-                                <strong>GoPay / OVO</strong>
+                                <strong>QRISS (All E-Wallet)</strong>
                                 <span>Scan QR Code</span>
                             </div>
-                            <span class="method-icon">📱</span>
-                            <input type="radio" name="metode_pembayaran" value="GoPay / OVO" hidden>
+                            <span class="method-icon">
+                                <img src="qriss.png" alt="QRISS" style="width: 40px; height: auto;">
+                            </span>
+                            <input type="radio" name="metode_pembayaran" value="QRISS" hidden>
                         </label>
-                        <label class="method-item" onclick="pilihMetode(this)">
-                            <div class="method-radio"></div>
-                            <div class="method-info">
-                                <strong>Bayar di Tempat</strong>
-                                <span>Konfirmasi saat hari H</span>
-                            </div>
-                            <span class="method-icon">💵</span>
-                            <input type="radio" name="metode_pembayaran" value="Bayar di Tempat" hidden>
-                        </label>
-                    </div>
                 </div>
-                <div class="card">
-                    <h3>Detail Transfer</h3>
-                    <div class="rekening-box">
+                <div class="card" id="detail-pembayaran-card" style="display:none;">
+                    <h3 id="detail-title">Detail Pembayaran</h3>
+                    <div class="rekening-box" id="rekening-box" style="display:none;">
                         <span>Transfer ke rekening</span>
                         <strong>123456789107</strong>
-                        <p>Bank BCA a.n. UKM Desain Unila</p>
+                        <p>Bank BCA a.n. Evently Organisasi</p>
                     </div>
 
-                    <span class="upload-label">Upload Bukti Transfer</span>
-                    <label class="upload-area">
-                        <input type="file" name="bukti_transfer" accept="image/*">
-                        <p>Klik untuk upload atau drag<br>JPG, PNG, max 5MB</p>
-                    </label>
+                    <div class="qris-box" id="qris-box" style="display:none; text-align:center;">
+                        <img src="../../assets/img/qriss.png" alt="QRIS" style="max-width: 200px; border-radius: 8px;">
+                        <p style="margin-top: 10px; color: #64748b;">Scan QRIS ini untuk semua E-Wallet / M-Banking</p>
+                    </div>
+
+                    <div id="upload-box">
+                        <span class="upload-label" style="display:block; margin-top:15px;">Upload Bukti Transfer</span>
+                        <label class="upload-area">
+                            <input type="file" name="bukti_transfer" accept="image/*">
+                            <p>Klik untuk upload atau drag<br>JPG, PNG, max 5MB</p>
+                        </label>
+                    </div>
                 </div>
             </div>
             <button type="submit" name="submit_pembayaran" class="btn-submit">Konfirmasi Pembayaran →</button>
@@ -194,11 +201,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
 </div>
 
 <script>
-    function pilihMetode(el) {
+    function pilihMetode(el, tipe) {
         document.querySelectorAll('.method-item').forEach(i => i.classList.remove('selected'));
         el.classList.add('selected');
         el.querySelector('input').checked = true;
+
+        const detailCard = document.getElementById('detail-pembayaran-card');
+        const rekBox = document.getElementById('rekening-box');
+        const qrisBox = document.getElementById('qris-box');
+        const uploadBox = document.getElementById('upload-box');
+        const detailTitle = document.getElementById('detail-title');
+
+        if (tipe === 'tunai') {
+            detailCard.style.display = 'none';
+        } else {
+            detailCard.style.display = 'block';
+            if (tipe === 'transfer') {
+                detailTitle.textContent = 'Detail Transfer';
+                rekBox.style.display = 'block';
+                qrisBox.style.display = 'none';
+            } else if (tipe === 'qris') {
+                detailTitle.textContent = 'Detail QRIS';
+                rekBox.style.display = 'none';
+                qrisBox.style.display = 'block';
+            }
+        }
     }
+
+    // Initialize display on load based on checked radio
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkedInput = document.querySelector('input[name="metode_pembayaran"]:checked');
+        if(checkedInput) {
+            const val = checkedInput.value;
+            if (val === 'Tunai') pilihMetode(checkedInput.closest('label'), 'tunai');
+            else if (val === 'Transfer Bank') pilihMetode(checkedInput.closest('label'), 'transfer');
+            else if (val === 'QRIS') pilihMetode(checkedInput.closest('label'), 'qris');
+        }
+    });
 </script>
 
 </body>

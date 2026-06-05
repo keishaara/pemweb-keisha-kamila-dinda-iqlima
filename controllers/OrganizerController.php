@@ -165,6 +165,11 @@ class OrganizerController {
             $judul_event = isset($_POST['judul_event']) ? trim(htmlspecialchars($_POST['judul_event'])) : '';
             $deskripsi   = isset($_POST['deskripsi']) ? trim(htmlspecialchars($_POST['deskripsi'])) : '';
             $tanggal     = isset($_POST['tanggal']) ? $_POST['tanggal'] : '';
+            $tanggal_selesai = isset($_POST['tanggal_selesai']) ? $_POST['tanggal_selesai'] : '';
+            $waktu       = isset($_POST['waktu']) ? $_POST['waktu'] : '';
+            $lokasi      = isset($_POST['lokasi']) ? trim(htmlspecialchars($_POST['lokasi'])) : '';
+            $kategori_id = isset($_POST['kategori_id']) ? intval($_POST['kategori_id']) : 0;
+            $jenis_acara = isset($_POST['jenis_acara']) ? $_POST['jenis_acara'] : '';
             $kuota       = isset($_POST['kuota']) ? intval($_POST['kuota']) : 0;
             $harga       = isset($_POST['harga']) ? intval($_POST['harga']) : 0;
 
@@ -173,6 +178,7 @@ class OrganizerController {
             if (empty($tanggal))     $errors[] = "Tanggal pelaksanaan tidak boleh dikosongkan.";
             if ($kuota <= 0)         $errors[] = "Kuota batasan peserta harus berupa angka di atas 0.";
             if ($harga < 0)          $errors[] = "Harga pendaftaran tidak boleh bernilai negatif.";
+            if ($kategori_id <= 0)   $errors[] = "Pilihan kategori tidak valid.";
 
             if (!empty($errors)) {
                 $_SESSION['form_errors'] = $errors;
@@ -184,6 +190,11 @@ class OrganizerController {
                 'judul_event' => $judul_event,
                 'deskripsi'   => $deskripsi,
                 'tanggal'     => $tanggal,
+                'tanggal_selesai' => $tanggal_selesai,
+                'waktu'       => $waktu,
+                'lokasi'      => $lokasi,
+                'kategori_id' => $kategori_id,
+                'jenis_acara' => $jenis_acara,
                 'kuota'       => $kuota,
                 'harga'       => $harga
             ];

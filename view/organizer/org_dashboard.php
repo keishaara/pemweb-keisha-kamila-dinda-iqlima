@@ -118,7 +118,7 @@ $agenda = $data['agenda'];
 
             <div class="org-stats">
 
-                <div class="org-stat-card">
+                <div class="org-stat-card" onclick="window.location.href='org_data_peserta.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
 
                     <div class="org-stat-icon">
                         <i class="fa-solid fa-users" style="font-size: 24px;"></i>
@@ -133,7 +133,7 @@ $agenda = $data['agenda'];
 
                 </div>
 
-                <div class="org-stat-card">
+                <div class="org-stat-card" onclick="window.location.href='org_kelola_acara.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
 
                     <div class="org-stat-icon">
                         <i class="fa-solid fa-calendar-day" style="font-size: 24px;"></i>
@@ -148,7 +148,7 @@ $agenda = $data['agenda'];
 
                 </div>
 
-                <div class="org-stat-card">
+                <div class="org-stat-card" onclick="window.location.href='org_kelola_acara.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
 
                     <div class="org-stat-icon">
                         <i class="fa-solid fa-clock-rotate-left" style="font-size: 24px;"></i>
@@ -163,10 +163,10 @@ $agenda = $data['agenda'];
 
                 </div>
 
-                <div class="org-stat-card">
+                <div class="org-stat-card" onclick="window.location.href='org_kelola_acara.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
 
                     <div class="org-stat-icon">
-                        <i class="fa-solid fa-circle-check" style="font-size: 24px;"></i>
+                        <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
                     </div>
 
                     <div class="org-stat-info">

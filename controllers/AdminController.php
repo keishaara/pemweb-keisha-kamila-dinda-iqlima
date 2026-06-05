@@ -19,6 +19,11 @@ class AdminController {
         return $res['total'] ?? 0;
     }
 
+    public function getTotalMahasiswa() {
+        $res = $this->model->countMahasiswa();
+        return $res['total'] ?? 0;
+    }
+
     public function getLatestUsers() {
         return $this->model->getLatestUsers();
     }
@@ -46,6 +51,7 @@ class AdminController {
     public function dashboard() {
         $totalUsers = $this->getTotalUsers();
         $totalOrganisasi = $this->getTotalOrganisasi();
+        $totalMahasiswa = $this->getTotalMahasiswa();
         $latestUsers = $this->getLatestUsers();
         $verifikasiAcara = $this->getVerifikasiAcara();
 

@@ -72,34 +72,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="org-menu-category">Menu Organisasi</div>
 
             <a href="org_dashboard.php" class="org-menu-item">
-            <i class="fa-solid fa-house"></i>
-            <span>Dashboard</span>
-        </a>
-            <a href="org_kelola_acara.php"
-                class="org-menu-item <?= $is_edit ? 'active' : '' ?>">
-                <img src="../../assets/img/<?= $is_edit ? 'icon-ticket2.png' : 'icon-ticket.png' ?>" alt="Kelola Acara">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="org_kelola_acara.php" class="org-menu-item <?= $is_edit ? 'active' : '' ?>">
+                <i class="fa-solid fa-ticket"></i>
                 <span>Kelola Acara</span>
             </a>
             <a href="org_data_peserta.php" class="org-menu-item">
-            <i class="fa-solid fa-users"></i>
-            <span>Data Peserta</span>
-        </a>
-            <a href="org_buat_acara.php"
-                class="org-menu-item <?= !$is_edit ? 'active' : '' ?>">
-                <img src="../../assets/img/<?= !$is_edit ? 'icon-kegiatan2.png' : 'icon-kegiatan.png' ?>" alt="Buat Acara">
+                <i class="fa-solid fa-users"></i>
+                <span>Data Peserta</span>
+            </a>
+            <a href="org_buat_acara.php" class="org-menu-item <?= !$is_edit ? 'active' : '' ?>">
+                <i class="fa-solid fa-layer-group"></i>
                 <span>Buat Acara</span>
             </a>
 
             <div class="org-menu-category">Akun</div>
 
             <a href="org_profile.php" class="org-menu-item">
-            <i class="fa-solid fa-user-tie"></i>
-            <span>Profil Organisasi</span>
-        </a>
-            <a href="org_kelola_acara.php" class="org-menu-item">
-            <i class="fa-solid fa-ticket"></i>
-            <span>Kelola Acara</span>
-        </a>
+                <i class="fa-solid fa-user-tie"></i>
+                <span>Profil Organisasi</span>
+            </a>
+            <a href="../auth/logout.php" class="org-menu-item">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Keluar</span>
+            </a>
         </aside>
 
         <main class="org-main">
@@ -134,13 +132,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               <?php
                                 $selectedKategori = $_POST['kategori_id']
                                     ?? ($is_edit ? ($event['kategori_id'] ?? '') : '');
+                                
+                                global $conn;
+                                $cat_query = mysqli_query($conn, "SELECT * FROM categories ORDER BY id ASC");
+                                $categories = mysqli_fetch_all($cat_query, MYSQLI_ASSOC);
                                 ?>
 
                                 <select name="kategori_id" class="org-select" required>
-                                    <option value="1" <?= $selectedKategori == '1' ? 'selected' : '' ?>>Seminar</option>
-                                    <option value="2" <?= $selectedKategori == '2' ? 'selected' : '' ?>>Workshop</option>
-                                    <option value="3" <?= $selectedKategori == '3' ? 'selected' : '' ?>>Pelatihan</option>
-                                    <option value="4" <?= $selectedKategori == '4' ? 'selected' : '' ?>>Diskusi</option>
+                                    <option value="" disabled <?= empty($selectedKategori) ? 'selected' : '' ?>>-- Pilih Kategori --</option>
+                                    <?php foreach ($categories as $cat): ?>
+                                        <option value="<?= $cat['id'] ?>" <?= $selectedKategori == $cat['id'] ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($cat['nama_kategori']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 

@@ -165,17 +165,29 @@ public function getEventById($eventId, $userId) {
                     judul_event = ?, 
                     deskripsi = ?, 
                     tanggal = ?, 
-                    kuota = ?
+                    tanggal_selesai = ?,
+                    waktu = ?,
+                    lokasi = ?,
+                    kuota = ?,
+                    harga = ?,
+                    kategori_id = ?,
+                    jenis_acara = ?
                 WHERE id = ? AND user_id = ?";
                 
         $stmt = mysqli_prepare($this->conn, $sql);
         mysqli_stmt_bind_param(
             $stmt, 
-            "sssiii", 
+            "ssssssiiiisi", 
             $data['judul_event'], 
             $data['deskripsi'], 
             $data['tanggal'], 
+            $data['tanggal_selesai'],
+            $data['waktu'],
+            $data['lokasi'],
             $data['kuota'], 
+            $data['harga'],
+            $data['kategori_id'],
+            $data['jenis_acara'],
             $eventId, 
             $userId
         );

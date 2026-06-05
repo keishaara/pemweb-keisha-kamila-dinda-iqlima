@@ -50,40 +50,40 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
 
             <div class="stats-grid">
                <div class="stat-card">
-                        <i class="fa-solid fa-ticket"></i>
+                    <div class="stat-icon"><i class="fa-solid fa-ticket"></i></div>
                     <div class="stat-info">
                         <h3><?= $stats['total_terdaftar'] ?? 0 ?></h3>
-                        <a href="e-tiket.php" class="btn btn-link btn-small">
+                        <a href="e-tiket.php" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
                             Event Terdaftar
                         </a>
                     </div>
                 </div>
 
                 <div class="stat-card">
-                        <i class="fa-solid fa-circle-check"></i>
+                    <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
                     <div class="stat-info">
                         <h3><?= $stats['total_selesai'] ?? 0 ?></h3>
-                        <a href="e-tiket.php?status=selesai" class="btn btn-link btn-small">
+                        <a href="e-tiket.php?status=selesai" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
                             Event Selesai
                         </a>
                     </div>
                 </div>
 
                 <div class="stat-card">
-                        <i class="fa-solid fa-star"></i>
+                    <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
                     <div class="stat-info">
                         <h3><?= $saved['total_saved']; ?></h3>
-                        <a href="saved_events.php" class="btn btn-link btn-small">
+                        <a href="saved_events.php" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
                             Disimpan
                         </a>
                     </div>
                 </div>
 
                 <div class="stat-card">
-                        <i class="fa-solid fa-clock"></i>
+                    <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
                     <div class="stat-info">
                         <h3><?= $stats['total_mendatang'] ?? 0 ?></h3>
-                        <a href="e-tiket.php?status=mendatang" class="btn btn-link btn-small">
+                        <a href="e-tiket.php?status=mendatang" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
                             Event Mendatang
                         </a>
                     </div>

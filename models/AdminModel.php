@@ -69,6 +69,14 @@ class AdminModel {
         return mysqli_fetch_assoc($query);
     }
 
+    public function countMahasiswa() {
+        $query = mysqli_query(
+            $this->conn, 
+            "SELECT COUNT(*) as total FROM users WHERE tipe_akun='mahasiswa'"
+        );
+        return mysqli_fetch_assoc($query);
+    }
+
     public function getLatestUsers() {
         $query = mysqli_query(
             $this->conn,

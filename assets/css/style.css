@@ -4309,6 +4309,21 @@ a.btn-table-action {
     color: #ef4444 !important;
 }
 
+.status-pill.ditolak {
+    background-color: #fee2e2 !important;
+    color: #ef4444 !important;
+}
+
+.status-pill.menunggu {
+    background-color: #fef9c3 !important;
+    color: #ca8a04 !important;
+}
+
+.status-pill.disetujui {
+    background-color: #d1fae5 !important;
+    color: #10b981 !important;
+}
+
 /* --- Font Awesome Icon Styles --- */
 .sidebar .logo i {
     color: var(--primary-color, #4CAF50);
