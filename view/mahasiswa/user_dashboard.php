@@ -91,7 +91,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
             </div>
             <div class="header-actions">
                 <h3 class="section-title">Event Mendatang</h3>
-                <a href="e-tiket.php" class="btn btn-outline btn-small">Lihat Semua</a>
+                <a href="kegiatan_mhs.php" class="btn btn-outline btn-small">Lihat Semua</a>
             </div>
 
             <div class="card-grid">
