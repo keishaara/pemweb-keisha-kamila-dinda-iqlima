@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $msg = 'Token tidak ditemukan. Silakan minta ulang reset password.'; $msgType = 'error';
     } else {
         $stmt = mysqli_prepare($conn, "SELECT pr.user_id FROM password_resets pr WHERE pr.token = ?");
-        // AND pr.expires_at >= NOW()");
         mysqli_stmt_bind_param($stmt, "s", $token);
         mysqli_stmt_execute($stmt);
         $res = mysqli_stmt_get_result($stmt);
@@ -53,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Setel Ulang Kata Sandi - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="split-screen">
         <div class="form-side">
-            <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
+            <a href="../auth/login.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
             <h2>Setel Ulang Kata Sandi</h2>
             <p class="text-muted mb-3">Masukkan kode verifikasi <strong>123456</strong> dan kata sandi baru Anda.</p>
 
@@ -68,24 +68,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>"><?= htmlspecialchars($msg); ?></div>
             <?php endif; ?>
 
-            <?php if (empty($msgType) || $msgType !== 'success'): ?>
-            <form method="POST" action="">
-                <input type="hidden" name="token" value="<?= htmlspecialchars($token); ?>">
-                <div class="form-group">
-                    <label class="form-label">Kode Verifikasi</label>
-                    <input type="text" name="verification_code" class="form-control" placeholder="Masukkan 6 digit kode" required>
+            <?php if ($msgType === 'success'): ?>
+                <div class="success-action-container">
+                    <a href="../auth/login.php" class="btn btn-primary btn-block btn-centered-text">Kembali Ke Login</a>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Kata Sandi Baru</label>
-                    <input type="password" name="password" class="form-control" placeholder="Min. 8 karakter" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Konfirmasi Sandi</label>
-                    <input type="password" name="konfirmasi_password" class="form-control" placeholder="Ulangi Sandi" required>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Setel Ulang Kata Sandi</button>
-                <p class="auth-footer">Kembali ke <a href="login.php">Masuk</a></p>
-            </form>
+            <?php else: ?>
+                <form method="POST" action="">
+                    <input type="hidden" name="token" value="<?= htmlspecialchars($token); ?>">
+                    <div class="form-group">
+                        <label class="form-label">Kode Verifikasi</label>
+                        <input type="text" name="verification_code" class="form-control" placeholder="Masukkan 6 digit kode" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kata Sandi Baru</label>
+                        <input type="password" name="password" class="form-control" placeholder="Min. 8 karakter" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Konfirmasi Sandi</label>
+                        <input type="password" name="konfirmasi_password" class="form-control" placeholder="Ulangi Sandi" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Setel Ulang Kata Sandi</button>
+                    <p class="auth-footer">Kembali ke <a href="../public/index.php">Masuk</a></p>
+                </form>
             <?php endif; ?>
         </div>
         <div class="img-side"></div>
