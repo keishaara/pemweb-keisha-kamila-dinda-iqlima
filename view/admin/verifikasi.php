@@ -20,38 +20,39 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
     <meta charset="UTF-8">
     <title>Verifikasi Acara - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="logo">
-                <img src="../../assets/img/icon.png" alt="Evently">
+                <i class="fa-solid fa-calendar-check"></i>
                 Evently
             </div>
             <div class="menu-category">Manajemen</div>
             <a href="dashboard.php" class="menu-item">
-                <img src="../../assets/img/icon-home2.png" alt="Dashboard">
+                <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
             <a href="verifikasi.php" class="menu-item active">
-                <img src="../../assets/img/icon-ticket2.png" alt="Verifikasi">
+                <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
             <a href="semua_acara.php" class="menu-item">
-                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
             <a href="pengguna.php" class="menu-item">
-                <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
+                <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
             <a href="kategori.php" class="menu-item">
-                <img src="../../assets/img/icon-kegiatan.png" alt="Kategori">
+                <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
             <div class="menu-category">Sistem</div>
-            <a href="../auth/logout.php" class="menu-item">
-                <img src="../../assets/img/icon-logout.png" alt="Logout">
+            <a href="../auth/logout.php" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+                <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
         </aside>
@@ -78,9 +79,9 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
             <?php else: ?>
                 <?php foreach($verifikasiAcara as $acara): ?>
                 <div class="verif-card">
-                    <div class="verif-icon-box">
-                        <img src="../../assets/img/ver.png" alt="Event">
-                    </div>
+                        <div class="verify-icon">
+                            <i class="fa-solid fa-file-signature"></i>
+                        </div>
 
                     <div class="verif-info">
                         <div class="verif-tags">

@@ -27,6 +27,7 @@ $kategori = $controller->getKategori();
     <meta charset="UTF-8">
     <title>Kelola Kategori - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -35,40 +36,40 @@ $kategori = $controller->getKategori();
 
         <aside class="sidebar">
             <div class="logo">
-                <img src="../../assets/img/icon.png" alt="Evently">
+                <i class="fa-solid fa-calendar-check"></i>
                 Evently
             </div>
 
             <div class="menu-category">Manajemen</div>
 
             <a href="dashboard.php" class="menu-item">
-                <img src="../../assets/img/icon-home2.png" alt="Dashboard">
+                <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
 
             <a href="verifikasi.php" class="menu-item">
-                <img src="../../assets/img/icon-ticket.png" alt="Verifikasi">
+                <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
             <a href="semua_acara.php" class="menu-item">
-                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
 
             <a href="pengguna.php" class="menu-item">
-                <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
+                <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
 
             <a href="kategori.php" class="menu-item active">
-                <img src="../../assets/img/icon-kegiatan.png" alt="Kategori">
+                <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
 
             <div class="menu-category">Sistem</div>
 
             <a href="../auth/logout.php" class="menu-item">
-                <img src="../../assets/img/icon-logout.png" alt="Logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
         </aside>
@@ -96,13 +97,27 @@ $kategori = $controller->getKategori();
                     <div class="cat-card">
                         <div class="cat-icon">
                             <?php 
-                                $iconName = !empty($kat['icon']) ? $kat['icon'] : 'icon-kegiatan.png';
+                                $nama_kat = strtolower($kat['nama_kategori']);
+                                $fa_icon = 'fa-solid fa-layer-group';
+                                if (strpos($nama_kat, 'music') !== false || strpos($nama_kat, 'musik') !== false) {
+                                    $fa_icon = 'fa-solid fa-music';
+                                } elseif (strpos($nama_kat, 'olahraga') !== false || strpos($nama_kat, 'sport') !== false) {
+                                    $fa_icon = 'fa-solid fa-medal';
+                                } elseif (strpos($nama_kat, 'teknologi') !== false || strpos($nama_kat, 'tech') !== false || strpos($nama_kat, 'it') !== false) {
+                                    $fa_icon = 'fa-solid fa-laptop-code';
+                                } elseif (strpos($nama_kat, 'seni') !== false || strpos($nama_kat, 'art') !== false) {
+                                    $fa_icon = 'fa-solid fa-palette';
+                                } elseif (strpos($nama_kat, 'pendidikan') !== false || strpos($nama_kat, 'seminar') !== false || strpos($nama_kat, 'education') !== false) {
+                                    $fa_icon = 'fa-solid fa-graduation-cap';
+                                } elseif (strpos($nama_kat, 'bisnis') !== false || strpos($nama_kat, 'business') !== false) {
+                                    $fa_icon = 'fa-solid fa-briefcase';
+                                } elseif (strpos($nama_kat, 'kesehatan') !== false || strpos($nama_kat, 'health') !== false) {
+                                    $fa_icon = 'fa-solid fa-heart-pulse';
+                                } elseif (strpos($nama_kat, 'budaya') !== false || strpos($nama_kat, 'culture') !== false) {
+                                    $fa_icon = 'fa-solid fa-masks-theater';
+                                }
                             ?>
-                            <img 
-                                src="../../assets/img/<?= htmlspecialchars($iconName); ?>" 
-                                alt="<?= htmlspecialchars($kat['nama_kategori']); ?>"
-                                onerror="this.src='../../assets/img/icon.png';"
-                            >
+                            <i class="<?= $fa_icon; ?>"></i>
                         </div>
 
                         <div class="cat-details">

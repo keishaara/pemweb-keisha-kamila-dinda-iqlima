@@ -28,6 +28,7 @@ $keyword = $_GET['search'] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Acara - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -35,41 +36,41 @@ $keyword = $_GET['search'] ?? '';
 
     <aside class="org-sidebar">
         <a href="index.php" class="org-logo">
-            <img src="../../assets/img/icon.png" alt="Evently">
+            <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
             <span>Evently</span>
         </a>
 
         <div class="org-menu-category">Menu Organisasi</div>
 
         <a href="org_dashboard.php" class="org-menu-item">
-            <img src="../../assets/img/icon-home2.png" alt="Dashboard">
+            <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
         </a>
 
         <a href="org_kelola_acara.php" class="org-menu-item active">
-            <img src="../../assets/img/icon-ticket2.png" alt="Kelola Acara">
+            <i class="fa-solid fa-ticket"></i>
             <span>Kelola Acara</span>
         </a>
 
         <a href="org_data_peserta.php" class="org-menu-item">
-            <img src="../../assets/img/icon-user2.png" alt="Data Peserta">
+            <i class="fa-solid fa-users"></i>
             <span>Data Peserta</span>
         </a>
 
         <a href="org_buat_acara.php" class="org-menu-item">
-            <img src="../../assets/img/icon-kegiatan.png" alt="Buat Acara">
+            <i class="fa-solid fa-layer-group"></i>
             <span>Buat Acara</span>
         </a>
 
         <div class="org-menu-category">Akun</div>
 
         <a href="org_profile.php" class="org-menu-item">
-            <img src="../../assets/img/icon-profil-organisasi.png" alt="Profil">
+            <i class="fa-solid fa-user-tie"></i>
             <span>Profil Organisasi</span>
         </a>
 
         <a href="../auth/logout.php" class="org-menu-item">
-            <img src="../../assets/img/icon-logout.png" alt="Keluar">
+            <i class="fa-solid fa-right-from-bracket"></i>
             <span>Keluar</span>
         </a>
     </aside>

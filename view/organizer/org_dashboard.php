@@ -40,6 +40,7 @@ $agenda = $data['agenda'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Organisasi - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -48,7 +49,7 @@ $agenda = $data['agenda'];
     <aside class="org-sidebar">
 
         <a href="index.php" class="org-logo">
-            <img src="../../assets/img/icon.png" alt="Evently">
+            <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
             <span>Evently</span>
         </a>
 
@@ -57,22 +58,22 @@ $agenda = $data['agenda'];
         </div>
 
         <a href="org_dashboard.php" class="org-menu-item active">
-            <img src="../../assets/img/icon-home3.png" alt="Dashboard">
+            <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
         </a>
 
         <a href="org_kelola_acara.php" class="org-menu-item">
-            <img src="../../assets/img/icon-ticket.png" alt="Kelola Acara">
+            <i class="fa-solid fa-ticket"></i>
             <span>Kelola Acara</span>
         </a>
 
         <a href="org_data_peserta.php" class="org-menu-item">
-            <img src="../../assets/img/icon-user2.png" alt="Data Peserta">
+            <i class="fa-solid fa-users"></i>
             <span>Data Peserta</span>
         </a>
 
         <a href="org_buat_acara.php" class="org-menu-item">
-            <img src="../../assets/img/icon-kegiatan.png" alt="Buat Acara">
+            <i class="fa-solid fa-layer-group"></i>
             <span>Buat Acara</span>
         </a>
 
@@ -81,12 +82,12 @@ $agenda = $data['agenda'];
         </div>
 
         <a href="org_profile.php" class="org-menu-item">
-            <img src="../../assets/img/icon-profil-organisasi.png" alt="Profil">
+            <i class="fa-solid fa-user-tie"></i>
             <span>Profil Organisasi</span>
         </a>
 
         <a href="../auth/logout.php" class="org-menu-item">
-            <img src="../../assets/img/icon-logout.png" alt="Keluar">
+            <i class="fa-solid fa-right-from-bracket"></i>
             <span>Keluar</span>
         </a>
 
@@ -120,7 +121,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card">
 
                     <div class="org-stat-icon">
-                        <img src="../../assets/img/icon-peserta.png" alt="Peserta">
+                        <i class="fa-solid fa-users" style="font-size: 24px;"></i>
                     </div>
 
                     <div class="org-stat-info">
@@ -135,7 +136,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card">
 
                     <div class="org-stat-icon">
-                        <img src="../../assets/img/icon-time.png" alt="Event">
+                        <i class="fa-solid fa-calendar-day" style="font-size: 24px;"></i>
                     </div>
 
                     <div class="org-stat-info">
@@ -150,7 +151,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card">
 
                     <div class="org-stat-icon">
-                        <img src="../../assets/img/icon-clock.png" alt="Pending">
+                        <i class="fa-solid fa-clock-rotate-left" style="font-size: 24px;"></i>
                     </div>
 
                     <div class="org-stat-info">
@@ -165,7 +166,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card">
 
                     <div class="org-stat-icon">
-                        <img src="../../assets/img/icon-check.png" alt="Selesai">
+                        <i class="fa-solid fa-circle-check" style="font-size: 24px;"></i>
                     </div>
 
                     <div class="org-stat-info">

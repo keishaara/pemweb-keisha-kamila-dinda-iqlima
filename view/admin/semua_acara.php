@@ -18,48 +18,49 @@ $semuaAcara = $controller->getAllEvents();
     <meta charset="UTF-8">
     <title>Daftar Semua Acara - Admin Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
-          <div class="logo">
-               <img src="../../assets/img/icon.png" alt="Evently">
+           <div class="logo">
+               <i class="fa-solid fa-calendar-check"></i>
                Evently
-          </div>
+           </div>
     
           <div class="menu-category">Manajemen</div>
     
-          <a href="dashboard.php" class="menu-item">
-               <img src="../../assets/img/icon-home2.png" alt="Dashboard">
+           <a href="dashboard.php" class="menu-item">
+               <i class="fa-solid fa-chart-line"></i>
                Dashboard
-          </a>
+           </a>
 
-          <a href="verifikasi.php" class="menu-item">
-               <img src="../../assets/img/icon-ticket.png" alt="Verifikasi">
+           <a href="verifikasi.php" class="menu-item">
+               <i class="fa-solid fa-ticket"></i>
                Verifikasi Acara
-          </a>
+           </a>
 
-          <a href="semua_acara.php" class="menu-item active">
-               <img src="../../assets/img/icon-allevents.png" alt="Semua Acara">
+           <a href="semua_acara.php" class="menu-item active">
+               <i class="fa-solid fa-calendar-days"></i>
                Semua Acara
-          </a>
+           </a>
 
-          <a href="pengguna.php" class="menu-item">
-               <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
+           <a href="pengguna.php" class="menu-item">
+               <i class="fa-solid fa-users"></i>
                Pengguna
-          </a>
+           </a>
 
-          <a href="kategori.php" class="menu-item">
-               <img src="../../assets/img/icon-kegiatan.png" alt="Kategori">
+           <a href="kategori.php" class="menu-item">
+               <i class="fa-solid fa-layer-group"></i>
                Kategori
-          </a>
+           </a>
 
           <div class="menu-category">Sistem</div>
     
-          <a href="../auth/logout.php" class="menu-item">
-               <img src="../../assets/img/icon-logout.png" alt="Logout">
+           <a href="../auth/logout.php" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin logout?')">
+               <i class="fa-solid fa-right-from-bracket"></i>
                Keluar
-          </a>
+           </a>
      </aside>
 
         <main class="main-content">

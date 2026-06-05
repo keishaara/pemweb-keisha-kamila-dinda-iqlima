@@ -9,11 +9,12 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evently - Platform Kegiatan Kampus #1</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="landing-page">
         <nav class="navbar">
-            <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
+            <div class="logo"><i class="fa-solid fa-calendar-check" style="font-size: 24px; color: #2E4C82;"></i> Evently</div>
             <div class="nav-links">
                 <a href="fitur.php">Fitur</a>
                 <a href="kegiatan.php">Kegiatan</a>

@@ -28,6 +28,7 @@ $totalUsersCount = $controller->getTotalUsers();
     <meta charset="UTF-8">
     <title>Manajemen Pengguna - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -37,7 +38,7 @@ $totalUsersCount = $controller->getTotalUsers();
         <aside class="sidebar">
 
             <div class="logo">
-                <img src="../../assets/img/icon.png" alt="Evently">
+                <i class="fa-solid fa-calendar-check"></i>
                 Evently
             </div>
 
@@ -46,26 +47,26 @@ $totalUsersCount = $controller->getTotalUsers();
             </div>
 
             <a href="dashboard.php" class="menu-item">
-                <img src="../../assets/img/icon-home2.png" alt="Dashboard">
+                <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
 
             <a href="verifikasi.php" class="menu-item">
-                <img src="../../assets/img/icon-ticket.png" alt="Verifikasi">
+                <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
             <a href="semua_acara.php" class="menu-item">
-                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
 
             <a href="pengguna.php" class="menu-item active">
-                <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
+                <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
 
             <a href="kategori.php" class="menu-item">
-                <img src="../../assets/img/icon-kegiatan.png" alt="Kategori">
+                <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
 
@@ -74,7 +75,7 @@ $totalUsersCount = $controller->getTotalUsers();
             </div>
 
             <a href="../auth/logout.php" class="menu-item">
-                <img src="../../assets/img/icon-logout.png" alt="Logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
 

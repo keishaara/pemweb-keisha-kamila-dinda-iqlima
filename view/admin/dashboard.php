@@ -23,38 +23,39 @@ $semuaAcara = $controller->getAllEvents();
     <meta charset="UTF-8">
     <title>Dashboard Admin</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
             <div class="logo">
-                <img src="../../assets/img/icon.png" alt="Evently">
+                <i class="fa-solid fa-calendar-check"></i>
                 Evently
             </div>
             <div class="menu-category">Manajemen</div>
             <a href="dashboard.php" class="menu-item active">
-                <img src="../../assets/img/icon-dash-admin-active.png" alt="Dashboard">
+                <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
             <a href="verifikasi.php" class="menu-item">
-                <img src="../../assets/img/icon-ticket.png" alt="Verifikasi">
+                <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
             <a href="semua_acara.php" class="menu-item">
-                <img src="../../assets/img/icon-allevent.png" alt="Semua Acara">
+                <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
             <a href="pengguna.php" class="menu-item">
-                <img src="../../assets/img/icon-user-admin.png" alt="Pengguna">
+                <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
             <a href="kategori.php" class="menu-item">
-                <img src="../../assets/img/icon-kegiatan.png" alt="Kategori">
+                <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
             <div class="menu-category">Sistem</div>
             <a href="../auth/logout.php" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
-                <img src="../../assets/img/icon-logout.png" alt="Logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
         </aside>
@@ -67,28 +68,28 @@ $semuaAcara = $controller->getAllEvents();
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon"><img src="../../assets/img/dsa1.png" alt="Users"></div>
+                    <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
                     <h3><?= $totalUsersData; ?></h3>
                     <p>Total Pengguna</p>
                     <div class="stat-trend">Data pengguna terdaftar</div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-icon"><img src="../../assets/img/dsa2.png" alt="Acara"></div>
+                    <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
                     <h3><?= count($verifikasiAcara); ?></h3>
                     <p>Acara Menunggu</p>
                     <div class="stat-trend">Jumlah acara yang perlu diverifikasi</div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-icon"><img src="../../assets/img/dsa3.png" alt="Verifikasi"></div>
+                    <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                     <h3><?= count(array_filter($verifikasiAcara, fn($e) => $e['status'] == 'pending')); ?></h3>
                     <p>Menunggu Verifikasi</p>
                     <div class="stat-trend negative">Perlu tindakan admin</div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-icon"><img src="../../assets/img/dsa4.png" alt="Organisasi"></div>
+                    <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
                     <h3><?= $totalOrgData; ?></h3>
                     <p>Organisasi Aktif</p>
                     <div class="stat-trend">Total akun organisasi</div>

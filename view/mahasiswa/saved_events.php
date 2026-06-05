@@ -38,18 +38,19 @@ $saved = $controller->getSavedEvents(
     <meta charset="UTF-8">
     <title>Disimpan - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
-            <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
+            <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
-            <a href="user_dashboard.php" class="menu-item"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
-            <a href="kegiatan_mhs.php" class="menu-item"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
-            <a href="e-tiket.php" class="menu-item"><img src="../../assets/img/icon-ticket.png" alt="E-Tiket"> E-Tiket</a>
+            <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
+            <a href="kegiatan_mhs.php" class="menu-item"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
+            <a href="e-tiket.php" class="menu-item"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
             <div class="menu-category">Akun</div>
-            <a href="profil.php" class="menu-item"><img src="../../assets/img/icon-user2.png" alt="Profil"> Profil Saya</a>
-            <a href="../auth/logout.php" class="menu-item"><img src="../../assets/img/icon-logout.png" alt="Keluar"> Keluar</a>
+            <a href="profil.php" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
+            <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
         </aside>
 
         <main class="main-content">
@@ -64,9 +65,28 @@ $saved = $controller->getSavedEvents(
                 <?php else: ?>
                     <?php foreach($saved as $ev): ?>
                         <div class="event-card">
-                            <div class="event-img">
-                                <img src="../../assets/img/icon-<?= strtolower($ev['kategori_id'] ?? 'workshop') ?>.png" onerror="this.src='../../assets/img/icon-workshop.png'" alt="Icon">
-                            </div>
+                            <?php 
+                                $nama_kat = strtolower($ev['nama_kategori'] ?? '');
+                                $fa_icon = 'fa-solid fa-layer-group';
+                                if (strpos($nama_kat, 'music') !== false || strpos($nama_kat, 'musik') !== false) {
+                                    $fa_icon = 'fa-solid fa-music';
+                                } elseif (strpos($nama_kat, 'olahraga') !== false || strpos($nama_kat, 'sport') !== false) {
+                                    $fa_icon = 'fa-solid fa-medal';
+                                } elseif (strpos($nama_kat, 'teknologi') !== false || strpos($nama_kat, 'tech') !== false || strpos($nama_kat, 'it') !== false) {
+                                    $fa_icon = 'fa-solid fa-laptop-code';
+                                } elseif (strpos($nama_kat, 'seni') !== false || strpos($nama_kat, 'art') !== false) {
+                                    $fa_icon = 'fa-solid fa-palette';
+                                } elseif (strpos($nama_kat, 'pendidikan') !== false || strpos($nama_kat, 'seminar') !== false || strpos($nama_kat, 'education') !== false) {
+                                    $fa_icon = 'fa-solid fa-graduation-cap';
+                                } elseif (strpos($nama_kat, 'bisnis') !== false || strpos($nama_kat, 'business') !== false) {
+                                    $fa_icon = 'fa-solid fa-briefcase';
+                                } elseif (strpos($nama_kat, 'kesehatan') !== false || strpos($nama_kat, 'health') !== false) {
+                                    $fa_icon = 'fa-solid fa-heart-pulse';
+                                } elseif (strpos($nama_kat, 'budaya') !== false || strpos($nama_kat, 'culture') !== false) {
+                                    $fa_icon = 'fa-solid fa-masks-theater';
+                                }
+                            ?>
+                            <i class="<?= $fa_icon; ?>" style="font-size: 2em; color: #2E4C82;"></i>
                             <div class="event-details">
                                 <span class="event-tag"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')) ?></span>
                                 <h4 class="event-title"><?= htmlspecialchars($ev['judul_event']) ?></h4>

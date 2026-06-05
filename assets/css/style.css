@@ -4309,3 +4309,19 @@ a.btn-table-action {
     color: #ef4444 !important;
 }
 
+/* --- Font Awesome Icon Styles --- */
+.sidebar .logo i {
+    color: var(--primary-color, #4CAF50);
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.sidebar .menu-item i {
+    margin-right: 10px;
+    width: 24px; /* Ensure uniform width */
+    text-align: center;
+}
+
+.stat-icon i {
+    font-size: 24px;
+}

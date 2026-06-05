@@ -27,18 +27,19 @@ if ($status === 'selesai') {
     <meta charset="UTF-8">
     <title>E-Tiket Saya - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
-            <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
+            <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
-            <a href="user_dashboard.php" class="menu-item"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
-            <a href="kegiatan_mhs.php" class="menu-item"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
-            <a href="e-tiket.php" class="menu-item active"><img src="../../assets/img/icon-ticket.png" alt="E-Tiket"> E-Tiket</a>
+            <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
+            <a href="kegiatan_mhs.php" class="menu-item"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
+            <a href="e-tiket.php" class="menu-item active"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
             <div class="menu-category">Akun</div>
-            <a href="profil.php" class="menu-item"><img src="../../assets/img/icon-user2.png" alt="Profil"> Profil Saya</a>
-            <a href="../auth/logout.php" class="menu-item"><img src="../../assets/img/icon-logout.png" alt="Keluar"> Keluar</a>
+            <a href="profil.php" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
+            <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
         </aside>
 
         <main class="main-content">
@@ -91,17 +92,17 @@ if ($status === 'selesai') {
 
                                 <div class="verif-details">
                                     <span>
-                                        <img src="../../assets/img/icon-time.png" style="width:12px;">
+                                        <i class="fa-solid fa-calendar" style="font-size:12px;"></i>
                                         <?= date('d M Y', strtotime($tiket['tanggal'])) ?>
                                     </span>
 
                                     <span>
-                                        <img src="../../assets/img/icon-time.png" style="width:12px;">
+                                        <i class="fa-solid fa-clock" style="font-size:12px;"></i>
                                         <?= date('H.i', strtotime($tiket['waktu'])) ?> WIB
                                     </span>
 
                                     <span>
-                                        <img src="../../assets/img/icon-loc.png" style="width:12px;">
+                                        <i class="fa-solid fa-location-dot" style="font-size:12px;"></i>
                                         <?= htmlspecialchars($tiket['lokasi']) ?>
                                     </span>
                                 </div>

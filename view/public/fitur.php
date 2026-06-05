@@ -21,6 +21,7 @@ function getKategoriStyle($kategori) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitur & Layanan - Evently</title>
     <link rel="stylesheet" href="../../assets/css/fitur.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="features-wrapper">
@@ -29,7 +30,7 @@ function getKategoriStyle($kategori) {
             <div class="nav-container">
                 <a href="javascript:history.back()" class="logo">
                     <div class="logo-icon">
-                        <img src="../../assets/img/icon.png" alt="Evently" onerror="this.src='https://cdn-icons-png.flaticon.com/512/609/609803.png';">
+                        <i class="fa-solid fa-calendar-check" style="font-size: 24px; color: #2E4C82;"></i>
                     </div>
                     <span>Evently</span>
                 </a>
@@ -55,7 +56,7 @@ function getKategoriStyle($kategori) {
             <div class="features-grid">
                 <div class="feature-item">
                     <div class="icon-box bg-blue">
-                        <img src="../../assets/img/icon-search.png" alt="Cari" onerror="this.src='https://cdn-icons-png.flaticon.com/512/622/622669.png';">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 24px; color: #fff;"></i>
                     </div>
                     <h3>Temukan Kegiatan</h3>
                     <p>Filter berdasarkan kategori, tanggal, atau minat. Tidak perlu lagi buka banyak grup WhatsApp dan Instagram.</p>
@@ -63,7 +64,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-pink">
-                        <img src="../../assets/img/icon-ticket.png" alt="E-Ticket" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1950/1950315.png';">
+                        <i class="fa-solid fa-ticket" style="font-size: 24px; color: #fff;"></i>
                     </div>
                     <h3>E-Ticket Digital</h3>
                     <p>Daftar dan simpan bukti pendaftaran digital langsung di profil. Praktis, tidak perlu cetak tiket.</p>
@@ -71,7 +72,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-cyan">
-                        <img src="../../assets/img/icon-user-admin.png" alt="Peserta" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png';">
+                        <i class="fa-solid fa-users" style="font-size: 24px; color: #fff;"></i>
                     </div>
                     <h3>Kelola Peserta</h3>
                     <p>Organisasi dapat memantau peserta dan mengunduh data Excel/CSV untuk keperluan absensi kegiatan.</p>
@@ -79,7 +80,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-green">
-                        <img src="../../assets/img/icon-check.png" alt="Verifikasi" onerror="this.src='https://cdn-icons-png.flaticon.com/512/5290/5290058.png';">
+                        <i class="fa-solid fa-circle-check" style="font-size: 24px; color: #fff;"></i>
                     </div>
                     <h3>Verifikasi Admin</h3>
                     <p>Setiap kegiatan diverifikasi Admin sebelum tampil, sehingga kualitas informasi selalu terjaga.</p>
@@ -87,7 +88,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-purple">
-                        <img src="../../assets/img/icon-megaphone.png" alt="Promosi" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1793/1793392.png';">
+                        <i class="fa-solid fa-bullhorn" style="font-size: 24px; color: #fff;"></i>
                     </div>
                     <h3>Promosi Luas</h3>
                     <p>Jangkau lebih banyak mahasiswa sekaligus. Informasi acaramu tersebar ke seluruh pengguna platform.</p>
@@ -95,7 +96,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-orange">
-                        <img src="../../assets/img/icon-lock.png" alt="Akses" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3064/3064155.png';">
+                        <i class="fa-solid fa-lock" style="font-size: 24px; color: #fff;"></i>
                     </div>
                     <h3>Hak Akses Berlapis</h3>
                     <p>Sistem role berbeda untuk Mahasiswa, Organisasi, dan Admin menjamin keamanan pengelolaan data.</p>

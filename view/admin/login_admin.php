@@ -50,11 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Login - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="split-screen">
         <div class="form-side">
-            <a href="../public/index.php" class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</a>
+            <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
             <h2>Login Admin</h2>
             <p class="text-muted mb-3">Silakan masuk ke akun admin Anda.</p>
 
