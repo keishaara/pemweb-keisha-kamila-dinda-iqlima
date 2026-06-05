@@ -44,6 +44,7 @@ class MahasiswaModel {
         mysqli_stmt_execute($stmt);
         return mysqli_stmt_get_result($stmt);
     }
+
     public function getDashboardStats($userId)
     {
         $sql = "
@@ -62,6 +63,7 @@ class MahasiswaModel {
 
         return $stmt->get_result()->fetch_assoc();
     }
+
     public function getSavedCount($userId)
     {
         $sql = "
@@ -96,6 +98,7 @@ class MahasiswaModel {
 
         return $stmt->get_result();
     }
+
     public function getUserById(int $id)
     {
         $stmt = mysqli_prepare(
@@ -113,6 +116,7 @@ class MahasiswaModel {
         $result = mysqli_stmt_get_result($stmt);
         return mysqli_fetch_assoc($result);
     }
+
     public function getEventById(int $id)
     {
         $stmt = mysqli_prepare(
@@ -132,271 +136,284 @@ class MahasiswaModel {
     }
 
     public function isEventSaved($userId, $eventId)
-{
-    $stmt = $this->conn->prepare("
-        SELECT 1
-        FROM saved_events
-        WHERE user_id = ? AND event_id = ?
-        LIMIT 1
-    ");
-    $stmt->bind_param("ii", $userId, $eventId);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    {
+        $stmt = $this->conn->prepare("
+            SELECT 1
+            FROM saved_events
+            WHERE user_id = ? AND event_id = ?
+            LIMIT 1
+        ");
+        $stmt->bind_param("ii", $userId, $eventId);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    return $result->num_rows > 0;
-}
-
-public function saveEvent($userId, $eventId)
-{
-    if ($this->isEventSaved($userId, $eventId)) {
-        return false;
+        return $result->num_rows > 0;
     }
 
-    $stmt = $this->conn->prepare("
-        INSERT INTO saved_events (user_id, event_id)
-        VALUES (?, ?)
-    ");
-    $stmt->bind_param("ii", $userId, $eventId);
+    public function saveEvent($userId, $eventId)
+    {
+        if ($this->isEventSaved($userId, $eventId)) {
+            return false;
+        }
 
-    return $stmt->execute();
-}
-public function getTicketsByUser($userId, $status = '')
-{
-    $whereStatus = '';
+        $stmt = $this->conn->prepare("
+            INSERT INTO saved_events (user_id, event_id)
+            VALUES (?, ?)
+        ");
+        $stmt->bind_param("ii", $userId, $eventId);
 
-    if ($status == 'selesai') {
-        $whereStatus = " AND e.tanggal < CURDATE() ";
-    } elseif ($status == 'mendatang') {
-        $whereStatus = " AND e.tanggal >= CURDATE() ";
+        return $stmt->execute();
     }
 
-    $sql = "
-        SELECT
-            b.kode_booking,
-            b.status AS status_booking,
-            b.event_id,
-            e.judul_event,
-            e.tanggal,
-            e.waktu,
-            e.lokasi,
-            e.penyelenggara,
-            c.nama_kategori
-        FROM bookings b
-        JOIN events e ON b.event_id = e.id
-        LEFT JOIN categories c ON e.kategori_id = c.id
-        WHERE b.user_id = ?
-        $whereStatus
-        ORDER BY e.tanggal ASC
-    ";
+    public function getTicketsByUser($userId, $status = '')
+    {
+        $whereStatus = '';
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
+        if ($status == 'selesai') {
+            $whereStatus = " AND e.tanggal < CURDATE() ";
+        } elseif ($status == 'mendatang') {
+            $whereStatus = " AND e.tanggal >= CURDATE() ";
+        }
 
-    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-}
-
-public function getTicketByKode($kodeBooking)
-{
-    $sql = "
-        SELECT
-            b.kode_booking,
-            b.status AS status_booking,
-            b.event_id,
-            e.judul_event,
-            e.deskripsi,
-            e.poster,
-            e.tanggal,
-            e.tanggal_selesai,
-            e.waktu,
-            e.lokasi,
-            e.penyelenggara,
-            e.harga,
-            c.id AS kategori_id,
-            c.nama_kategori
-        FROM bookings b
-        INNER JOIN events e ON b.event_id = e.id
-        LEFT JOIN categories c ON e.kategori_id = c.id
-        WHERE b.kode_booking = ?
-        LIMIT 1
-    ";
-
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bind_param("s", $kodeBooking);
-    $stmt->execute();
-
-    return $stmt->get_result()->fetch_assoc();
-}
-public function getEvents($search = '', $catId = '', $isFree = false)
-{
-    $sql = "
-        SELECT e.*, c.nama_kategori
-        FROM events e
-        LEFT JOIN categories c ON e.kategori_id = c.id
-        WHERE e.status = 'approved'
-    ";
-
-    if (!empty($search)) {
-        $search = $this->conn->real_escape_string($search);
-
-        $sql .= "
-            AND (
-                e.judul_event LIKE '%$search%'
-                OR e.penyelenggara LIKE '%$search%'
-            )
+        $sql = "
+            SELECT
+                b.kode_booking,
+                b.status AS status_booking,
+                b.event_id,
+                e.judul_event,
+                e.tanggal,
+                e.waktu,
+                e.lokasi,
+                e.penyelenggara,
+                c.nama_kategori
+            FROM bookings b
+            JOIN events e ON b.event_id = e.id
+            LEFT JOIN categories c ON e.kategori_id = c.id
+            WHERE b.user_id = ?
+            $whereStatus
+            ORDER BY e.tanggal ASC
         ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    if (!empty($catId)) {
-        $catId = (int)$catId;
-        $sql .= " AND e.kategori_id = $catId ";
+    public function getTicketByKode($kodeBooking)
+    {
+        $sql = "
+            SELECT
+                b.kode_booking,
+                b.status AS status_booking,
+                b.event_id,
+                e.judul_event,
+                e.deskripsi,
+                e.poster,
+                e.tanggal,
+                e.tanggal_selesai,
+                e.waktu,
+                e.lokasi,
+                e.penyelenggara,
+                e.harga,
+                c.id AS kategori_id,
+                c.nama_kategori
+            FROM bookings b
+            INNER JOIN events e ON b.event_id = e.id
+            LEFT JOIN categories c ON e.kategori_id = c.id
+            WHERE b.kode_booking = ?
+            LIMIT 1
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $kodeBooking);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_assoc();
     }
 
-    if ($isFree) {
-        $sql .= " AND e.harga = 0 ";
+    public function getEvents($search = '', $catId = '', $isFree = false)
+    {
+        $sql = "
+            SELECT e.*, c.nama_kategori
+            FROM events e
+            LEFT JOIN categories c ON e.kategori_id = c.id
+            WHERE e.status = 'approved'
+        ";
+
+        $params = [];
+        $types = "";
+
+        if (!empty($search)) {
+            $sql .= " AND (e.judul_event LIKE ? OR e.penyelenggara LIKE ?)";
+            $keyword = "%" . $search . "%";
+            $params[] = $keyword;
+            $params[] = $keyword;
+            $types .= "ss";
+        }
+
+        if (!empty($catId)) {
+            $sql .= " AND e.kategori_id = ? ";
+            $params[] = (int)$catId;
+            $types .= "i";
+        }
+
+        if ($isFree) {
+            $sql .= " AND e.harga = 0 ";
+        }
+
+        $sql .= " ORDER BY e.tanggal DESC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
-    $sql .= " ORDER BY e.tanggal DESC";
-
-    $result = $this->conn->query($sql);
-
-    return $result->fetch_all(MYSQLI_ASSOC);
-}
-
-public function updateProfile(
-    $userId,
-    $nama,
-    $email,
-    $programStudi,
-    $wa,
-    $semester
-)
-{
-    $stmt = $this->conn->prepare(
-        "UPDATE users
-         SET nama_lengkap=?,
-             email=?,
-             program_studi=?,
-             no_whatsapp=?,
-             semester=?
-         WHERE id=?"
-    );
-
-    $stmt->bind_param(
-        "sssssi",
+    public function updateProfile(
+        $userId,
         $nama,
         $email,
         $programStudi,
         $wa,
-        $semester,
-        $userId
-    );
+        $semester
+    )
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE users
+             SET nama_lengkap=?,
+                 email=?,
+                 program_studi=?,
+                 no_whatsapp=?,
+                 semester=?
+             WHERE id=?"
+        );
 
-    return $stmt->execute();
-}
-public function updatePassword(
-    $userId,
-    $hashedPassword
-)
-{
-    $stmt = $this->conn->prepare(
-        "UPDATE users
-         SET password=?
-         WHERE id=?"
-    );
+        $stmt->bind_param(
+            "sssssi",
+            $nama,
+            $email,
+            $programStudi,
+            $wa,
+            $semester,
+            $userId
+        );
 
-    $stmt->bind_param(
-        "si",
-        $hashedPassword,
-        $userId
-    );
+        return $stmt->execute();
+    }
 
-    return $stmt->execute();
-}
-public function getSavedEvents($userId)
-{
-    $stmt = $this->conn->prepare(
-        "SELECT e.*, s.id as saved_id
-         FROM saved_events s
-         JOIN events e ON s.event_id = e.id
-         WHERE s.user_id = ?
-         ORDER BY e.tanggal DESC"
-    );
-
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-
-    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-}
-public function removeSavedEvent($userId, $eventId)
-{
-    $stmt = $this->conn->prepare(
-        "DELETE FROM saved_events
-         WHERE user_id = ?
-         AND event_id = ?"
-    );
-
-    $stmt->bind_param(
-        "ii",
+    public function updatePassword(
         $userId,
-        $eventId
-    );
+        $hashedPassword
+    )
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE users
+             SET password=?
+             WHERE id=?"
+        );
 
-    return $stmt->execute();
-}
-public function createBooking(
-    $eventId,
-    $userId,
-    $kodeBooking,
-    $metode,
-    $buktiTransfer
-)
-{
-    $stmt = $this->conn->prepare(
-        "INSERT INTO bookings
-        (
-            event_id,
-            user_id,
-            kode_booking,
-            metode_pembayaran,
-            bukti_transfer,
-            status,
-            created_at
-        )
-        VALUES
-        (
-            ?, ?, ?, ?, ?, 'active', NOW()
-        )"
-    );
+        $stmt->bind_param(
+            "si",
+            $hashedPassword,
+            $userId
+        );
 
-    $stmt->bind_param(
-        "iisss",
+        return $stmt->execute();
+    }
+
+    public function getSavedEvents($userId)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT e.*, s.id as saved_id
+             FROM saved_events s
+             JOIN events e ON s.event_id = e.id
+             WHERE s.user_id = ?
+             ORDER BY e.tanggal DESC"
+        );
+
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function removeSavedEvent($userId, $eventId)
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM saved_events
+             WHERE user_id = ?
+             AND event_id = ?"
+        );
+
+        $stmt->bind_param(
+            "ii",
+            $userId,
+            $eventId
+        );
+
+        return $stmt->execute();
+    }
+
+    public function createBooking(
         $eventId,
         $userId,
         $kodeBooking,
         $metode,
         $buktiTransfer
-    );
+    )
+    {
+        $stmt = $this->conn->prepare(
+            "INSERT INTO bookings
+            (
+                event_id,
+                user_id,
+                kode_booking,
+                metode_pembayaran,
+                bukti_transfer,
+                status,
+                created_at
+            )
+            VALUES
+            (
+                ?, ?, ?, ?, ?, 'active', NOW()
+            )"
+        );
 
-    return $stmt->execute();
-}
-public function isAlreadyRegistered($userId, $eventId)
-{
-    $stmt = $this->conn->prepare(
-        "SELECT id
-         FROM bookings
-         WHERE user_id = ?
-         AND event_id = ?"
-    );
+        $stmt->bind_param(
+            "iisss",
+            $eventId,
+            $userId,
+            $kodeBooking,
+            $metode,
+            $buktiTransfer
+        );
 
-    $stmt->bind_param(
-        "ii",
-        $userId,
-        $eventId
-    );
+        return $stmt->execute();
+    }
 
-    $stmt->execute();
+    public function isAlreadyRegistered($userId, $eventId)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT id
+             FROM bookings
+             WHERE user_id = ?
+             AND event_id = ?"
+        );
 
-    return $stmt->get_result()->num_rows > 0;
-}
+        $stmt->bind_param(
+            "ii",
+            $userId,
+            $eventId
+        );
+
+        $stmt->execute();
+
+        return $stmt->get_result()->num_rows > 0;
+    }
 }

@@ -104,8 +104,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
 
             </div>
 
-            <div class="banner">
-                💻
+            <div class="banner" style="width: 100%; height: 350px; overflow: hidden; border-radius: 12px; margin-bottom: 20px; background: #f1f5f9;">
+                <?php 
+                if (!empty($event['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $event['poster'])): 
+                ?>
+                    <img src="../../assets/poster/<?= htmlspecialchars($event['poster']); ?>" alt="Poster <?= htmlspecialchars($event['judul_event']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                <?php else: ?>
+                    <img src="../../assets/poster/default.png" alt="Default Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                <?php endif; ?>
             </div>
 
             <div class="tags">
