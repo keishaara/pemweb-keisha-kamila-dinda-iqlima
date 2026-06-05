@@ -25,7 +25,6 @@ if ($is_edit) {
         exit();
     }
 
-    // PROTESI URL MANUAL: Jika acara terbukti sudah Approved, usir keluar!
     $statusAcara = strtolower($event['status'] ?? 'pending');
     if ($statusAcara === 'approved' || $statusAcara === 'disetujui') {
         header("Location: org_kelola_acara.php?status=action_blocked");

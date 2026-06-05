@@ -83,45 +83,28 @@ $events = $controller->getEvents(
 
             <div class="card-grid">
                 <?php if (empty($events)): ?>
-                    <p style="color:#64748b; grid-column:1/-1; text-align:center;">Belum ada kegiatan yang tersedia.</p>
+                    <p>Belum ada event mendatang.</p>
                 <?php else: ?>
-                    <?php foreach($events as $ev): ?>
+                    <?php foreach ($events as $ev): ?>
                     <div class="event-card">
-                        <span class="badge">Populer</span>
-                        
-                        <div class="icon">
+                        <div class="event-banner" style="width: 100%; height: 180px; overflow: hidden; position: relative; background: #f1f5f9;">
                             <?php 
-                                $nama_kat = strtolower($ev['nama_kategori'] ?? '');
-                                $fa_icon = 'fa-solid fa-layer-group';
-                                if (strpos($nama_kat, 'music') !== false || strpos($nama_kat, 'musik') !== false) {
-                                    $fa_icon = 'fa-solid fa-music';
-                                } elseif (strpos($nama_kat, 'olahraga') !== false || strpos($nama_kat, 'sport') !== false) {
-                                    $fa_icon = 'fa-solid fa-medal';
-                                } elseif (strpos($nama_kat, 'teknologi') !== false || strpos($nama_kat, 'tech') !== false || strpos($nama_kat, 'it') !== false) {
-                                    $fa_icon = 'fa-solid fa-laptop-code';
-                                } elseif (strpos($nama_kat, 'seni') !== false || strpos($nama_kat, 'art') !== false) {
-                                    $fa_icon = 'fa-solid fa-palette';
-                                } elseif (strpos($nama_kat, 'pendidikan') !== false || strpos($nama_kat, 'seminar') !== false || strpos($nama_kat, 'education') !== false) {
-                                    $fa_icon = 'fa-solid fa-graduation-cap';
-                                } elseif (strpos($nama_kat, 'bisnis') !== false || strpos($nama_kat, 'business') !== false) {
-                                    $fa_icon = 'fa-solid fa-briefcase';
-                                } elseif (strpos($nama_kat, 'kesehatan') !== false || strpos($nama_kat, 'health') !== false) {
-                                    $fa_icon = 'fa-solid fa-heart-pulse';
-                                } elseif (strpos($nama_kat, 'budaya') !== false || strpos($nama_kat, 'culture') !== false) {
-                                    $fa_icon = 'fa-solid fa-masks-theater';
-                                }
+                            if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
                             ?>
-                            <i class="<?= $fa_icon; ?>" style="font-size: 2em; color: #2E4C82;"></i>
+                                <img src="../../assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster <?= htmlspecialchars($ev['judul_event']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php else: ?>
+                                <img src="../../assets/poster/default.png" alt="Default Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                            <?php endif; ?>
                         </div>
                         
                         <div class="event-body">
                             <p class="category"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')); ?></p>
                             <h4><?= htmlspecialchars($ev['judul_event']); ?></h4>
-                            <p class="organizer"><?= htmlspecialchars($ev['penyelenggara']); ?></p>
+                            <p class="organizer"><i class="fa-solid fa-building-user"></i> <?= htmlspecialchars($ev['penyelenggara'] ?? 'Organisasi'); ?></p>
                             <div class="event-footer">
                                 <a href="../mahasiswa/detail.php?id=<?= $ev['id']; ?>" class="btn">Detail</a>
                                 <span class="price <?= $ev['harga'] == 0 ? 'free' : ''; ?>">
-                                    <?= $ev['harga'] == 0 ? 'Gratis' : 'Rp '.number_format($ev['harga'],0,',','.'); ?>
+                                    <?= $ev['harga'] == 0 ? 'Gratis' : 'Rp '.number_format($ev['harga'], 0, ',', '.'); ?>
                                 </span>
                             </div>
                         </div>
