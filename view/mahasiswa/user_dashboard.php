@@ -48,44 +48,36 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                 <p><?= date('l, d F Y') ?></p>
             </div>
 
-            <div class="stats-grid">
-               <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-ticket"></i></div>
-                    <div class="stat-info">
+            <div class="org-stats">
+               <div class="org-stat-card clickable-card" onclick="window.location.href='e-tiket.php'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-ticket" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
                         <h3><?= $stats['total_terdaftar'] ?? 0 ?></h3>
-                        <a href="e-tiket.php" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
-                            Event Terdaftar
-                        </a>
+                        <p>Event Terdaftar</p>
                     </div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
-                    <div class="stat-info">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='e-tiket.php?status=selesai'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-circle-check" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
                         <h3><?= $stats['total_selesai'] ?? 0 ?></h3>
-                        <a href="e-tiket.php?status=selesai" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
-                            Event Selesai
-                        </a>
+                        <p>Event Selesai</p>
                     </div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
-                    <div class="stat-info">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='saved_events.php'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-star" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
                         <h3><?= $saved['total_saved']; ?></h3>
-                        <a href="saved_events.php" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
-                            Disimpan
-                        </a>
+                        <p>Disimpan</p>
                     </div>
                 </div>
 
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
-                    <div class="stat-info">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='e-tiket.php?status=mendatang'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-clock" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
                         <h3><?= $stats['total_mendatang'] ?? 0 ?></h3>
-                        <a href="e-tiket.php?status=mendatang" class="btn btn-link btn-small" style="padding:0; margin-top:5px;">
-                            Event Mendatang
-                        </a>
+                        <p>Event Mendatang</p>
                     </div>
                 </div>
             </div>
@@ -119,8 +111,8 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                                     $fa_icon = 'fa-solid fa-masks-theater';
                                 }
                             ?>
-                            <i class="<?= $fa_icon; ?>" style="font-size: 2em; color: #2E4C82;"></i>
                         <div class="event-details">
+                            <i class="<?= $fa_icon; ?>" style="font-size: 2em; color: #2E4C82; margin-bottom: 15px; display: block;"></i>
                             <span class="event-tag"><?= htmlspecialchars($ev['nama_kategori'] ?? 'Umum') ?></span>
                             <h4 class="event-title"><?= htmlspecialchars($ev['judul_event']) ?></h4>
                             <p class="event-meta"><?= htmlspecialchars($ev['penyelenggara']) ?></p>
