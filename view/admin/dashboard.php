@@ -15,7 +15,7 @@ $totalOrgData = $controller->getTotalOrganisasi();
 $latestUsers = $controller->getLatestUsers();
 $verifikasiAcara = $controller->getVerifikasiAcara();
 $semuaAcara = $controller->getAllEvents();
-// $totalMahasiswa = $controller->getTotalMahasiswa();
+$totalMahasiswa = $controller->getTotalMahasiswa();
 ?>
 
 <!DOCTYPE html>
