@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
 
         <form method="POST" enctype="multipart/form-data">
             <div class="etiket-preview">
-                <div style="flex:1; position:relative; z-index:1;">
+                <div class="etiket-preview-info">
                     <p class="etiket-label">Preview E-Tiket</p>
                     <h2 class="etiket-title">
                         <?= htmlspecialchars($event['nama_event'] ?? $event['judul_event'] ?? 'Nama Event') ?>
@@ -167,27 +167,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
                                 <strong>QRISS (All E-Wallet)</strong>
                                 <span>Scan QR Code</span>
                             </div>
-                            <span class="method-icon">
-                                <img src="qriss.png" alt="QRISS" style="width: 40px; height: auto;">
+                            <span class="method-icon qris-method-icon">
+                                <i class="fa-solid fa-qrcode"></i>
                             </span>
                             <input type="radio" name="metode_pembayaran" value="QRISS" hidden>
                         </label>
                 </div>
-                <div class="card" id="detail-pembayaran-card" style="display:none;">
+                <div class="card" id="detail-pembayaran-card">
                     <h3 id="detail-title">Detail Pembayaran</h3>
-                    <div class="rekening-box" id="rekening-box" style="display:none;">
+                    <div class="rekening-box" id="rekening-box">
                         <span>Transfer ke rekening</span>
                         <strong>123456789107</strong>
                         <p>Bank BCA a.n. Evently Organisasi</p>
                     </div>
 
-                    <div class="qris-box" id="qris-box" style="display:none; text-align:center;">
-                        <img src="../../assets/img/qriss.png" alt="QRIS" style="max-width: 200px; border-radius: 8px;">
-                        <p style="margin-top: 10px; color: #64748b;">Scan QRIS ini untuk semua E-Wallet / M-Banking</p>
+                    <div class="qris-box" id="qris-box">
+                        <p class="qris-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Klik gambar untuk perbesar & unduh</p>
+                        <img
+                            src="../../assets/img/qriss.jpg"
+                            alt="QRIS"
+                            class="qris-img-clickable"
+                            onclick="bukaLightboxQris()"
+                            title="Klik untuk perbesar">
+                        <p>Scan QRIS ini untuk semua E-Wallet / M-Banking</p>
+                    </div>
+
+                    <!-- Lightbox QRIS -->
+                    <div class="qris-lightbox" id="qrisLightbox" onclick="tutupLightboxQris(event)">
+                        <div class="qris-lightbox-inner">
+                            <button class="qris-lightbox-close" onclick="tutupLightboxQris()" title="Tutup">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            <img src="../../assets/img/qriss.jpg" alt="QRIS Besar" class="qris-lightbox-img">
+                            <a
+                                href="../../assets/img/qriss.jpg"
+                                download="QRIS-Evently.jpg"
+                                class="qris-download-btn"
+                                onclick="event.stopPropagation()">
+                                <i class="fa-solid fa-download"></i> Unduh QRIS
+                            </a>
+                        </div>
                     </div>
 
                     <div id="upload-box">
-                        <span class="upload-label" style="display:block; margin-top:15px;">Upload Bukti Transfer</span>
+                        <span class="upload-label">Upload Bukti Transfer</span>
                         <label class="upload-area">
                             <input type="file" name="bukti_transfer" accept="image/*">
                             <p>Klik untuk upload atau drag<br>JPG, PNG, max 5MB</p>
@@ -227,6 +250,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
             }
         }
     }
+
+    function bukaLightboxQris() {
+        const lb = document.getElementById('qrisLightbox');
+        lb.classList.add('aktif');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function tutupLightboxQris(e) {
+        // Tutup hanya jika klik di overlay, bukan di dalam konten
+        if (e && e.target !== document.getElementById('qrisLightbox')) return;
+        const lb = document.getElementById('qrisLightbox');
+        lb.classList.remove('aktif');
+        document.body.style.overflow = '';
+    }
+
+    // Tutup dengan tombol close
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('.qris-lightbox-close')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const lb = document.getElementById('qrisLightbox');
+            lb.classList.remove('aktif');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Tutup dengan tombol Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const lb = document.getElementById('qrisLightbox');
+            lb.classList.remove('aktif');
+            document.body.style.overflow = '';
+        }
+    });
 
     // Initialize display on load based on checked radio
     document.addEventListener('DOMContentLoaded', () => {

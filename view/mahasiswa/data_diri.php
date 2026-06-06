@@ -20,6 +20,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_data_diri'])) 
     exit;
 }
 
+// Generate dynamic labels based on event name & category
+$namaEvent    = htmlspecialchars($event['judul_event'] ?? 'Event');
+$namaKategori = strtolower($event['nama_kategori'] ?? '');
+
+// Label pertanyaan alasan
+$labelAlasan = "Alasan mengikuti " . $namaEvent;
+
+// Label pertanyaan pengalaman — disesuaikan per kategori
+if (strpos($namaKategori, 'desain') !== false || strpos($namaKategori, 'design') !== false) {
+    $labelPengalaman = "Pengalaman desain sebelumnya";
+} elseif (strpos($namaKategori, 'musik') !== false || strpos($namaKategori, 'music') !== false) {
+    $labelPengalaman = "Pengalaman bermusik sebelumnya";
+} elseif (strpos($namaKategori, 'olahraga') !== false || strpos($namaKategori, 'sport') !== false) {
+    $labelPengalaman = "Pengalaman olahraga sebelumnya";
+} elseif (strpos($namaKategori, 'teknologi') !== false || strpos($namaKategori, 'tech') !== false || strpos($namaKategori, 'it') !== false) {
+    $labelPengalaman = "Pengalaman di bidang teknologi sebelumnya";
+} elseif (strpos($namaKategori, 'seni') !== false || strpos($namaKategori, 'art') !== false) {
+    $labelPengalaman = "Pengalaman seni sebelumnya";
+} elseif (strpos($namaKategori, 'bisnis') !== false || strpos($namaKategori, 'business') !== false) {
+    $labelPengalaman = "Pengalaman bisnis sebelumnya";
+} elseif (strpos($namaKategori, 'pendidikan') !== false || strpos($namaKategori, 'seminar') !== false) {
+    $labelPengalaman = "Pengalaman mengikuti seminar sebelumnya";
+} elseif (strpos($namaKategori, 'kesehatan') !== false || strpos($namaKategori, 'health') !== false) {
+    $labelPengalaman = "Pengalaman di bidang kesehatan sebelumnya";
+} elseif (strpos($namaKategori, 'volunteer') !== false || strpos($namaKategori, 'relawan') !== false) {
+    $labelPengalaman = "Pengalaman menjadi relawan sebelumnya";
+} elseif (strpos($namaKategori, 'workshop') !== false) {
+    $labelPengalaman = "Pengalaman workshop sebelumnya";
+} else {
+    $labelPengalaman = "Pengalaman terkait " . $namaEvent . " sebelumnya";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -133,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_data_diri'])) 
                     <h3>Informasi Tambahan</h3>
                     <div class="field-group">
                         <label class="field-label">
-                            Alasan mengikuti workshop
+                            <?= $labelAlasan ?>
                         </label>
 
                         <textarea
@@ -144,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_data_diri'])) 
                     </div>
 
                     <span class="radio-label">
-                        Pengalaman desain sebelumnya
+                        <?= $labelPengalaman ?>
                     </span>
 
                     <div class="radio-group">
@@ -161,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_data_diri'])) 
                             id="tidak"
                             value="Tidak Ada"
                             checked>
-                        <label for="tidak">tidak ada</label>
+                        <label for="tidak">Tidak Ada</label>
                     </div>
                 </div>
 

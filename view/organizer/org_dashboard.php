@@ -49,7 +49,7 @@ $agenda = $data['agenda'];
     <aside class="org-sidebar">
 
         <a href="index.php" class="org-logo">
-            <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
+            <i class="fa-solid fa-calendar-check"></i>
             <span>Evently</span>
         </a>
 
@@ -121,7 +121,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card clickable-card" onclick="window.location.href='org_data_peserta.php'">
 
                     <div class="org-stat-icon">
-                        <i class="fa-solid fa-users" style="font-size: 24px;"></i>
+                        <i class="fa-solid fa-users"></i>
                     </div>
 
                     <div class="org-stat-info">
@@ -136,7 +136,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card clickable-card" onclick="window.location.href='org_kelola_acara.php'">
 
                     <div class="org-stat-icon">
-                        <i class="fa-solid fa-calendar-day" style="font-size: 24px;"></i>
+                        <i class="fa-solid fa-calendar-day"></i>
                     </div>
 
                     <div class="org-stat-info">
@@ -151,7 +151,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card clickable-card" onclick="window.location.href='org_kelola_acara.php'">
 
                     <div class="org-stat-icon">
-                        <i class="fa-solid fa-clock-rotate-left" style="font-size: 24px;"></i>
+                        <i class="fa-solid fa-clock-rotate-left"></i>
                     </div>
 
                     <div class="org-stat-info">
@@ -166,7 +166,7 @@ $agenda = $data['agenda'];
                 <div class="org-stat-card clickable-card" onclick="window.location.href='org_kelola_acara.php'">
 
                     <div class="org-stat-icon">
-                        <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
+                        <i class="fa-solid fa-calendar-check"></i>
                     </div>
 
                     <div class="org-stat-info">

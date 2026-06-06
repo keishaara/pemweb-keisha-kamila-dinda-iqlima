@@ -85,7 +85,7 @@ $kategori = $controller->getKategori();
             </div>
 
             <?php if (isset($_SESSION['kat_error'])): ?>
-                <div style="margin-bottom: 20px; padding: 12px 15px; background-color: #fef2f2; color: #ef4444; border-radius: 6px; border: 1px solid #fee2e2; font-size: 14px; font-weight: bold;">
+                <div class="kat-alert-danger">
                     <?= $_SESSION['kat_error']; ?>
                 </div>
                 <?php unset($_SESSION['kat_error']); ?>
@@ -151,17 +151,17 @@ $kategori = $controller->getKategori();
         <div class="modal-content">
             <h3>Tambah Kategori Baru</h3>
             <form method="POST" action="">
-                <div style="margin-bottom: 12px;">
-                    <label style="display:block; font-size:13px; margin-bottom:4px;">Nama Kategori</label>
-                    <input type="text" name="nama_kategori" class="field-input" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" required>
+                <div class="kat-form-group">
+                    <label class="kat-form-label">Nama Kategori</label>
+                    <input type="text" name="nama_kategori" class="field-input" required>
                 </div>
-                <div style="margin-bottom: 12px;">
-                    <label style="display:block; font-size:13px; margin-bottom:4px;">Deskripsi / Keterangan</label>
-                    <textarea name="deskripsi" class="field-textarea" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; height:80px;" required></textarea>
+                <div class="kat-form-group">
+                    <label class="kat-form-label">Deskripsi / Keterangan</label>
+                    <textarea name="deskripsi" class="field-textarea" required></textarea>
                 </div>
                 <div class="btn-group">
-                    <button type="submit" name="submit_tambah" class="btn-submit" style="background:#3d5a80; color:white; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Simpan</button>
-                    <button type="button" onclick="tutupModal()" style="background:#e0e0e0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Batal</button>
+                    <button type="submit" name="submit_tambah" class="btn-submit kat-btn-submit">Simpan</button>
+                    <button type="button" onclick="tutupModal()" class="kat-btn-cancel">Batal</button>
                 </div>
             </form>
         </div>
@@ -173,17 +173,17 @@ $kategori = $controller->getKategori();
             <form method="POST" action="">
                 <input type="hidden" name="id_kategori" id="edit_id_kategori">
                 
-                <div style="margin-bottom: 12px;">
-                    <label style="display:block; font-size:13px; margin-bottom:4px;">Nama Kategori</label>
-                    <input type="text" name="nama_kategori" id="edit_nama_kategori" class="field-input" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" required>
+                <div class="kat-form-group">
+                    <label class="kat-form-label">Nama Kategori</label>
+                    <input type="text" name="nama_kategori" id="edit_nama_kategori" class="field-input" required>
                 </div>
-                <div style="margin-bottom: 12px;">
-                    <label style="display:block; font-size:13px; margin-bottom:4px;">Deskripsi / Keterangan</label>
-                    <textarea name="deskripsi" id="edit_deskripsi" class="field-textarea" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; height:80px;" required></textarea>
+                <div class="kat-form-group">
+                    <label class="kat-form-label">Deskripsi / Keterangan</label>
+                    <textarea name="deskripsi" id="edit_deskripsi" class="field-textarea" required></textarea>
                 </div>
                 <div class="btn-group">
-                    <button type="submit" name="submit_edit" class="btn-submit" style="background:#3d5a80; color:white; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Simpan Perubahan</button>
-                    <button type="button" onclick="tutupModalEdit()" style="background:#e0e0e0; padding:8px 16px; border:none; border-radius:6px; cursor:pointer;">Batal</button>
+                    <button type="submit" name="submit_edit" class="btn-submit kat-btn-submit">Simpan Perubahan</button>
+                    <button type="button" onclick="tutupModalEdit()" class="kat-btn-cancel">Batal</button>
                 </div>
             </form>
         </div>

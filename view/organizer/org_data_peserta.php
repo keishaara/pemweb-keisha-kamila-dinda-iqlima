@@ -30,7 +30,7 @@ $eventsList = $controller->getEvents();
     <div class="org-layout">
         <aside class="org-sidebar">
             <a href="index.php" class="org-logo">
-            <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
+            <i class="fa-solid fa-calendar-check"></i>
             <span>Evently</span>
         </a>
 
@@ -86,7 +86,7 @@ $eventsList = $controller->getEvents();
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <button type="submit" style="display: none;"></button>
+                        <button type="submit" class="d-none"></button>
                     </form>
 
                     <table class="org-table">
@@ -102,7 +102,7 @@ $eventsList = $controller->getEvents();
                         <tbody>
                             <?php if (empty($pesertaList)): ?>
                                 <tr>
-                                    <td colspan="5" style="text-align: center; padding: 20px;">
+                                    <td colspan="5" class="org-no-data-cell">
                                         Belum ada peserta yang mendaftar pada acara Anda.
                                     </td>
                                 </tr>

@@ -73,7 +73,7 @@ if ($status === 'selesai') {
                                             : 'Selesai';
                                     ?>
 
-                                    <span class="status-pill <?= $status_class ?>" style="border:none;">
+                                    <span class="status-pill <?= $status_class ?> border-none">
                                         <?= $status_label ?>
                                     </span>
 
@@ -92,17 +92,17 @@ if ($status === 'selesai') {
 
                                 <div class="verif-details">
                                     <span>
-                                        <i class="fa-solid fa-calendar" style="font-size:12px;"></i>
+                                        <i class="fa-solid fa-calendar"></i>
                                         <?= date('d M Y', strtotime($tiket['tanggal'])) ?>
                                     </span>
 
                                     <span>
-                                        <i class="fa-solid fa-clock" style="font-size:12px;"></i>
+                                        <i class="fa-solid fa-clock"></i>
                                         <?= date('H.i', strtotime($tiket['waktu'])) ?> WIB
                                     </span>
 
                                     <span>
-                                        <i class="fa-solid fa-location-dot" style="font-size:12px;"></i>
+                                        <i class="fa-solid fa-location-dot"></i>
                                         <?= htmlspecialchars($tiket['lokasi']) ?>
                                     </span>
                                 </div>

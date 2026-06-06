@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="org-layout">
         <aside class="org-sidebar">
             <a href="index.php" class="org-logo">
-            <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
+            <i class="fa-solid fa-calendar-check"></i>
             <span>Evently</span>
         </a>
 
@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if (isset($_SESSION['form_errors'])): ?>
                     <div class="org-alert org-alert-danger">
                         <b>Gagal Memproses Data Form:</b>
-                        <ul style="margin-left: 20px; margin-top: 5px; padding-left: 0; list-style-type: square;">
+                        <ul class="org-alert-list">
                             <?php foreach ($_SESSION['form_errors'] as $err): ?>
                                 <li><?= htmlspecialchars($err); ?></li>
                             <?php endforeach; ?>
@@ -193,8 +193,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="org-form-group org-full">
                             <label>Poster Acara</label>
-                            <div class="org-upload-box" style="position: relative; cursor: pointer;">
-                                <input type="file" name="poster" accept="image/*" style="position: absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor: pointer;">
+                            <div class="org-upload-box">
+                                <input type="file" name="poster" accept="image/*">
                                 <p><?= $is_edit && !empty($event['poster']) ? 'Pilih file baru jika ingin mengganti poster' : 'Unggah poster acara di sini' ?></p>
                                 <span>PNG, JPG maksimal 2MB</span>
                             </div>

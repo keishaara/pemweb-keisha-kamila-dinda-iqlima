@@ -14,7 +14,7 @@ session_start();
 <body>
     <div class="landing-page">
         <nav class="navbar">
-            <div class="logo"><i class="fa-solid fa-calendar-check" style="font-size: 24px; color: #2E4C82;"></i> Evently</div>
+            <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="nav-links">
                 <a href="fitur.php">Fitur</a>
                 <a href="kegiatan.php">Kegiatan</a>

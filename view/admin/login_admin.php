@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="text-muted mb-3">Silakan masuk ke akun admin Anda.</p>
 
             <?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error); ?></div><?php endif; ?>
-            <div id="clientError" class="auth-error" style="display:none;"></div>
+            <div id="clientError" class="auth-error"></div>
 
             <form id="loginForm" method="POST" action="">
                 <div class="form-group">
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" name="password" class="form-control" placeholder="••••••••" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block" style="margin-top:15px;">Masuk</button>
+                <button type="submit" class="btn btn-primary btn-block login-submit-btn">Masuk</button>
             </form>
         </div>
         <div class="img-side"></div>

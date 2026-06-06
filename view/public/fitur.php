@@ -30,7 +30,7 @@ function getKategoriStyle($kategori) {
             <div class="nav-container">
                 <a href="javascript:history.back()" class="logo">
                     <div class="logo-icon">
-                        <i class="fa-solid fa-calendar-check" style="font-size: 24px; color: #2E4C82;"></i>
+                        <i class="fa-solid fa-calendar-check"></i>
                     </div>
                     <span>Evently</span>
                 </a>
@@ -56,7 +56,7 @@ function getKategoriStyle($kategori) {
             <div class="features-grid">
                 <div class="feature-item">
                     <div class="icon-box bg-blue">
-                        <i class="fa-solid fa-magnifying-glass" style="font-size: 24px; color: #fff;"></i>
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                     <h3>Temukan Kegiatan</h3>
                     <p>Filter berdasarkan kategori, tanggal, atau minat. Tidak perlu lagi buka banyak grup WhatsApp dan Instagram.</p>
@@ -64,7 +64,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-pink">
-                        <i class="fa-solid fa-ticket" style="font-size: 24px; color: #fff;"></i>
+                        <i class="fa-solid fa-ticket"></i>
                     </div>
                     <h3>E-Ticket Digital</h3>
                     <p>Daftar dan simpan bukti pendaftaran digital langsung di profil. Praktis, tidak perlu cetak tiket.</p>
@@ -72,7 +72,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-cyan">
-                        <i class="fa-solid fa-users" style="font-size: 24px; color: #fff;"></i>
+                        <i class="fa-solid fa-users"></i>
                     </div>
                     <h3>Kelola Peserta</h3>
                     <p>Organisasi dapat memantau peserta dan mengunduh data Excel/CSV untuk keperluan absensi kegiatan.</p>
@@ -80,7 +80,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-green">
-                        <i class="fa-solid fa-circle-check" style="font-size: 24px; color: #fff;"></i>
+                        <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <h3>Verifikasi Admin</h3>
                     <p>Setiap kegiatan diverifikasi Admin sebelum tampil, sehingga kualitas informasi selalu terjaga.</p>
@@ -88,7 +88,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-purple">
-                        <i class="fa-solid fa-bullhorn" style="font-size: 24px; color: #fff;"></i>
+                        <i class="fa-solid fa-bullhorn"></i>
                     </div>
                     <h3>Promosi Luas</h3>
                     <p>Jangkau lebih banyak mahasiswa sekaligus. Informasi acaramu tersebar ke seluruh pengguna platform.</p>
@@ -96,7 +96,7 @@ function getKategoriStyle($kategori) {
 
                 <div class="feature-item">
                     <div class="icon-box bg-orange">
-                        <i class="fa-solid fa-lock" style="font-size: 24px; color: #fff;"></i>
+                        <i class="fa-solid fa-lock"></i>
                     </div>
                     <h3>Hak Akses Berlapis</h3>
                     <p>Sistem role berbeda untuk Mahasiswa, Organisasi, dan Admin menjamin keamanan pengelolaan data.</p>
@@ -134,7 +134,7 @@ function getKategoriStyle($kategori) {
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p style="grid-column: 1/-1; text-align: center; color: #64748b;">Belum ada kegiatan terbaru saat ini.</p>
+                        <p class="grid-empty-state">Belum ada kegiatan terbaru saat ini.</p>
                     <?php endif; ?>
                 </div>
 

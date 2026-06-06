@@ -45,7 +45,7 @@ $organizer = $controller->profile();
     <aside class="org-sidebar">
 
         <a href="index.php" class="org-logo">
-            <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
+            <i class="fa-solid fa-calendar-check"></i>
             <span>Evently</span>
         </a>
 
@@ -100,7 +100,7 @@ $organizer = $controller->profile();
             <section class="org-card org-profile-card">
                 <div class="org-profile-top">
                     <div class="org-profile-avatar">
-                        <img src="../../assets/img/icon-profil-organisasi.png" alt="Profil">
+                        <i class="fa-solid fa-building-columns"></i>
                     </div>
                     <div class="org-profile-meta">
                         <h2>

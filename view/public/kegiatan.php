@@ -37,16 +37,17 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     <meta charset="UTF-8">
     <title>Kegiatan - Evently</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-layout">
         <aside class="sidebar">
-            <div class="logo"><img src="../../assets/img/icon.png" alt="Evently"> Evently</div>
+            <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
-            <a href="index.php" class="menu-item"><img src="../../assets/img/icon-home2.png" alt="Home"> Beranda</a>
-            <a href="kegiatan.php" class="menu-item active"><img src="../../assets/img/icon-kegiatan.png" alt="Kegiatan"> Kegiatan</a>
+            <a href="index.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
+            <a href="kegiatan.php" class="menu-item active"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
             <div class="menu-category">Akun</div>
-            <a href="../mahasiswa/profil.php" class="menu-item"><img src="../../assets/img/icon-user2.png" alt="Profil"> Profil Saya</a>
+            <a href="../mahasiswa/profil.php" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
         </aside>
 
         <main class="main-content">
@@ -55,7 +56,7 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
                 <p>Temukan kegiatan sesuai minatmu</p>
             </div>
             <div class="search-bar">
-                <form method="GET" action="" style="display:flex; gap:10px; flex:1;">
+                <form method="GET" action="">
                     <input type="text" name="q" placeholder="Cari event . ." value="<?= htmlspecialchars($search); ?>">
                     <button type="submit">Cari</button>
                 </form>
@@ -72,12 +73,36 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
 
             <div class="card-grid">
                 <?php if (empty($events)): ?>
-                    <p style="color:#64748b; grid-column:1/-1; text-align:center;">Belum ada kegiatan yang tersedia.</p>
+                    <p class="grid-empty-state">Belum ada kegiatan yang tersedia.</p>
                 <?php else: ?>
-                    <?php foreach($events as $ev): ?>
+                    <?php foreach($events as $ev):
+                        $namaKat = strtolower($ev['nama_kategori'] ?? '');
+                        if (strpos($namaKat, 'musik') !== false || strpos($namaKat, 'music') !== false) {
+                            $icon = 'fa-solid fa-music';
+                        } elseif (strpos($namaKat, 'olahraga') !== false || strpos($namaKat, 'sport') !== false) {
+                            $icon = 'fa-solid fa-medal';
+                        } elseif (strpos($namaKat, 'teknologi') !== false || strpos($namaKat, 'tech') !== false) {
+                            $icon = 'fa-solid fa-laptop-code';
+                        } elseif (strpos($namaKat, 'seni') !== false || strpos($namaKat, 'art') !== false) {
+                            $icon = 'fa-solid fa-palette';
+                        } elseif (strpos($namaKat, 'bisnis') !== false || strpos($namaKat, 'business') !== false) {
+                            $icon = 'fa-solid fa-briefcase';
+                        } elseif (strpos($namaKat, 'kesehatan') !== false || strpos($namaKat, 'health') !== false) {
+                            $icon = 'fa-solid fa-heart-pulse';
+                        } elseif (strpos($namaKat, 'volunteer') !== false || strpos($namaKat, 'relawan') !== false) {
+                            $icon = 'fa-solid fa-hand-holding-heart';
+                        } elseif (strpos($namaKat, 'pendidikan') !== false || strpos($namaKat, 'seminar') !== false) {
+                            $icon = 'fa-solid fa-graduation-cap';
+                        } elseif (strpos($namaKat, 'workshop') !== false) {
+                            $icon = 'fa-solid fa-chalkboard-user';
+                        } else {
+                            $icon = 'fa-solid fa-layer-group';
+                        }
+                    ?>
                     <div class="event-card">
-                        <span class="badge">Populer</span>
-                        <div class="icon"><img src="../../assets/img/icon-music.png" alt="Icon"></div>
+                        <div class="event-icon-box">
+                            <i class="<?= $icon ?>"></i>
+                        </div>
                         <div class="event-body">
                             <p class="category"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')); ?></p>
                             <h4><?= htmlspecialchars($ev['judul_event']); ?></h4>

@@ -104,13 +104,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
 
             </div>
 
-            <div class="banner" style="width: 100%; height: 350px; overflow: hidden; border-radius: 12px; margin-bottom: 20px; background: #f1f5f9;">
+            <div class="detail-banner">
                 <?php 
                 if (!empty($event['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $event['poster'])): 
                 ?>
-                    <img src="../../assets/poster/<?= htmlspecialchars($event['poster']); ?>" alt="Poster <?= htmlspecialchars($event['judul_event']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="../../assets/poster/<?= htmlspecialchars($event['poster']); ?>" alt="Poster <?= htmlspecialchars($event['judul_event']); ?>">
                 <?php else: ?>
-                    <img src="../../assets/poster/default.png" alt="Default Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="../../assets/poster/default.png" alt="Default Poster">
                 <?php endif; ?>
             </div>
 
@@ -213,9 +213,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
                             <?php if($isRegistered): ?>
 
                                 <button
-                                    class="btn-primary"
-                                    disabled
-                                    style="opacity:.7;cursor:not-allowed;">
+                                    class="btn-primary btn-disabled"
+                                    disabled>
                                     Sudah Terdaftar
                                 </button>
 
@@ -250,7 +249,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
                             <div class="price-box">
                                 <p>STATUS TIKET</p>
 
-                                <h2 style="font-size: 20px;">
+                                <h2 class="status-verified-title">
                                     Terverifikasi
                                 </h2>
 
@@ -258,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
                                     <div class="bar"></div>
                                 </div>
 
-                                <p style="margin-top:15px;">KODE BOOKING</p>
+                                <p class="kode-booking-label">KODE BOOKING</p>
 
                                 <strong>
                                     <?= htmlspecialchars($kodeBooking) ?>

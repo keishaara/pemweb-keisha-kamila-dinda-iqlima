@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="text-muted mb-3">Masuk ke akun kamu untuk menemukan kegiatan kampus terbaru.</p>
 
             <?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error); ?></div><?php endif; ?>
-            <div id="clientError" class="auth-error" style="display:none;"></div>
+            <div id="clientError" class="auth-error"></div>
 
             <form id="loginForm" method="POST" action="">
                 <div class="form-group">
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="forgot_password.php" class="auth-forgot">Lupa kata sandi?</a>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block" style="margin-top:15px;">Masuk</button>
+                <button type="submit" class="btn btn-primary btn-block login-submit-btn">Masuk</button>
                 <p class="auth-footer">Belum punya akun? <a href="register.php">Daftar gratis</a></p>
             </form>
         </div>

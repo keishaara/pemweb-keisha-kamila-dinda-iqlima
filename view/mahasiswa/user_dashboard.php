@@ -50,7 +50,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
 
             <div class="org-stats">
                <div class="org-stat-card clickable-card" onclick="window.location.href='e-tiket.php'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-ticket" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-ticket"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $stats['total_terdaftar'] ?? 0 ?></h3>
                         <p>Event Terdaftar</p>
@@ -58,7 +58,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                 </div>
 
                 <div class="org-stat-card clickable-card" onclick="window.location.href='e-tiket.php?status=selesai'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-circle-check" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-circle-check"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $stats['total_selesai'] ?? 0 ?></h3>
                         <p>Event Selesai</p>
@@ -66,7 +66,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                 </div>
 
                 <div class="org-stat-card clickable-card" onclick="window.location.href='saved_events.php'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-star" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-star"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $saved['total_saved']; ?></h3>
                         <p>Disimpan</p>
@@ -74,7 +74,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                 </div>
 
                 <div class="org-stat-card clickable-card" onclick="window.location.href='e-tiket.php?status=mendatang'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-clock" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-clock"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $stats['total_mendatang'] ?? 0 ?></h3>
                         <p>Event Mendatang</p>
@@ -112,7 +112,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                                 }
                             ?>
                         <div class="event-details">
-                            <i class="<?= $fa_icon; ?>" style="font-size: 2em; color: #2E4C82; margin-bottom: 15px; display: block;"></i>
+                            <i class="<?= $fa_icon; ?>"></i>
                             <span class="event-tag"><?= htmlspecialchars($ev['nama_kategori'] ?? 'Umum') ?></span>
                             <h4 class="event-title"><?= htmlspecialchars($ev['judul_event']) ?></h4>
                             <p class="event-meta"><?= htmlspecialchars($ev['penyelenggara']) ?></p>

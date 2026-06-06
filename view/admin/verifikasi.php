@@ -66,14 +66,14 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
             </div>
 
             <?php if (isset($_SESSION['db_error'])): ?>
-                <div style="margin-bottom: 20px; padding: 12px 15px; background-color: #fef2f2; color: #ef4444; border-radius: 6px; border: 1px solid #fee2e2; font-size: 14px; font-weight: bold;">
+                <div class="verif-alert-danger">
                     <?= $_SESSION['db_error']; ?>
                 </div>
                 <?php unset($_SESSION['db_error']); ?>
             <?php endif; ?>
 
             <?php if (empty($verifikasiAcara)): ?>
-                <div class="verif-card" style="justify-content: center;">
+                <div class="verif-card verif-card-empty">
                     <p>Tidak ada acara yang perlu diverifikasi saat ini.</p>
                 </div>
             <?php else: ?>
@@ -98,7 +98,7 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                                     $statusLabel = 'Menunggu';
                                 }
                             ?>
-                            <span class="status-pill <?= $statusClass ?>" style="border:none;">
+                            <span class="status-pill <?= $statusClass ?> border-none">
                                 <?= htmlspecialchars($statusLabel); ?>
                             </span>
                             <span class="tag-kategori">
@@ -133,14 +133,12 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                         <?php else: ?>
                             <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=tolak" 
                                class="btn-verif btn-tolak" 
-                               style="text-decoration: none; text-align: center;" 
                                onclick="return confirm('Apakah Anda yakin ingin MENOLAK acara ini?')">
                                Tolak
                             </a>
                             
                             <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=setuju" 
                                class="btn-verif btn-setujui" 
-                               style="text-decoration: none; text-align: center;" 
                                onclick="return confirm('Apakah Anda yakin ingin MENYETUJUI acara ini?')">
                                Setujui
                             </a>

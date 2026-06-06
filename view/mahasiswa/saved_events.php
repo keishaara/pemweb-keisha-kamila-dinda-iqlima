@@ -61,7 +61,7 @@ $saved = $controller->getSavedEvents(
 
             <div class="card-grid">
                 <?php if (empty($saved)): ?>
-                    <p style="grid-column:1/-1; text-align:center; color:#64748b; padding:40px;">Belum ada event yang disimpan.</p>
+                    <p class="grid-empty-state">Belum ada event yang disimpan.</p>
                 <?php else: ?>
                     <?php foreach($saved as $ev): ?>
                         <div class="event-card">
@@ -86,14 +86,14 @@ $saved = $controller->getSavedEvents(
                                     $fa_icon = 'fa-solid fa-masks-theater';
                                 }
                             ?>
-                            <i class="<?= $fa_icon; ?>" style="font-size: 2em; color: #2E4C82;"></i>
+                            <i class="<?= $fa_icon; ?>"></i>
                             <div class="event-details">
                                 <span class="event-tag"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')) ?></span>
                                 <h4 class="event-title"><?= htmlspecialchars($ev['judul_event']) ?></h4>
                                 <p class="event-meta"><?= htmlspecialchars($ev['penyelenggara']) ?></p>
                                 <div class="event-footer">
                                     <a href="detail.php?id=<?= intval($ev['id']) ?>" class="btn btn-small">Detail</a>
-                                    <form method="POST" style="display:inline; margin-left:8px;">
+                                    <form method="POST" class="d-inline ml-8">
                                         <input type="hidden" name="event_id" value="<?= intval($ev['id']) ?>">
                                         <button type="submit" name="unsave_event" class="btn-outline btn-small" onclick="return confirm('Hapus dari disimpan?')">Hapus</button>
                                     </form>

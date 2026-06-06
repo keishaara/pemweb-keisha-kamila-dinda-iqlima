@@ -100,7 +100,7 @@ $semuaAcara = $controller->getAllEvents();
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="4" style="text-align: center; padding: 20px;">Belum ada acara yang didaftarkan.</td>
+                                <td colspan="4" class="org-no-data-cell">Belum ada acara yang didaftarkan.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>

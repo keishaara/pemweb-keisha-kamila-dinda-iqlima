@@ -136,7 +136,7 @@ $totalUsersCount = $controller->getTotalUsers();
                             <?php if ($hasStatusColumn): ?>
                                 <th>STATUS</th>
                             <?php endif; ?>
-                            <th style="text-align:center;">AKSI</th>
+                            <th class="text-center">AKSI</th>
                         </tr>
                     </thead>
 

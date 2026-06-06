@@ -36,7 +36,7 @@ $keyword = $_GET['search'] ?? '';
 
     <aside class="org-sidebar">
         <a href="index.php" class="org-logo">
-            <i class="fa-solid fa-calendar-check" style="font-size: 24px;"></i>
+            <i class="fa-solid fa-calendar-check"></i>
             <span>Evently</span>
         </a>
 
@@ -125,7 +125,7 @@ $keyword = $_GET['search'] ?? '';
                     <tbody>
                         <?php if (empty($events)): ?>
                             <tr>
-                                <td colspan="6" style="text-align: center; padding: 20px; color: #666;">
+                                <td colspan="6" class="org-no-data-cell">
                                     Belum ada acara yang terdaftar.
                                 </td>
                             </tr>

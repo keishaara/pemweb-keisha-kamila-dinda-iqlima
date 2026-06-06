@@ -51,7 +51,7 @@ $events = $controller->getEvents(
             </div>
             
             <div class="search-bar">
-                <form method="GET" action="kegiatan_mhs.php" style="display:flex; gap:10px; flex:1;">
+                <form method="GET" action="kegiatan_mhs.php">
                     <?php if ($cat_id): ?>
                         <input type="hidden" name="cat_id" value="<?= htmlspecialchars($cat_id); ?>">
                     <?php endif; ?>
@@ -65,7 +65,7 @@ $events = $controller->getEvents(
                 </form>
                 
                 <?php if ($search || $cat_id || $is_free): ?>
-                    <a href="kegiatan_mhs.php" class="btn" style="background-color: #ef4444; color: white; text-decoration: none; padding: 10px 15px; border-radius: 6px; font-size: 14px;">Reset Filter</a>
+                    <a href="kegiatan_mhs.php" class="btn btn-reset-filter">Reset Filter</a>
                 <?php endif; ?>
             </div>
 
@@ -87,13 +87,13 @@ $events = $controller->getEvents(
                 <?php else: ?>
                     <?php foreach ($events as $ev): ?>
                     <div class="event-card">
-                        <div class="event-banner" style="width: 100%; height: 180px; overflow: hidden; position: relative; background: #f1f5f9;">
+                        <div class="event-banner">
                             <?php 
                             if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
                             ?>
-                                <img src="../../assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster <?= htmlspecialchars($ev['judul_event']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                                <img src="../../assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster <?= htmlspecialchars($ev['judul_event']); ?>">
                             <?php else: ?>
-                                <img src="../../assets/poster/default.png" alt="Default Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                                <img src="../../assets/poster/default.png" alt="Default Poster">
                             <?php endif; ?>
                         </div>
                         

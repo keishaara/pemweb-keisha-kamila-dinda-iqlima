@@ -69,7 +69,7 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
 
             <div class="org-stats">
                 <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-users" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-users"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $totalUsersData; ?></h3>
                         <p>Total Pengguna</p>
@@ -77,7 +77,7 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                 </div>
 
                 <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-user-graduate" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $totalMahasiswa; ?></h3>
                         <p>Mahasiswa Aktif</p>
@@ -85,7 +85,7 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                 </div>
 
                 <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-building" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-building"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $totalOrgData; ?></h3>
                         <p>Organisasi Aktif</p>
@@ -93,7 +93,7 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                 </div>
 
                 <div class="org-stat-card clickable-card" onclick="window.location.href='verifikasi.php'">
-                    <div class="org-stat-icon"><i class="fa-solid fa-clipboard-check" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                     <div class="org-stat-info">
                         <h3><?= count(array_filter($verifikasiAcara, fn($e) => strtolower($e['status']) == 'pending')); ?></h3>
                         <p>Menunggu Verifikasi</p>

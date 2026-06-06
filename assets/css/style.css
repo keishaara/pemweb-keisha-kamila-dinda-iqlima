@@ -2044,12 +2044,20 @@ body {
     background: #eef4fb;
     overflow: hidden;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .org-profile-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.org-profile-avatar i {
+    font-size: 2rem;
+    color: #2E4C82;
 }
 
 .org-profile-meta h2 {
@@ -4367,4 +4375,467 @@ a.btn-table-action {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+}
+
+/* // ======================================================================= */
+/* // UTILITY & GLOBAL STYLES                                                 */
+/* // ======================================================================= */
+.border-none {
+    border: none !important;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.justify-start {
+    justify-content: flex-start !important;
+}
+
+.d-inline {
+    display: inline !important;
+}
+
+.ml-8 {
+    margin-left: 8px !important;
+}
+
+.grid-empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #64748b;
+    padding: 40px;
+}
+
+/* // ======================================================================= */
+/* // login.php & login_admin.php                                            */
+/* // ======================================================================= */
+#clientError {
+    display: none;
+}
+
+.login-submit-btn {
+    margin-top: 15px !important;
+}
+
+/* // ======================================================================= */
+/* // dashboard.php (Admin) & user_dashboard.php (Mahasiswa)                  */
+/* // ======================================================================= */
+.org-stat-icon i {
+    font-size: 24px;
+}
+
+/* // ======================================================================= */
+/* // kategori.php (Admin)                                                   */
+/* // ======================================================================= */
+.kat-alert-danger {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    background-color: #fef2f2;
+    color: #ef4444;
+    border-radius: 6px;
+    border: 1px solid #fee2e2;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.kat-form-group {
+    margin-bottom: 12px;
+}
+
+.kat-form-label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.kat-btn-submit {
+    background: #3d5a80;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.kat-btn-cancel {
+    background: #e0e0e0;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* // ======================================================================= */
+/* // verifikasi.php (Admin)                                                 */
+/* // ======================================================================= */
+.verif-alert-danger {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    background-color: #fef2f2;
+    color: #ef4444;
+    border-radius: 6px;
+    border: 1px solid #fee2e2;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.verif-card-empty {
+    justify-content: center !important;
+}
+
+.btn-verif {
+    text-decoration: none;
+    text-align: center;
+}
+
+/* // ======================================================================= */
+/* // detail.php (Mahasiswa)                                                 */
+/* // ======================================================================= */
+.detail-banner {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: #f1f5f9;
+}
+
+.detail-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.status-verified-title {
+    font-size: 20px;
+}
+
+.kode-booking-label {
+    margin-top: 15px;
+}
+
+/* // ======================================================================= */
+/* // e-tiket.php (Mahasiswa)                                                */
+/* // ======================================================================= */
+.verif-details i {
+    font-size: 12px;
+}
+
+/* // ======================================================================= */
+/* // kegiatan_mhs.php (Mahasiswa) & kegiatan.php (Public)                    */
+/* // ======================================================================= */
+.search-bar form {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.btn-reset-filter {
+    background-color: #ef4444 !important;
+    color: white !important;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.event-banner {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    background: #f1f5f9;
+}
+
+.event-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* // ======================================================================= */
+/* // pembayaran.php (Mahasiswa)                                             */
+/* // ======================================================================= */
+.etiket-preview-info {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.method-icon img {
+    width: 40px;
+    height: auto;
+}
+
+#detail-pembayaran-card {
+    display: none;
+}
+
+#rekening-box {
+    display: none;
+}
+
+#qris-box {
+    display: none;
+}
+
+.qris-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.qris-hint {
+    font-size: 12px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+}
+
+.qris-hint i {
+    font-size: 13px;
+    color: #2E4C82;
+}
+
+.qris-img-clickable {
+    max-width: 200px;
+    border-radius: 12px;
+    cursor: zoom-in;
+    border: 2px solid #e2e8f0;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.qris-img-clickable:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 24px rgba(46, 76, 130, 0.18);
+    border-color: #2E4C82;
+}
+
+.qris-box p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    text-align: center;
+}
+
+/* ---- Lightbox Overlay ---- */
+.qris-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 30, 0.82);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: fadeInOverlay 0.2s ease;
+}
+
+.qris-lightbox.aktif {
+    display: flex;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.qris-lightbox-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+}
+
+.qris-lightbox-img {
+    max-width: min(420px, 90vw);
+    max-height: 80vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 3px solid rgba(255,255,255,0.15);
+    object-fit: contain;
+    background: #fff;
+}
+
+.qris-lightbox-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #334155;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    transition: background 0.15s, color 0.15s, transform 0.15s;
+    z-index: 10000;
+}
+
+.qris-lightbox-close:hover {
+    background: #ef4444;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.qris-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #2E4C82, #4a73c2);
+    color: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(46, 76, 130, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.qris-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 76, 130, 0.5);
+    color: #fff;
+}
+
+/* ---- Icon fa-qrcode di method item ---- */
+.qris-method-icon i {
+    font-size: 22px;
+    color: #2E4C82;
+    display: block;
+}
+
+.upload-label {
+    display: block;
+    margin-top: 15px;
+}
+
+/* // ======================================================================= */
+/* // profil.php (Mahasiswa)                                                 */
+/* // ======================================================================= */
+.form-control[readonly] {
+    background: #f8fafc;
+    color: #64748b;
+}
+
+/* // ======================================================================= */
+/* // saved_events.php (Mahasiswa)                                           */
+/* // ======================================================================= */
+.event-card > i {
+    font-size: 2em;
+    color: #2E4C82;
+}
+
+/* // ======================================================================= */
+/* // user_dashboard.php (Mahasiswa)                                         */
+/* // ======================================================================= */
+.event-details > i {
+    font-size: 2em;
+    color: #2E4C82;
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* // ======================================================================= */
+/* // org_logo (Organizer - all files)                                       */
+/* // ======================================================================= */
+.org-logo i {
+    font-size: 24px;
+}
+
+/* // ======================================================================= */
+/* // org_buat_acara.php (Organizer)                                         */
+/* // ======================================================================= */
+.org-alert-list {
+    margin-left: 20px;
+    margin-top: 5px;
+    padding-left: 0;
+    list-style-type: square;
+}
+
+.org-upload-box {
+    position: relative;
+    cursor: pointer;
+}
+
+.org-upload-box input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* // ======================================================================= */
+/* // org_data_peserta.php & org_kelola_acara.php (Organizer)                */
+/* // ======================================================================= */
+.org-no-data-cell {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+/* // ======================================================================= */
+/* // fitur.php (Public)                                                     */
+/* // ======================================================================= */
+.logo-icon i {
+    font-size: 24px;
+    color: #2E4C82;
+}
+
+.icon-box i {
+    font-size: 24px;
+    color: #fff;
+}
+
+/* // ======================================================================= */
+/* // index.php (Public)                                                     */
+/* // ======================================================================= */
+.navbar .logo i {
+    font-size: 24px;
+    color: #2E4C82;
+}
+
+/* // ======================================================================= */
+/* // kegiatan.php (Public)                                                   */
+/* // ======================================================================= */
+.event-icon-box {
+    height: 110px;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #2E4C82;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background 0.3s;
+}
+
+.event-card:hover .event-icon-box {
+    background: linear-gradient(135deg, #c7d2fe 0%, #e0e7ff 100%);
 }

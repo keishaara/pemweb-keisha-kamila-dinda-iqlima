@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label class="form-label">NPM</label>
-                            <input type="text" class="form-control" value="<?= htmlspecialchars($user['npm']); ?>" readonly style="background:#f8fafc; color:#64748b;">
+                            <input type="text" class="form-control" value="<?= htmlspecialchars($user['npm']); ?>" readonly>
                         </div>
                     </div>
                     <div class="form-row">
@@ -168,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label class="form-label">Konfirmasi Sandi Baru</label>
                         <input type="password" name="konfirmasi" class="form-control" required>
                     </div>
-                    <div class="form-actions" style="justify-content: flex-start;">
+                    <div class="form-actions justify-start">
                         <button type="submit" name="ganti_sandi" class="btn btn-outline">Ubah Sandi</button>
                     </div>
                 </form>
