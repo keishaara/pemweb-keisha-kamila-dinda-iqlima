@@ -162,7 +162,7 @@ class OrganizerController {
             $waktu       = isset($_POST['waktu']) ? $_POST['waktu'] : '';
             $lokasi      = isset($_POST['lokasi']) ? trim(htmlspecialchars($_POST['lokasi'])) : '';
             $kategori_id = isset($_POST['kategori_id']) ? intval($_POST['kategori_id']) : 0;
-            $jenis_acara = isset($_POST['jenis_acara']) ? $_POST['jenis_acara'] : '';
+            $jenis_acara = isset($_POST['jenis_acara']) ?trim($_POST['jenis_acara'] ?? '') : '';
             $kuota       = isset($_POST['kuota']) ? intval($_POST['kuota']) : 0;
             $harga       = isset($_POST['harga']) ? intval($_POST['harga']) : 0;
 

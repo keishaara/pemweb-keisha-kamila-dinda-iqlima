@@ -115,7 +115,7 @@ class OrganizerModel {
         $stmt = mysqli_prepare($this->conn, $sql);
         mysqli_stmt_bind_param(
             $stmt, 
-            "ssssssssiiissi", 
+            "ssssssssidissi", 
             $data['judul_event'], 
             $data['penyelenggara'], 
             $data['deskripsi'], 
@@ -173,7 +173,7 @@ class OrganizerModel {
         $stmt = mysqli_prepare($this->conn, $sql);
         mysqli_stmt_bind_param(
             $stmt, 
-            "ssssssiiisii", 
+            "ssssssidisii", 
             $data['judul_event'], 
             $data['deskripsi'], 
             $data['tanggal'], 
