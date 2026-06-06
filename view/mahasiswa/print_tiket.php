@@ -23,7 +23,7 @@ if (!$tiket) {
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>E-Ticket <?= htmlspecialchars($tiket['kode_booking']) ?></title>
+<title>E-Ticket <?= htmlspecialchars($tiket['kode_booking'] ?? '') ?></title>
 <link rel="stylesheet" href="../../assets/css/style.css?v=2">
 </head>
 
@@ -38,7 +38,7 @@ if (!$tiket) {
                 </div>
 
                 <div class="ticket-print-code">
-                    <?= htmlspecialchars($tiket['kode_booking']) ?>
+                    <?= htmlspecialchars($tiket['kode_booking'] ?? '') ?>
                 </div>
 
                 <div class="ticket-print-status">
@@ -51,17 +51,17 @@ if (!$tiket) {
 
                 <div class="ticket-print-row">
                     <span>Nama Event</span>
-                    <strong><?= htmlspecialchars($tiket['judul_event']) ?></strong>
+                    <strong><?= htmlspecialchars($tiket['judul_event'] ?? '') ?></strong>
                 </div>
 
                 <div class="ticket-print-row">
                     <span>Kategori</span>
-                    <strong><?= htmlspecialchars($tiket['nama_kategori']) ?></strong>
+                    <strong><?= htmlspecialchars($tiket['nama_kategori'] ?? 'Umum') ?></strong>
                 </div>
 
                 <div class="ticket-print-row">
                     <span>Penyelenggara</span>
-                    <strong><?= htmlspecialchars($tiket['penyelenggara']) ?></strong>
+                    <strong><?= htmlspecialchars($tiket['penyelenggara'] ?? '') ?></strong>
                 </div>
 
                 <div class="ticket-print-row">
@@ -76,7 +76,7 @@ if (!$tiket) {
 
                 <div class="ticket-print-row">
                     <span>Lokasi</span>
-                    <strong><?= htmlspecialchars($tiket['lokasi']) ?></strong>
+                    <strong><?= htmlspecialchars($tiket['lokasi'] ?? '') ?></strong>
                 </div>
 
             </div>

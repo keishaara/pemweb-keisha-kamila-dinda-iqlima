@@ -67,33 +67,37 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                 <p>Semua platform dalam kendalimu</p>
             </div>
 
-            <div class="stats-grid">
-                <div class="stat-card" onclick="window.location.href='pengguna.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-                    <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-                    <h3><?= $totalUsersData; ?></h3>
-                    <p>Total Pengguna</p>
-                    <div class="stat-trend">Data pengguna terdaftar</div>
+            <div class="org-stats">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-users" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
+                        <h3><?= $totalUsersData; ?></h3>
+                        <p>Total Pengguna</p>
+                    </div>
                 </div>
 
-                <div class="stat-card" onclick="window.location.href='pengguna.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-                    <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
-                    <h3><?= $totalMahasiswa; ?></h3>
-                    <p>Mahasiswa Aktif</p>
-                    <div class="stat-trend">Total akun mahasiswa</div>
+                <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-user-graduate" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
+                        <h3><?= $totalMahasiswa; ?></h3>
+                        <p>Mahasiswa Aktif</p>
+                    </div>
                 </div>
 
-                <div class="stat-card" onclick="window.location.href='pengguna.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-                    <div class="stat-icon"><i class="fa-solid fa-building"></i></div>
-                    <h3><?= $totalOrgData; ?></h3>
-                    <p>Organisasi Aktif</p>
-                    <div class="stat-trend">Total akun organisasi</div>
+                <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-building" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
+                        <h3><?= $totalOrgData; ?></h3>
+                        <p>Organisasi Aktif</p>
+                    </div>
                 </div>
 
-                <div class="stat-card" onclick="window.location.href='verifikasi.php'" style="cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-                    <div class="stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-                    <h3><?= count(array_filter($verifikasiAcara, fn($e) => strtolower($e['status']) == 'pending')); ?></h3>
-                    <p>Menunggu Verifikasi</p>
-                    <div class="stat-trend negative">Perlu tindakan admin</div>
+                <div class="org-stat-card clickable-card" onclick="window.location.href='verifikasi.php'">
+                    <div class="org-stat-icon"><i class="fa-solid fa-clipboard-check" style="font-size: 24px;"></i></div>
+                    <div class="org-stat-info">
+                        <h3><?= count(array_filter($verifikasiAcara, fn($e) => strtolower($e['status']) == 'pending')); ?></h3>
+                        <p>Menunggu Verifikasi</p>
+                    </div>
                 </div>
             </div>
 

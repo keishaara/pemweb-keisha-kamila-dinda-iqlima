@@ -4309,6 +4309,21 @@ a.btn-table-action {
     color: #ef4444 !important;
 }
 
+.clickable-card {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.clickable-card:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
 .status-pill.ditolak {
     background-color: #fee2e2 !important;
     color: #ef4444 !important;
