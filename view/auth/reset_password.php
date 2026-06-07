@@ -57,15 +57,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="split-screen">
-        <div class="form-side">
-            <a href="../auth/login.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
+<body class="login-page-v2">
+
+    <div class="login-wrapper">
+        <div class="login-card-v2">
+            <a href="../auth/login.php" class="logo">
+                <i class="fa-solid fa-calendar-check"></i> Evently
+            </a>
             <h2>Setel Ulang Kata Sandi</h2>
-            <p class="text-muted mb-3">Masukkan kode verifikasi <strong>123456</strong> dan kata sandi baru Anda.</p>
+            <p class="text-muted">Masukkan kode verifikasi <strong>123456</strong> dan kata sandi baru Anda.</p>
 
             <?php if ($msg): ?>
-                <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>"><?= htmlspecialchars($msg); ?></div>
+                <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>">
+                    <?= htmlspecialchars($msg); ?>
+                </div>
             <?php endif; ?>
 
             <?php if ($msgType === 'success'): ?>
@@ -88,11 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="password" name="konfirmasi_password" class="form-control" placeholder="Ulangi Sandi" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Setel Ulang Kata Sandi</button>
-                    <p class="auth-footer">Kembali ke <a href="../public/index.php">Masuk</a></p>
+                    <p class="auth-footer">Kembali ke <a href="../public/index.php">Beranda</a></p>
                 </form>
             <?php endif; ?>
         </div>
-        <div class="img-side"></div>
     </div>
 </body>
-</html>

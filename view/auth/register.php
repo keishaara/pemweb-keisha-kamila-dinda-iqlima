@@ -48,10 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="split-screen">
-        <div class="form-side">
-            <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
+<body class="login-page-v2">
+
+    <div class="login-wrapper">
+        <div class="login-card-v2" style="max-width: 600px;"> <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
             <h2>Buat akun baru</h2>
             <p class="text-muted mb-3">Bergabung dengan kami di Evently</p>
 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Prodi</label>
-                        <input type="text" name="program_studi" class="form-control" placeholder="Pilih Prodi">
+                        <input type="text" name="program_studi" class="form-control" placeholder="Contoh: Ilmu Komputer">
                     </div>
                     <div class="form-group">
                         <label class="form-label">No. Whatsapp</label>
@@ -101,12 +101,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="password" name="konfirmasi_password" class="form-control" placeholder="Ulangi Sandi" required>
                     </div>
                 </div>
+                
                 <button type="submit" class="btn btn-primary btn-block">Buat Akun</button>
                 <p class="auth-footer">Sudah punya akun? <a href="login.php">Masuk</a></p>
             </form>
         </div>
-        <div class="img-side"></div>
     </div>
+    
     <script>
         document.getElementById('registerForm').addEventListener('submit', function(event) {
             var form = event.target;

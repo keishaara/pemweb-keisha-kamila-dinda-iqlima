@@ -65,9 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="split-screen">
-        <div class="form-side">
+<body class="login-page">
+
+    <div class="login-wrapper">
+        <div class="login-card">
             <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
             <h2>Selamat Datang Kembali</h2>
             <p class="text-muted mb-3">Masuk ke akun kamu untuk menemukan kegiatan kampus terbaru.</p>
@@ -92,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="mahasiswa">Mahasiswa</option>
                     </select>
                 </div>
+                
                 <div class="auth-remember">
                     <a href="forgot_password.php" class="auth-forgot">Lupa kata sandi?</a>
                 </div>
@@ -100,9 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="auth-footer">Belum punya akun? <a href="register.php">Daftar gratis</a></p>
             </form>
         </div>
-        <div class="img-side"></div>
     </div>
-
+    
     <script>
         const loginForm = document.getElementById('loginForm');
         const clientError = document.getElementById('clientError');

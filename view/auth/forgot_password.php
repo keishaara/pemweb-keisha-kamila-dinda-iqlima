@@ -60,15 +60,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <div class="split-screen">
-        <div class="form-side">
-            <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
+<body class="dinda-auth-body">
+    <div class="dinda-auth-wrapper">
+        <div class="dinda-auth-card">
+            <a href="../public/index.php" class="logo">
+                <i class="fa-solid fa-calendar-check"></i> Evently
+            </a>
+            
             <h2>Lupa Kata Sandi</h2>
-            <p class="text-muted mb-3">Masukkan Email dan pilih role untuk menerima link reset.</p>
+            <p class="text-muted">Masukkan Email dan pilih role untuk menerima link reset.</p>
 
             <?php if ($msg): ?>
-                <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>"><?= $msg; ?></div>
+                <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>">
+                    <?= $msg; ?>
+                </div>
             <?php endif; ?>
 
             <form method="POST" action="">
@@ -88,7 +93,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="auth-footer">Kembali ke <a href="login.php">Masuk</a></p>
             </form>
         </div>
-        <div class="img-side"></div>
     </div>
 </body>
-</html>

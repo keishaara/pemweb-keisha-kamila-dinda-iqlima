@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -367,12 +367,6 @@ ul {
 .stat-item p {
     color: #64748b;
     font-size: 0.9rem;
-}
-
-
-.split-screen {
-    display: flex;
-    min-height: 100vh;
 }
 
 .form-side {
@@ -928,7 +922,7 @@ text-align: center; padding: 40px; color: #64748b;}
 .ticket-print-body{
     background:#eef3ff;
     padding:40px;
-    font-family:'Segoe UI',sans-serif;
+    font-family:'Poppins',sans-serif;
 }
 
     .ticket-print-card{
@@ -998,12 +992,7 @@ text-align: center; padding: 40px; color: #64748b;}
         grid-template-columns: repeat(2, 1fr);
     }
 }
-
 @media (max-width: 768px) {
-    .split-screen {
-        flex-direction: column;
-    }
-
     .form-side,
     .img-side {
         width: 100%;
@@ -2232,7 +2221,7 @@ body {
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #f8f6f2, #eef2f7);
     margin: 0;
 }
@@ -2250,7 +2239,7 @@ body {
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #f8f6f2 0%, #eef2f7 100%);
     min-height: 100vh;
     color: #333;
@@ -2374,7 +2363,7 @@ body {
     border-radius: 10px;
     border: 1.5px solid #e5e7eb;
     font-size: 14px;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: white;
     color: #333;
     outline: none;
@@ -2397,7 +2386,7 @@ body {
     font-size: 13px;
     color: #555;
     cursor: pointer;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     transition: background 0.15s;
 }
 
@@ -2421,7 +2410,7 @@ body {
     font-weight: 500;
     color: #6b7280;
     cursor: pointer;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     transition: all 0.15s;
 }
 
@@ -2582,7 +2571,7 @@ body {
     color: #3d5a80;
     font-size: 13px;
     font-weight: 600;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -2759,7 +2748,7 @@ body {
     border-radius: 12px;
     font-size: 14px;
     font-weight: 700;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
     align-items: center;       
     text-align: center;
@@ -2783,7 +2772,7 @@ body {
     border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
     transition: background 0.2s;
 }
@@ -2915,7 +2904,7 @@ body {
     color: #1a1a2e;
     background: #fafbfc;
     outline: none;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     transition: border-color 0.2s, background 0.2s;
 }
 
@@ -2934,7 +2923,7 @@ body {
     border-radius: 9px;
     border: 1.5px solid #e5e7eb;
     font-size: 13px;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: #1a1a2e;
     background: #fafbfc;
     resize: vertical;
@@ -4838,4 +4827,183 @@ a.btn-table-action {
 
 .event-card:hover .event-icon-box {
     background: linear-gradient(135deg, #c7d2fe 0%, #e0e7ff 100%);
+}
+/* --- Tampilan Baru Login Card --- */
+.login-page {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f7f6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.login-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #edf2f7;
+}
+
+.login-card .logo {
+    justify-content: center;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #3d5a80;
+}
+
+.login-card h2 {
+    text-align: left;
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #1e293b;
+}
+
+.login-card .text-muted {
+    text-align: left;
+    margin-bottom: 24px;
+    color: #64748b;
+}
+
+/* Styling Login Card Baru */
+.login-page {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f7f6;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.login-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #edf2f7;
+}
+
+.login-card .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #3d5a80;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.login-card h2 {
+    text-align: left;
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #1e293b;
+}
+
+.login-card .text-muted {
+    text-align: left;
+    margin-bottom: 24px;
+    color: #64748b;
+}
+
+.login-card .auth-footer {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+.login-page-v2 {
+    margin: 0;
+    padding: 0;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: left !important;
+    min-height: 100vh !important;
+    background-color: #f4f7f6 !important;
+}
+
+.login-card-v2 {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    border: 1px solid #edf2f7;
+}
+
+.login-card-v2 .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #3d5a80;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+/* --- CSS Khusus untuk Wrapper Baru --- */
+.dinda-auth-body {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    background-color: #f4f7f6 !important;
+}
+
+.dinda-auth-wrapper {
+    width: 100% !important;
+    max-width: 600px !important; /* Lebar card diperkecil */
+    padding: 20px !important;
+}
+
+.dinda-auth-card {
+    background: #ffffff !important;
+    padding: 35px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* Mengatur agar logo dan teks di dalam card ini rapi */
+.dinda-auth-card .logo {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-bottom: 20px !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: #3d5a80 !important;
 }
