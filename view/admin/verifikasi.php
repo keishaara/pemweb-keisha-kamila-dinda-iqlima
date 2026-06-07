@@ -131,9 +131,9 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                         ?>
                             <span style></span>
                         <?php else: ?>
-                            <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=tolak" 
+                            <a href="#" 
                                class="btn-verif btn-tolak" 
-                               onclick="return confirm('Apakah Anda yakin ingin MENOLAK acara ini?')">
+                               onclick="tolakDenganAlasan(<?= $acara['id']; ?>)">
                                Tolak
                             </a>
                             
@@ -149,5 +149,15 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
             <?php endif; ?>
         </main>
     </div>
+    <script>
+    function tolakDenganAlasan(id) {
+        let alasan = prompt("Masukkan alasan penolakan acara ini:");
+        if (alasan !== null && alasan.trim() !== "") {
+            window.location.href = "verifikasi.php?action=tolak&id=" + id + "&alasan=" + encodeURIComponent(alasan);
+        } else if (alasan !== null) {
+            alert("Alasan harus diisi!");
+        }
+    }
+    </script>
 </body>
 </html>

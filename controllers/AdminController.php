@@ -165,14 +165,13 @@ class AdminController {
             $action = $_GET['action'];
 
             if ($action === 'setuju') {
-                $status = 'approved';
+                $eksekusi = $this->model->updateStatusEvent($id, 'approved');
             } elseif ($action === 'tolak') {
-                $status = 'rejected';
+                $alasan = isset($_GET['alasan']) ? trim(urldecode($_GET['alasan'])) : 'Ditolak oleh admin tanpa alasan spesifik.';
+                $eksekusi = $this->model->rejectEventWithReason($id, $alasan);
             } else {
                 return; 
             }
-
-            $eksekusi = $this->model->updateStatusEvent($id, $status);
             
             if (!$eksekusi) {
                 $dbError = isset($GLOBALS['conn']) ? mysqli_error($GLOBALS['conn']) : 'Query gagal dieksekusi';
