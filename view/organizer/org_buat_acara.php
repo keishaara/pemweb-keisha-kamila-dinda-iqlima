@@ -194,9 +194,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="org-form-group org-full">
                             <label>Poster Acara</label>
                             <div class="org-upload-box">
-                                <input type="file" name="poster" accept="image/*">
-                                <p><?= $is_edit && !empty($event['poster']) ? 'Pilih file baru jika ingin mengganti poster' : 'Unggah poster acara di sini' ?></p>
-                                <span>PNG, JPG maksimal 2MB</span>
+                                <input type="file" name="poster" id="posterInput" accept="image/*">
+                                <div id="uploadPlaceholder">
+                                    <p><?= $is_edit && !empty($event['poster']) ? 'Pilih file baru jika ingin mengganti poster' : 'Unggah poster acara di sini' ?></p>
+                                    <span>PNG, JPG maksimal 2MB</span>
+                                </div>
+                                <img id="posterPreview" src="#" alt="Preview Poster" style="display: none; width: 100%; height: 400px; border-radius: 8px; object-fit: contain; margin: 0 auto;">
                             </div>
                             <?php if ($is_edit && !empty($event['poster'])): ?>
                                 <p>Poster saat ini: <strong><?= htmlspecialchars($event['poster']) ?></strong></p>
@@ -212,5 +215,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </main>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const posterInput = document.getElementById('posterInput');
+            const posterPreview = document.getElementById('posterPreview');
+            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+
+            if (posterInput && posterPreview) {
+                posterInput.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            posterPreview.src = e.target.result;
+                            posterPreview.style.display = 'block';
+                            if (uploadPlaceholder) uploadPlaceholder.style.display = 'none';
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        posterPreview.src = '#';
+                        posterPreview.style.display = 'none';
+                        if (uploadPlaceholder) uploadPlaceholder.style.display = 'block';
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

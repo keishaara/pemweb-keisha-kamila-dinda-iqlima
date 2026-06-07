@@ -150,6 +150,13 @@ $keyword = $_GET['search'] ?? '';
                                         if ($status === 'approved' || $status === 'disetujui'): 
                                         ?>
                                             <span class="org-pill org-pill-success">Disetujui</span>
+                                        <?php elseif ($status === 'rejected'): ?>
+                                            <span class="org-pill org-pill-danger" style="background-color: #ffebee; color: #c62828; padding: 4px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: bold;">Ditolak/Dihapus</span>
+                                            <?php if (!empty($event['alasan_penolakan'])): ?>
+                                                <div style="margin-top: 5px; font-size: 0.8rem; color: #c62828;">
+                                                    <strong>Alasan:</strong> <?= htmlspecialchars($event['alasan_penolakan']) ?>
+                                                </div>
+                                            <?php endif; ?>
                                         <?php else: ?>
                                             <span class="org-pill org-pill-warning">
                                                 <?= htmlspecialchars($event['status'] ?? 'Pending') ?>

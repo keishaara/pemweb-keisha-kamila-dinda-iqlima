@@ -194,5 +194,11 @@ class AdminModel {
         $status = mysqli_real_escape_string($this->conn, $status);
         return mysqli_query($this->conn, "UPDATE events SET status = '$status' WHERE id = '$id'");
     }
+
+    public function rejectEventWithReason($id, $alasan) {
+        $id = intval($id);
+        $alasan = mysqli_real_escape_string($this->conn, $alasan);
+        return mysqli_query($this->conn, "UPDATE events SET status = 'rejected', alasan_penolakan = '$alasan' WHERE id = '$id'");
+    }
 } 
 ?>

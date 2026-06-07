@@ -20,7 +20,7 @@ function getKategoriStyle($kategori) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitur & Layanan - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/fitur.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -185,7 +185,6 @@ function getKategoriStyle($kategori) {
                             <li><span class="check-icon white-check">✓</span> Pantau akun pengguna</li>
                             <li><span class="check-icon white-check">✓</span> Jaga kualitas & keamanan data</li>
                         </ul>
-                        <a href="../auth/register.php" class="btn-role btn-admin-outline">Masuk sebagai Admin</a>
                     </div>
                 </div>
             </div>
