@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
 </head>
 <body>
 
-<div class="dashboard-layout">
-    <aside class="sidebar">
+<div class="dashboard-layout-mhs">
+    <aside class="sidebar-mhs">
         <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
         <div class="menu-category">Menu</div>
         <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
         <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
     </aside>
 
-    <main class="content">
+    <main class="main-content-mhs">
        <?php if(isset($_SESSION['success'])): ?>
 
         <div class="profile-message profile-success">
@@ -117,11 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['simpan_event'])) {
             <div class="tags">
 
                 <span>
-                    <?= htmlspecialchars($event['kategori_id']) ?>
-                </span>
-
-                <span>
-                    <?= htmlspecialchars($event['deskripsi']) ?>
+                    <?= htmlspecialchars(strtoupper($event['nama_kategori'] ?? 'UMUM')) ?>
                 </span>
 
                 <span class="green">

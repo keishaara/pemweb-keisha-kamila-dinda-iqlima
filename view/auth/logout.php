@@ -18,7 +18,7 @@ session_destroy();
 if ($role === 'admin') {
     header("Location: ../admin/login_admin.php");
 } else {
-    header("Location: ../auth/login.php");
+    header("Location: ../public/index.php");
 }
 exit;
 ?>

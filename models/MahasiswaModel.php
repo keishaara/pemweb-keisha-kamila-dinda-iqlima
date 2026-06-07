@@ -121,9 +121,10 @@ class MahasiswaModel {
     {
         $stmt = mysqli_prepare(
             $this->conn,
-            "SELECT *
-             FROM events
-             WHERE id = ?"
+            "SELECT e.*, c.nama_kategori
+             FROM events e
+             LEFT JOIN categories c ON e.kategori_id = c.id
+             WHERE e.id = ?"
         );
         mysqli_stmt_bind_param(
             $stmt,
@@ -185,6 +186,7 @@ class MahasiswaModel {
                 e.waktu,
                 e.lokasi,
                 e.penyelenggara,
+                e.poster,
                 c.nama_kategori
             FROM bookings b
             JOIN events e ON b.event_id = e.id

@@ -32,8 +32,8 @@ $events = $controller->getEvents(
 </head>
 <body>
     
-    <div class="dashboard-layout">
-        <aside class="sidebar">
+    <div class="dashboard-layout-mhs">
+        <aside class="sidebar-mhs">
             <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
             <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
@@ -44,7 +44,7 @@ $events = $controller->getEvents(
             <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content-mhs">
             <div class="page-header">
                 <h2>Jelajahi Event</h2>
                 <p>Temukan kegiatan sesuai minatmu</p>
@@ -86,8 +86,8 @@ $events = $controller->getEvents(
                     <p>Belum ada event mendatang.</p>
                 <?php else: ?>
                     <?php foreach ($events as $ev): ?>
-                    <div class="event-card">
-                        <div class="event-banner">
+                    <div class="mhs-event-card">
+                        <div class="mhs-event-banner" style="overflow: hidden; position: relative;">
                             <?php 
                             if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
                             ?>
@@ -95,17 +95,17 @@ $events = $controller->getEvents(
                             <?php else: ?>
                                 <img src="../../assets/poster/default.png" alt="Default Poster">
                             <?php endif; ?>
+                            <span class="mhs-event-tag"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')); ?></span>
                         </div>
                         
-                        <div class="event-body">
-                            <p class="category"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')); ?></p>
-                            <h4><?= htmlspecialchars($ev['judul_event']); ?></h4>
-                            <p class="organizer"><i class="fa-solid fa-building-user"></i> <?= htmlspecialchars($ev['penyelenggara'] ?? 'Organisasi'); ?></p>
-                            <div class="event-footer">
-                                <a href="../mahasiswa/detail.php?id=<?= $ev['id']; ?>" class="btn">Detail</a>
+                        <div class="mhs-event-details">
+                            <h4 class="mhs-event-title"><?= htmlspecialchars($ev['judul_event']); ?></h4>
+                            <p class="mhs-event-meta"><i class="fa-solid fa-building-user"></i> <?= htmlspecialchars($ev['penyelenggara'] ?? 'Organisasi'); ?></p>
+                            <div class="mhs-event-footer">
                                 <span class="price <?= $ev['harga'] == 0 ? 'free' : ''; ?>">
                                     <?= $ev['harga'] == 0 ? 'Gratis' : 'Rp '.number_format($ev['harga'], 0, ',', '.'); ?>
                                 </span>
+                                <a href="../mahasiswa/detail.php?id=<?= $ev['id']; ?>" class="mhs-btn-primary">Detail</a>
                             </div>
                         </div>
                     </div>

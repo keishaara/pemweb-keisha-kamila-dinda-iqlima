@@ -25,27 +25,7 @@ function getKategoriStyle($kategori) {
 </head>
 <body>
     <div class="features-wrapper">
-        
-        <header class="navbar">
-            <div class="nav-container">
-                <a href="javascript:history.back()" class="logo">
-                    <div class="logo-icon">
-                        <i class="fa-solid fa-calendar-check"></i>
-                    </div>
-                    <span>Evently</span>
-                </a>
-                <nav class="nav-menu">
-                    <a href="#" class="active">Fitur</a>
-                    <a href="#">Kegiatan</a>
-                    <a href="#">Tentang</a>
-                </nav>
-                <div class="nav-auth">
-                    <a href="../auth/login.php" class="btn-masuk">Masuk</a>
-                    <a href="../auth/register.php" class="btn-daftar">Daftar Gratis</a>
-                </div>
-            </div>
-        </header>
-
+        <a href="index.php" class="btn-back-floating"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
         <main class="main-content">
             <div class="content-header">
                 <span class="sub-title">FITUR UNGGULAN</span>
@@ -120,7 +100,11 @@ function getKategoriStyle($kategori) {
                         ?>
                             <div class="event-card">
                                 <div class="event-banner <?= $style['bg']; ?>">
-                                    <span class="emoji-icon"><?= $style['emoji']; ?></span>
+                                    <?php if (!empty($event['poster']) && file_exists(__DIR__ . '/../../' . $event['poster'])): ?>
+                                        <img src="../../<?= htmlspecialchars($event['poster']); ?>" alt="Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <?php else: ?>
+                                        <span class="emoji-icon"><?= $style['emoji']; ?></span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="event-body">
                                     <span class="event-tag <?= $style['tag']; ?>"><?= strtoupper(htmlspecialchars($event['nama_kategori'] ?? 'UMUM')); ?></span>
@@ -139,7 +123,7 @@ function getKategoriStyle($kategori) {
                 </div>
 
                 <div class="action-center">
-                    <a href="#" class="btn-view-all">Lihat Semua Kegiatan →</a>
+                    <a href="kegiatan.php" class="btn-view-all">Lihat Semua Kegiatan →</a>
                 </div>
             </div>
         </section>

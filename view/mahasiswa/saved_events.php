@@ -41,8 +41,8 @@ $saved = $controller->getSavedEvents(
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard-layout">
-        <aside class="sidebar">
+    <div class="dashboard-layout-mhs">
+        <aside class="sidebar-mhs">
             <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
             <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
@@ -53,7 +53,7 @@ $saved = $controller->getSavedEvents(
             <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content-mhs">
             <div class="page-header">
                 <h2>Disimpan</h2>
                 <p>Event yang kamu tandai untuk disimpan.</p>
@@ -64,39 +64,26 @@ $saved = $controller->getSavedEvents(
                     <p class="grid-empty-state">Belum ada event yang disimpan.</p>
                 <?php else: ?>
                     <?php foreach($saved as $ev): ?>
-                        <div class="event-card">
-                            <?php 
-                                $nama_kat = strtolower($ev['nama_kategori'] ?? '');
-                                $fa_icon = 'fa-solid fa-layer-group';
-                                if (strpos($nama_kat, 'music') !== false || strpos($nama_kat, 'musik') !== false) {
-                                    $fa_icon = 'fa-solid fa-music';
-                                } elseif (strpos($nama_kat, 'olahraga') !== false || strpos($nama_kat, 'sport') !== false) {
-                                    $fa_icon = 'fa-solid fa-medal';
-                                } elseif (strpos($nama_kat, 'teknologi') !== false || strpos($nama_kat, 'tech') !== false || strpos($nama_kat, 'it') !== false) {
-                                    $fa_icon = 'fa-solid fa-laptop-code';
-                                } elseif (strpos($nama_kat, 'seni') !== false || strpos($nama_kat, 'art') !== false) {
-                                    $fa_icon = 'fa-solid fa-palette';
-                                } elseif (strpos($nama_kat, 'pendidikan') !== false || strpos($nama_kat, 'seminar') !== false || strpos($nama_kat, 'education') !== false) {
-                                    $fa_icon = 'fa-solid fa-graduation-cap';
-                                } elseif (strpos($nama_kat, 'bisnis') !== false || strpos($nama_kat, 'business') !== false) {
-                                    $fa_icon = 'fa-solid fa-briefcase';
-                                } elseif (strpos($nama_kat, 'kesehatan') !== false || strpos($nama_kat, 'health') !== false) {
-                                    $fa_icon = 'fa-solid fa-heart-pulse';
-                                } elseif (strpos($nama_kat, 'budaya') !== false || strpos($nama_kat, 'culture') !== false) {
-                                    $fa_icon = 'fa-solid fa-masks-theater';
-                                }
-                            ?>
-                            <i class="<?= $fa_icon; ?>"></i>
-                            <div class="event-details">
-                                <span class="event-tag"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')) ?></span>
-                                <h4 class="event-title"><?= htmlspecialchars($ev['judul_event']) ?></h4>
-                                <p class="event-meta"><?= htmlspecialchars($ev['penyelenggara']) ?></p>
-                                <div class="event-footer">
-                                    <a href="detail.php?id=<?= intval($ev['id']) ?>" class="btn btn-small">Detail</a>
-                                    <form method="POST" class="d-inline ml-8">
+                        <div class="mhs-event-card">
+                            <div class="mhs-event-banner" style="overflow: hidden; position: relative;">
+                                <?php 
+                                if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
+                                ?>
+                                    <img src="../../assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster <?= htmlspecialchars($ev['judul_event']); ?>">
+                                <?php else: ?>
+                                    <img src="../../assets/poster/default.png" alt="Default Poster">
+                                <?php endif; ?>
+                                <span class="mhs-event-tag"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')) ?></span>
+                            </div>
+                            <div class="mhs-event-details">
+                                <h4 class="mhs-event-title"><?= htmlspecialchars($ev['judul_event']) ?></h4>
+                                <p class="mhs-event-meta"><i class="fa-solid fa-building"></i> <?= htmlspecialchars($ev['penyelenggara']) ?></p>
+                                <div class="mhs-event-footer">
+                                    <form method="POST" class="d-inline">
                                         <input type="hidden" name="event_id" value="<?= intval($ev['id']) ?>">
-                                        <button type="submit" name="unsave_event" class="btn-outline btn-small" onclick="return confirm('Hapus dari disimpan?')">Hapus</button>
+                                        <button type="submit" name="unsave_event" class="btn btn-outline btn-small" style="padding: 10px; border-radius:12px; font-weight:600;" onclick="return confirm('Hapus dari disimpan?')"><i class="fa-solid fa-trash"></i> Hapus</button>
                                     </form>
+                                    <a href="detail.php?id=<?= intval($ev['id']) ?>" class="mhs-btn-primary">Detail</a>
                                 </div>
                             </div>
                         </div>

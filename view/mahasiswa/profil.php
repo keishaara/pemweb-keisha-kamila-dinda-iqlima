@@ -85,8 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard-layout">
-        <aside class="sidebar">
+    <div class="dashboard-layout-mhs">
+        <aside class="sidebar-mhs">
             <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
             <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content-mhs">
             <div class="page-header"><h2>Profil Saya</h2></div>
 
             <?php if ($msg): ?>

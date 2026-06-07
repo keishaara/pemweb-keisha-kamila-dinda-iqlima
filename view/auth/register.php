@@ -94,11 +94,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Kata Sandi*</label>
-                        <input type="password" name="password" class="form-control" placeholder="Min. 8 karakter" required>
+                        <div style="position: relative;">
+                            <input type="password" name="password" id="regPasswordField" class="form-control" placeholder="Min. 8 karakter" required style="padding-right: 40px;">
+                            <i class="fa-solid fa-eye" id="toggleRegPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;"></i>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Konfirmasi Sandi*</label>
-                        <input type="password" name="konfirmasi_password" class="form-control" placeholder="Ulangi Sandi" required>
+                        <div style="position: relative;">
+                            <input type="password" name="konfirmasi_password" id="regConfirmField" class="form-control" placeholder="Ulangi Sandi" required style="padding-right: 40px;">
+                            <i class="fa-solid fa-eye" id="toggleRegConfirm" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;"></i>
+                        </div>
                     </div>
                 </div>
                 
@@ -109,6 +115,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     
     <script>
+        const toggleRegPassword = document.querySelector('#toggleRegPassword');
+        const regPasswordField = document.querySelector('#regPasswordField');
+        if (toggleRegPassword && regPasswordField) {
+            toggleRegPassword.addEventListener('click', function (e) {
+                const type = regPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                regPasswordField.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        const toggleRegConfirm = document.querySelector('#toggleRegConfirm');
+        const regConfirmField = document.querySelector('#regConfirmField');
+        if (toggleRegConfirm && regConfirmField) {
+            toggleRegConfirm.addEventListener('click', function (e) {
+                const type = regConfirmField.getAttribute('type') === 'password' ? 'text' : 'password';
+                regConfirmField.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+
         document.getElementById('registerForm').addEventListener('submit', function(event) {
             var form = event.target;
             var nama = form.nama.value.trim();

@@ -83,7 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="form-group">
                     <label class="form-label">Kata Sandi</label>
-                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                    <div style="position: relative;">
+                        <input type="password" name="password" id="passwordField" class="form-control" placeholder="••••••••" required style="padding-right: 40px;">
+                        <i class="fa-solid fa-eye" id="togglePassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;"></i>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Masuk sebagai</label>
@@ -107,6 +110,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         const loginForm = document.getElementById('loginForm');
         const clientError = document.getElementById('clientError');
+
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordField = document.querySelector('#passwordField');
+
+        if (togglePassword && passwordField) {
+            togglePassword.addEventListener('click', function (e) {
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
 
         function showClientError(message) {
             clientError.textContent = message;

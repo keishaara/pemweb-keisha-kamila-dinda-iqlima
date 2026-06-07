@@ -30,8 +30,8 @@ if ($status === 'selesai') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard-layout">
-        <aside class="sidebar">
+    <div class="dashboard-layout-mhs">
+        <aside class="sidebar-mhs">
             <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
             <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
@@ -42,7 +42,7 @@ if ($status === 'selesai') {
             <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content-mhs">
             <div class="page-header">
                 <h2><?= $judul ?></h2>
                 <p>Tunjukkan tiket ini saat melakukan registrasi di lokasi acara.</p>
@@ -56,8 +56,12 @@ if ($status === 'selesai') {
 
                         <div class="verif-card ticket-card">
 
-                            <div class="verif-icon-box ticket-qr">
-                                <img src="../../assets/img/qr-placeholder.png" alt="QR Code Ticket">
+                            <div class="verif-icon-box ticket-qr" style="overflow: hidden;">
+                                <?php if (!empty($tiket['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $tiket['poster'])): ?>
+                                    <img src="../../assets/poster/<?= htmlspecialchars($tiket['poster']); ?>" alt="Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                                <?php else: ?>
+                                    <img src="../../assets/poster/default.png" alt="Default Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                                <?php endif; ?>
                             </div>
 
                             <div class="verif-info">
