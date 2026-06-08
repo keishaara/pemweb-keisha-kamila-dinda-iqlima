@@ -23,7 +23,7 @@ class OrganizerModel {
             SELECT 
                 (SELECT COUNT(*) FROM bookings b JOIN events e ON b.event_id = e.id WHERE e.user_id = '$id') as total_peserta,
                 (SELECT COUNT(*) FROM events WHERE user_id = '$id' AND status = 'approved' AND tanggal >= CURDATE()) as event_aktif,
-                (SELECT COUNT(*) FROM events WHERE user_id = '$id' AND status = 'pending') as menunggu_verifikasi,
+                (SELECT COUNT(*) FROM events WHERE user_id = '$id' AND status IN ('pending', 'locked')) as menunggu_verifikasi,
                 (SELECT COUNT(*) FROM events WHERE user_id = '$id' AND tanggal < CURDATE()) as event_selesai
         ");
         return mysqli_fetch_assoc($query);

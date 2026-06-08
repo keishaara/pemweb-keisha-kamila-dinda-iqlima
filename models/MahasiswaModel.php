@@ -241,7 +241,7 @@ class MahasiswaModel {
             SELECT e.*, c.nama_kategori
             FROM events e
             LEFT JOIN categories c ON e.kategori_id = c.id
-            WHERE e.status = 'approved'
+            WHERE e.status IN ('approved', 'locked')
         ";
 
         $params = [];

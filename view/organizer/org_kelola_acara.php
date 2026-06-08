@@ -159,26 +159,33 @@ $keyword = $_GET['search'] ?? '';
                                             <?php endif; ?>
                                         <?php else: ?>
                                             <span class="org-pill org-pill-warning">
-                                                <?= htmlspecialchars($event['status'] ?? 'Pending') ?>
+                                                <?= htmlspecialchars($event['status'] === 'locked' ? 'Pending' : ($event['status'] ?? 'Pending')) ?>
                                             </span>
+                                            <?php if ($status === 'locked'): ?>
+                                                <div style="margin-top: 5px; font-size: 0.8rem; color: #d39c00;">
+                                                    <strong>Catatan:</strong> Acara sedang ditinjau ulang.
+                                                </div>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php 
                                         $statusAksi = strtolower($event['status'] ?? 'pending');
 
-                                        if ($statusAksi === 'approved' || $statusAksi === 'disetujui'): 
+                                        if ($statusAksi === 'approved' || $statusAksi === 'disetujui' || $statusAksi === 'locked'): 
                                         ?>
                                             <span></span>
                                         <?php else: ?>
                                             <a href="org_buat_acara.php?id=<?= $event['id'] ?? '' ?>" class="org-btn org-btn-small org-btn-outline">Edit</a>
                                         <?php endif; ?>
                                         
+                                        <?php if ($statusAksi !== 'locked'): ?>
                                         <a href="org_kelola_acara.php?action=hapus&id=<?= $event['id'] ?? '' ?>"
                                            class="org-btn org-btn-small org-btn-danger"
                                            onclick="return confirm('Yakin ingin menghapus event ini?')">
                                            Hapus
                                         </a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

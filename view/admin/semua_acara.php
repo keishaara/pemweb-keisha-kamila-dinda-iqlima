@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 }
 
 $controller = new AdminController();
+$controller->prosesLockEvent(); // Tambahkan pemanggilan method di sini
 $semuaAcara = $controller->getAllEvents();
 ?>
 
@@ -79,6 +80,7 @@ $semuaAcara = $controller->getAllEvents();
                             <th>Kategori</th>
                             <th>Tanggal</th>
                             <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,10 +93,35 @@ $semuaAcara = $controller->getAllEvents();
                                 <td>
                                     <?php 
                                     $status = strtolower($acara['status']); 
+                                    if ($status === 'locked') {
+                                        $statusClass = 'status-locked';
+                                        $statusText = 'Locked';
+                                    } else {
+                                        $statusClass = 'status-' . $status;
+                                        $statusText = ucfirst($status);
+                                    }
                                     ?>
-                                    <span class="status-pill status-<?= $status; ?>">
-                                        <?= ucfirst($status); ?>
+                                    <span class="status-pill <?= $statusClass; ?>" <?= $status === 'locked' ? 'style="background: #e2e8f0; color: #475569;"' : '' ?>>
+                                        <?= $statusText; ?>
                                     </span>
+                                </td>
+                                <td>
+                                    <?php if ($status === 'approved'): ?>
+                                        <a href="semua_acara.php?action=lock&id=<?= $acara['id']; ?>" class="btn-table-action" style="background: #fef08a; color: #854d0e; text-decoration: none;" onclick="return confirm('Apakah Anda yakin ingin MENGUNCI (suspend) acara ini? Ini akan menyembunyikan acara dari mahasiswa.');">
+                                            <i class="fas fa-lock"></i> Kunci
+                                        </a>
+                                    <?php elseif ($status === 'locked'): ?>
+                                        <div style="display: flex; gap: 5px;">
+                                            <a href="semua_acara.php?action=unlock_approve&id=<?= $acara['id']; ?>" class="btn-table-action" style="background: #dcfce7; color: #166534; text-decoration: none;" onclick="return confirm('Setujui kembali acara ini?');">
+                                                <i class="fas fa-check"></i> Setujui
+                                            </a>
+                                            <a href="semua_acara.php?action=unlock_reject&id=<?= $acara['id']; ?>" class="btn-table-action" style="background: #fee2e2; color: #991b1b; text-decoration: none;" onclick="return confirm('Tolak acara ini secara permanen?');">
+                                                <i class="fas fa-times"></i> Tolak
+                                            </a>
+                                        </div>
+                                    <?php else: ?>
+                                        <span style="color: #cbd5e1; font-size: 0.8rem;">-</span>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

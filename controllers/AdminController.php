@@ -186,6 +186,42 @@ class AdminController {
         }
     }
 
+    public function prosesLockEvent() {
+        if (isset($_GET['action']) && isset($_GET['id'])) {
+            $id = intval($_GET['id']);
+            $action = $_GET['action'];
+            
+            if ($action === 'lock') {
+                $eksekusi = $this->model->updateStatusEvent($id, 'locked');
+                if (!$eksekusi) {
+                    $_SESSION['action_error'] = "Gagal mengunci acara!";
+                } else {
+                    $_SESSION['action_success'] = "Acara berhasil dikunci dan ditangguhkan.";
+                }
+                header("Location: semua_acara.php");
+                exit;
+            } elseif ($action === 'unlock_approve') {
+                $eksekusi = $this->model->updateStatusEvent($id, 'approved');
+                if (!$eksekusi) {
+                    $_SESSION['action_error'] = "Gagal menyetujui acara!";
+                } else {
+                    $_SESSION['action_success'] = "Acara berhasil disetujui kembali.";
+                }
+                header("Location: semua_acara.php");
+                exit;
+            } elseif ($action === 'unlock_reject') {
+                $eksekusi = $this->model->updateStatusEvent($id, 'rejected');
+                if (!$eksekusi) {
+                    $_SESSION['action_error'] = "Gagal menolak acara!";
+                } else {
+                    $_SESSION['action_success'] = "Acara berhasil ditolak secara permanen.";
+                }
+                header("Location: semua_acara.php");
+                exit;
+            }
+        }
+    }
+
     private function updateEventStatus($id, $status) {
         $methods = [
             'updateStatusEvent',
