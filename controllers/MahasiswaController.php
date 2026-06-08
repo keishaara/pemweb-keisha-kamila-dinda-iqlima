@@ -96,23 +96,39 @@ class MahasiswaController {
     }
 
     public function updateProfile(
-        $userId,
-        $nama,
-        $email,
-        $programStudi,
-        $wa,
-        $semester
-    )
-    {
-        return $this->model->updateProfile(
-            $userId,
-            $nama,
-            $email,
-            $programStudi,
-            $wa,
-            $semester
-        );
+    $userId,
+    $nama,
+    $email,
+    $programStudi,
+    $wa,
+    $semester,
+    $fileFoto = null, 
+    $oldFoto = null
+)
+{
+    $fotoName = $oldFoto; 
+    if ($fileFoto && $fileFoto['error'] === UPLOAD_ERR_OK) {
+        $fileName = time() . '_' . preg_replace("/[^a-zA-Z0-9.]/", "", basename($fileFoto['name']));
+        
+        $uploadDir = __DIR__ . '/../assets/profiles/';
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        if (move_uploaded_file($fileFoto['tmp_name'], $uploadDir . $fileName)) {
+            $fotoName = $fileName; 
+
+            if (!empty($oldFoto) && file_exists($uploadDir . $oldFoto)) {
+                unlink($uploadDir . $oldFoto);
+            }
+        }
     }
+
+    return $this->model->updateProfile(
+        $userId, $nama, $email, $programStudi, $wa, $semester, $fotoName
+    );
+}
 
     public function changePassword(
         $userId,

@@ -200,27 +200,39 @@ class OrganizerModel {
     }
 
     public function updateOrganizerProfile($userId, $data) {
-        $sql = "UPDATE users SET 
-                    nama_lengkap = ?, 
-                    singkatan = ?, 
-                    email = ?, 
-                    no_whatsapp = ?, 
-                    deskripsi = ? 
-                WHERE id = ?";
-                
-        $stmt = mysqli_prepare($this->conn, $sql);
-        mysqli_stmt_bind_param(
-            $stmt, 
-            "sssssi", 
-            $data['nama_lengkap'], 
-            $data['singkatan'], 
-            $data['email'], 
-            $data['no_whatsapp'], 
-            $data['deskripsi'], 
-            $userId
-        );
-        
-        return mysqli_stmt_execute($stmt);
+    $sql = "UPDATE users SET 
+                nama_lengkap = ?, 
+                singkatan = ?, 
+                email = ?, 
+                no_whatsapp = ?, 
+                deskripsi = ?,
+                foto_profil = ?
+            WHERE id = ?";
+            
+    $stmt = mysqli_prepare($this->conn, $sql);
+    
+    if (!$stmt) {
+        die("Error Prepare: " . mysqli_error($this->conn));
     }
 
+    mysqli_stmt_bind_param(
+        $stmt, 
+        "ssssssi", 
+        $data['nama_lengkap'], 
+        $data['singkatan'], 
+        $data['email'], 
+        $data['no_whatsapp'], 
+        $data['deskripsi'], 
+        $data['foto_profil'],
+        $userId
+    );
+    
+    $execute = mysqli_stmt_execute($stmt);
+    
+    if (!$execute) {
+        die("Error Execute: " . mysqli_stmt_error($stmt));
+    }
+    
+    return $execute;
+}
 }

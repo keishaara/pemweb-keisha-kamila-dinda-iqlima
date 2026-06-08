@@ -202,18 +202,41 @@ class OrganizerController {
         }
     }
 
-    public function prosesEditProfil($postData) {
-        $userId = $_SESSION['user_id'] ?? 0;
-        
-        $dataInput = [
+        public function prosesEditProfil($postData, $fileFoto = null, $oldFoto = null) {
+            $userId = $_SESSION['user_id'] ?? 0;
+            
+            $fotoName = $oldFoto; 
+
+            if ($fileFoto && $fileFoto['error'] === UPLOAD_ERR_OK) {
+                $ext = strtolower(pathinfo($fileFoto['name'], PATHINFO_EXTENSION));
+                
+                if (in_array($ext, ['png', 'jpg', 'jpeg']) && $fileFoto['size'] <= 2097152) {
+                    $fileName = 'org_' . time() . '_' . preg_replace("/[^a-zA-Z0-9.]/", "", basename($fileFoto['name']));
+                    
+                    $uploadDir = __DIR__ . '/../assets/profiles/'; 
+                    
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0755, true);
+                    }
+
+                    if (move_uploaded_file($fileFoto['tmp_name'], $uploadDir . $fileName)) {
+                        $fotoName = $fileName;
+                        
+                        if (!empty($oldFoto) && file_exists($uploadDir . $oldFoto)) {
+                            unlink($uploadDir . $oldFoto);
+                        }
+                    }
+                }
+            }
+            
+            $dataInput = [
             'nama_lengkap' => $postData['nama_lengkap'] ?? '',
             'singkatan'    => $postData['singkatan'] ?? '',
             'email'        => $postData['email'] ?? '',
             'no_whatsapp'  => $postData['whatsapp'] ?? '',
-            'deskripsi'    => $postData['deskripsi'] ?? ''
+            'deskripsi'    => $postData['deskripsi'] ?? '',
+            'foto_profil'  => $fotoName 
         ];
-
         return $this->model->updateOrganizerProfile($userId, $dataInput);
     }
 }
-?>

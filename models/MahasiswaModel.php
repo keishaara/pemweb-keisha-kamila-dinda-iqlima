@@ -278,36 +278,39 @@ class MahasiswaModel {
     }
 
     public function updateProfile(
-        $userId,
+    $userId,
+    $nama,
+    $email,
+    $programStudi,
+    $wa,
+    $semester,
+    $fotoName 
+)
+{
+    $stmt = $this->conn->prepare(
+        "UPDATE users
+         SET nama_lengkap=?,
+             email=?,
+             program_studi=?,
+             no_whatsapp=?,
+             semester=?,
+             foto_profil=? 
+         WHERE id=?"
+    );
+
+    $stmt->bind_param(
+        "ssssssi",
         $nama,
         $email,
         $programStudi,
         $wa,
-        $semester
-    )
-    {
-        $stmt = $this->conn->prepare(
-            "UPDATE users
-             SET nama_lengkap=?,
-                 email=?,
-                 program_studi=?,
-                 no_whatsapp=?,
-                 semester=?
-             WHERE id=?"
-        );
+        $semester,
+        $fotoName, 
+        $userId
+    );
 
-        $stmt->bind_param(
-            "sssssi",
-            $nama,
-            $email,
-            $programStudi,
-            $wa,
-            $semester,
-            $userId
-        );
-
-        return $stmt->execute();
-    }
+    return $stmt->execute();
+}
 
     public function updatePassword(
         $userId,

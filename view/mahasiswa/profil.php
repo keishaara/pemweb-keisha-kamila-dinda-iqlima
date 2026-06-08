@@ -10,67 +10,46 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
 }
 
 $controller = new MahasiswaController();
-
 $uid = $_SESSION['user_id'];
-
 $user = $controller->getProfile($uid);
 
 $msg = '';
 $msgType = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['update_profil'])) {
-
         $success = $controller->updateProfile(
             $uid,
-            trim($_POST['nama']),
-            trim($_POST['email']),
-            trim($_POST['program_studi']),
-            trim($_POST['wa']),
-            trim($_POST['semester'])
+            trim($_POST['nama'] ?? ''),
+            trim($_POST['email'] ?? ''),
+            trim($_POST['program_studi'] ?? ''),
+            trim($_POST['wa'] ?? ''),
+            trim($_POST['semester'] ?? ''),
+            $_FILES['foto_profil'] ?? null,  
+            $user['foto_profil'] ?? null     
         );
 
-        $msg = $success
-            ? "Profil berhasil diperbarui."
-            : "Gagal update profil.";
-
-        $msgType = $success
-            ? "success"
-            : "error";
+        $msg = $success ? "Profil berhasil diperbarui." : "Gagal update profil.";
+        $msgType = $success ? "success" : "error";
 
         $user = $controller->getProfile($uid);
-    }
-
+    } 
     elseif (isset($_POST['ganti_sandi'])) {
-
         $old  = $_POST['pass_lama'];
         $new  = $_POST['pass_baru'];
         $conf = $_POST['konfirmasi'];
 
         if ($new !== $conf) {
-
             $msg = "Konfirmasi sandi tidak cocok.";
             $msgType = "error";
-
         } elseif (!password_verify($old, $user['password'])) {
-
             $msg = "Sandi lama salah.";
             $msgType = "error";
-
         } else {
-
-            $success = $controller->changePassword(
-                $uid,
-                $new
-            );
-
-            $msg = $success
-                ? "Kata sandi berhasil diubah."
-                : "Gagal mengubah sandi.";
-
-            $msgType = $success
-                ? "success"
-                : "error";
+            $success = $controller->changePassword($uid, $new);
+            $msg = $success ? "Kata sandi berhasil diubah." : "Gagal mengubah sandi.";
+            $msgType = $success ? "success" : "error";
         }
     }
 }
@@ -105,7 +84,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <div class="profile-header">
-                <div class="profile-avatar"><?= strtoupper(substr($user['nama_lengkap'], 0, 2)); ?></div>
+                <div class="profile-avatar" style="overflow: hidden; padding: 0; display: flex; justify-content: center; align-items: center; background-color: #f0f0f0;">
+                    <?php if (!empty($user['foto_profil'])): ?>
+                        <img id="previewImg" src="../../assets/profiles/<?= htmlspecialchars($user['foto_profil']); ?>" alt="Foto" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div id="defaultAvatar" style="display: none;"><?= strtoupper(substr($user['nama_lengkap'], 0, 2)); ?></div>
+                    <?php else: ?>
+                        <img id="previewImg" src="" alt="Foto" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                        <div id="defaultAvatar"><?= strtoupper(substr($user['nama_lengkap'], 0, 2)); ?></div>
+                    <?php endif; ?>
+                </div>
                 <div class="profile-info">
                     <h2><?= htmlspecialchars($user['nama_lengkap']); ?></h2>
                     <p>NPM: <?= htmlspecialchars($user['npm']); ?> | <?= htmlspecialchars($user['program_studi'] ?? '-'); ?> | Semester <?= htmlspecialchars($user['semester'] ?? '-'); ?></p>
@@ -114,7 +101,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="card mb-3">
                 <h3 class="section-title">Informasi Saya</h3>
-                <form method="POST" action="">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    
+                    <div class="form-group mb-3">
+                        <label class="form-label">Ubah Foto Profil</label>
+                        <input type="file" name="foto_profil" id="inputFoto" class="form-control" accept="image/png, image/jpeg, image/jpg">
+                        <small class="text-muted">Format: JPG, JPEG, PNG.</small>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Nama Lengkap</label>
@@ -175,5 +169,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </main>
     </div>
+
+    <script>
+    document.getElementById('inputFoto').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewImg = document.getElementById('previewImg');
+                const defaultAvatar = document.getElementById('defaultAvatar');
+                
+                previewImg.src = e.target.result;
+                previewImg.style.display = 'block'; 
+                if (defaultAvatar) {
+                    defaultAvatar.style.display = 'none'; 
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+    </script>
 </body>
 </html>
