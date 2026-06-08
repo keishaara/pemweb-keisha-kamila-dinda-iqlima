@@ -75,6 +75,7 @@ ul {
 
 .page-header {
     margin-bottom: 2rem;
+    font-family: "Plus Jakarta Sans", sans-serif !important;
 }
 
 .page-header h2 {
@@ -87,6 +88,7 @@ ul {
 .page-header p {
     color: #64748b;
     font-size: 0.95rem;
+    font-family: "Plus Jakarta Sans", sans-serif !important;
     margin: 0;
 }
 
@@ -1782,7 +1784,7 @@ body {
     font-size: 30px;
     color: #335485;
     margin: 0 0 6px;
-    font-family: serif;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 .org-page-header p {
@@ -4811,8 +4813,16 @@ a.btn-table-action {
 /* // index.php (Public)                                                     */
 /* // ======================================================================= */
 .navbar .logo i {
-    font-size: 24px;
-    color: #2E4C82;
+  background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 1rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 /* // ======================================================================= */
@@ -5078,6 +5088,7 @@ a.btn-table-action {
     min-height: 100vh;
     z-index: 10;
     position: relative;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 .sidebar-mhs .logo {
@@ -5920,7 +5931,7 @@ a.btn-table-action {
 /* Public View Classes */
 .features-wrapper-min { min-height: 100vh; padding-top: 20px; }
 .public-page-header { margin-bottom: 30px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; }
-.public-h2-title { font-size: 2.5rem; color: #1e293b; font-weight: 800; margin-bottom: 10px; }
+.public-h2-title { font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 2.5rem; color: #1e293b; font-weight: 800; margin-bottom: 10px; }
 .public-p-subtitle { font-size: 1.1rem; color: #64748b; }
 .public-search-container { max-width: 800px; margin: 0 auto 30px auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); padding: 8px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 8px 24px rgba(46, 76, 130, 0.05); }
 .public-search-input { flex: 1; padding: 12px 20px; border: 1px solid rgba(46, 76, 130, 0.1); border-radius: 10px; font-size: 0.95rem; background: rgba(255,255,255,0.9); outline: none; }

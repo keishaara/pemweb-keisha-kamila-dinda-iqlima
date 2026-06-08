@@ -62,7 +62,7 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
         </aside>
 
         <main class="main-content">
-            <div class="admin-banner">
+            <div class="ccc">
                 <h1>Panel Admin</h1>
                 <p>Semua platform dalam kendalimu</p>
             </div>
