@@ -95,7 +95,7 @@ class AdminModel {
                 categories.nama_kategori
             FROM events
             LEFT JOIN categories ON events.kategori_id = categories.id
-            WHERE events.status = 'pending'
+            WHERE events.status IN ('pending', 'locked')
             ORDER BY events.created_at DESC"
         );
 

@@ -86,7 +86,7 @@ $events = $controller->getEvents(
                     <p>Belum ada event mendatang.</p>
                 <?php else: ?>
                     <?php foreach ($events as $ev): ?>
-                    <div class="mhs-event-card">
+                    <div class="mhs-event-card" <?= ($ev['status'] ?? '') === 'locked' ? 'style="filter: grayscale(100%); opacity: 0.8;"' : '' ?>>
                         <div class="mhs-event-banner" style="overflow: hidden; position: relative;">
                             <?php 
                             if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
@@ -105,7 +105,11 @@ $events = $controller->getEvents(
                                 <span class="price <?= $ev['harga'] == 0 ? 'free' : ''; ?>">
                                     <?= $ev['harga'] == 0 ? 'Gratis' : 'Rp '.number_format($ev['harga'], 0, ',', '.'); ?>
                                 </span>
-                                <a href="../mahasiswa/detail.php?id=<?= $ev['id']; ?>" class="mhs-btn-primary">Detail</a>
+                                <?php if (($ev['status'] ?? '') === 'locked'): ?>
+                                    <button class="mhs-btn-primary" style="background-color: #94a3b8; cursor: not-allowed; border: none;" disabled>Ditangguhkan</button>
+                                <?php else: ?>
+                                    <a href="../mahasiswa/detail.php?id=<?= $ev['id']; ?>" class="mhs-btn-primary">Detail</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

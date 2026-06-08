@@ -89,7 +89,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
             <div class="card-grid">
                 <?php if (mysqli_num_rows($res_event) > 0): ?>
                     <?php while($ev = mysqli_fetch_assoc($res_event)): ?>
-                    <div class="mhs-event-card">
+                    <div class="mhs-event-card" <?= ($ev['status'] ?? '') === 'locked' ? 'style="filter: grayscale(100%); opacity: 0.8;"' : '' ?>>
                         <div class="mhs-event-banner" style="overflow: hidden; position: relative;">
                             <?php 
                             if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
@@ -107,10 +107,16 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                                 <span class="price <?= $ev['harga'] == 0 ? 'free' : '' ?>">
                                     <?= $ev['harga'] == 0 ? 'Gratis' : 'Rp '.number_format($ev['harga'], 0, ',', '.') ?>
                                 </span>
-                                <a href="detail.php?id=<?= $ev['id'] ?>&from=dashboard"
-                                    class="mhs-btn-primary">
-                                    Detail
-                                </a>
+                                <?php if (($ev['status'] ?? '') === 'locked'): ?>
+                                    <button class="mhs-btn-primary" style="background-color: #94a3b8; cursor: not-allowed; border: none;" disabled>
+                                        Ditangguhkan
+                                    </button>
+                                <?php else: ?>
+                                    <a href="detail.php?id=<?= $ev['id'] ?>&from=dashboard"
+                                        class="mhs-btn-primary">
+                                        Detail
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

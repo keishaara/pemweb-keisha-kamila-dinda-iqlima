@@ -209,12 +209,22 @@ $agenda = $data['agenda'];
                                         <?= htmlspecialchars($event['kuota'] ?? '100') ?>
                                     </td>
                                     <td>
-                                        <?php if (($event['status'] ?? '') == 'approved'): ?>
+                                        <?php 
+                                        $statusAksi = strtolower($event['status'] ?? '');
+                                        if ($statusAksi === 'approved' || $statusAksi === 'disetujui'): 
+                                        ?>
                                             <span class="org-pill org-pill-success">Disetujui</span>
+                                        <?php elseif ($statusAksi === 'rejected'): ?>
+                                            <span class="org-pill org-pill-danger" style="background-color: #ffebee; color: #c62828; padding: 4px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: bold;">Ditolak</span>
                                         <?php else: ?>
                                             <span class="org-pill org-pill-warning">
-                                                <?= htmlspecialchars($event['status'] ?? 'Pending') ?>
+                                                <?= htmlspecialchars($statusAksi === 'locked' ? 'Pending' : ($event['status'] ?? 'Pending')) ?>
                                             </span>
+                                            <?php if ($statusAksi === 'locked'): ?>
+                                                <div style="margin-top: 5px; font-size: 0.75rem; color: #d39c00;">
+                                                    <strong>Catatan:</strong> Ditinjau ulang.
+                                                </div>
+                                            <?php endif; ?>
                                         <?php endif; ?>
                                     </td>
                                 </tr>

@@ -16,6 +16,9 @@ $event = $controller->detailEvent($eventId);
 if (!$event) {
     die("Event tidak ditemukan.");
 }
+if (($event['status'] ?? '') === 'locked') {
+    die("<div style='text-align:center; padding: 50px; font-family: sans-serif; margin-top: 50px;'><h2>🚫 Akses Ditolak</h2><p>Acara ini sedang ditangguhkan oleh Admin dan tidak dapat diakses untuk sementara waktu.</p><br><a href='user_dashboard.php' style='padding: 10px 20px; background: #2563eb; color: white; text-decoration: none; border-radius: 5px;'>Kembali ke Dashboard</a></div>");
+}
 $user_id = $_SESSION['user_id'];
 
 $isRegistered =
