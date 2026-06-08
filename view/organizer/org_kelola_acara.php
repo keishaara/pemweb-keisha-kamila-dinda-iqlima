@@ -149,9 +149,9 @@ $keyword = $_GET['search'] ?? '';
                                         ?>
                                             <span class="org-pill org-pill-success">Disetujui</span>
                                         <?php elseif ($status === 'rejected'): ?>
-                                            <span class="org-pill org-pill-danger" style="background-color: #ffebee; color: #c62828; padding: 4px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: bold;">Ditolak/Dihapus</span>
+                                            <span class="org-pill org-pill-rejected">Ditolak/Dihapus</span>
                                             <?php if (!empty($event['alasan_penolakan'])): ?>
-                                                <div style="margin-top: 5px; font-size: 0.8rem; color: #c62828;">
+                                                <div class="org-note-danger">
                                                     <strong>Alasan:</strong> <?= htmlspecialchars($event['alasan_penolakan']) ?>
                                                 </div>
                                             <?php endif; ?>
@@ -160,7 +160,7 @@ $keyword = $_GET['search'] ?? '';
                                                 <?= htmlspecialchars($event['status'] === 'locked' ? 'Pending' : ($event['status'] ?? 'Pending')) ?>
                                             </span>
                                             <?php if ($status === 'locked'): ?>
-                                                <div style="margin-top: 5px; font-size: 0.8rem; color: #d39c00;">
+                                                <div class="org-note-pending">
                                                     <strong>Catatan:</strong> Acara sedang ditinjau ulang.
                                                 </div>
                                             <?php endif; ?>

@@ -89,8 +89,8 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
             <div class="card-grid">
                 <?php if (mysqli_num_rows($res_event) > 0): ?>
                     <?php while($ev = mysqli_fetch_assoc($res_event)): ?>
-                    <div class="mhs-event-card" <?= ($ev['status'] ?? '') === 'locked' ? 'style="filter: grayscale(100%); opacity: 0.8;"' : '' ?>>
-                        <div class="mhs-event-banner" style="overflow: hidden; position: relative;">
+                    <div class="mhs-event-card <?= ($ev['status'] ?? '') === 'locked' ? 'event-locked-grayscale' : '' ?>">
+                        <div class="mhs-event-banner overflow-hidden relative">
                             <?php 
                             if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
                             ?>
@@ -108,7 +108,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                                     <?= $ev['harga'] == 0 ? 'Gratis' : 'Rp '.number_format($ev['harga'], 0, ',', '.') ?>
                                 </span>
                                 <?php if (($ev['status'] ?? '') === 'locked'): ?>
-                                    <button class="mhs-btn-primary" style="background-color: #94a3b8; cursor: not-allowed; border: none;" disabled>
+                                    <button class="mhs-btn-primary btn-disabled-suspended" disabled>
                                         Ditangguhkan
                                     </button>
                                 <?php else: ?>

@@ -101,7 +101,7 @@ function getKategoriStyle($kategori) {
                             <div class="event-card">
                                 <div class="event-banner <?= $style['bg']; ?>">
                                     <?php if (!empty($event['poster']) && file_exists(__DIR__ . '/../../' . $event['poster'])): ?>
-                                        <img src="../../<?= htmlspecialchars($event['poster']); ?>" alt="Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="../../<?= htmlspecialchars($event['poster']); ?>" alt="Poster" class="w-full h-full object-cover">
                                     <?php else: ?>
                                         <span class="emoji-icon"><?= $style['emoji']; ?></span>
                                     <?php endif; ?>

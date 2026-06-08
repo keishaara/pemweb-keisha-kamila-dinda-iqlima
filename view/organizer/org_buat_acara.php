@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <p><?= $is_edit && !empty($event['poster']) ? 'Pilih file baru jika ingin mengganti poster' : 'Unggah poster acara di sini' ?></p>
                                     <span>PNG, JPG maksimal 2MB</span>
                                 </div>
-                                <img id="posterPreview" src="#" alt="Preview Poster" style="display: none; width: 100%; height: 400px; border-radius: 8px; object-fit: contain; margin: 0 auto;">
+                                <img id="posterPreview" src="#" alt="Preview Poster" class="poster-preview-org">
                             </div>
                             <?php if ($is_edit && !empty($event['poster'])): ?>
                                 <p>Poster saat ini: <strong><?= htmlspecialchars($event['poster']) ?></strong></p>

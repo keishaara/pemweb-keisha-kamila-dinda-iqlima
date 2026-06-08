@@ -40,21 +40,21 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="features-wrapper" style="min-height: 100vh; padding-top: 20px;">
+    <div class="features-wrapper features-wrapper-min">
         <a href="index.php" class="btn-back-floating">Kembali</a>
         <main class="main-content">
-            <div class="page-header" style="margin-bottom: 30px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
-                <h2 style="font-size: 2.5rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">Jelajahi Event</h2>
-                <p style="font-size: 1.1rem; color: #64748b;">Temukan kegiatan sesuai minatmu</p>
+            <div class="page-header public-page-header">
+                <h2 class="public-h2-title">Jelajahi Event</h2>
+                <p class="public-p-subtitle">Temukan kegiatan sesuai minatmu</p>
             </div>
-            <div class="search-bar" style="max-width: 800px; margin: 0 auto 30px auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); padding: 8px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 8px 24px rgba(46, 76, 130, 0.05);">
-                <form method="GET" action="" style="display: flex; gap: 8px; width: 100%; margin: 0;">
-                    <input type="text" name="q" placeholder="Ketik nama event atau penyelenggara..." value="<?= htmlspecialchars($search); ?>" style="flex: 1; padding: 12px 20px; border: 1px solid rgba(46, 76, 130, 0.1); border-radius: 10px; font-size: 0.95rem; background: rgba(255,255,255,0.9); outline: none;">
-                    <button type="submit" style="padding: 12px 32px; background: linear-gradient(135deg, #2E4C82 0%, #1E3A5F 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(46, 76, 130, 0.2);">Cari</button>
+            <div class="search-bar public-search-container">
+                <form method="GET" action="" class="flex gap-8 w-full m-0">
+                    <input type="text" name="q" placeholder="Ketik nama event atau penyelenggara..." value="<?= htmlspecialchars($search); ?>" class="public-search-input">
+                    <button type="submit" class="public-btn-search">Cari</button>
                 </form>
             </div>
 
-            <div class="filter-tags" style="justify-content: center; margin-bottom: 40px;">
+            <div class="filter-tags public-filter-tags">
                 <a href="kegiatan.php" class="btn-filter <?= (!$cat_id && !$is_free) ? 'active' : ''; ?>">Semua</a>
                 <a href="?cat_id=2" class="btn-filter <?= $cat_id == '2' ? 'active' : ''; ?>">Workshop</a>
                 <a href="?cat_id=4" class="btn-filter <?= $cat_id == '4' ? 'active' : ''; ?>">Musik</a>
@@ -92,11 +92,11 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
                     ?>
                     <div class="event-card">
                         <?php if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../' . $ev['poster'])): ?>
-                            <div class="event-banner" style="height: 140px;">
-                                <img src="../../<?= htmlspecialchars($ev['poster']); ?>" alt="Poster" style="width: 100%; height: 100%; object-fit: cover; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                            <div class="event-banner public-event-banner">
+                                <img src="../../<?= htmlspecialchars($ev['poster']); ?>" alt="Poster" class="public-event-image">
                             </div>
                         <?php else: ?>
-                            <div class="event-icon-box" style="height: 140px; background: linear-gradient(135deg, #eef2f6 0%, #e2e8f0 100%);">
+                            <div class="event-icon-box public-event-icon-box">
                                 <i class="<?= $icon ?>"></i>
                             </div>
                         <?php endif; ?>

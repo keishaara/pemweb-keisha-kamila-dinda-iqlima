@@ -65,7 +65,7 @@ $saved = $controller->getSavedEvents(
                 <?php else: ?>
                     <?php foreach($saved as $ev): ?>
                         <div class="mhs-event-card">
-                            <div class="mhs-event-banner" style="overflow: hidden; position: relative;">
+                            <div class="mhs-event-banner overflow-hidden relative">
                                 <?php 
                                 if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
                                 ?>
@@ -81,7 +81,7 @@ $saved = $controller->getSavedEvents(
                                 <div class="mhs-event-footer">
                                     <form method="POST" class="d-inline">
                                         <input type="hidden" name="event_id" value="<?= intval($ev['id']) ?>">
-                                        <button type="submit" name="unsave_event" class="btn btn-outline btn-small" style="padding: 10px; border-radius:12px; font-weight:600;" onclick="return confirm('Hapus dari disimpan?')"><i class="fa-solid fa-trash"></i> Hapus</button>
+                                        <button type="submit" name="unsave_event" class="btn btn-outline btn-small btn-unsave" onclick="return confirm('Hapus dari disimpan?')"><i class="fa-solid fa-trash"></i> Hapus</button>
                                     </form>
                                     <a href="detail.php?id=<?= intval($ev['id']) ?>" class="mhs-btn-primary">Detail</a>
                                 </div>

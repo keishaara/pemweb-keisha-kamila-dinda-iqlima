@@ -83,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="form-group">
                     <label class="form-label">Kata Sandi</label>
-                    <div style="position: relative;">
-                        <input type="password" name="password" id="passwordField" class="form-control" placeholder="••••••••" required style="padding-right: 40px;">
-                        <i class="fa-solid fa-eye" id="togglePassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;"></i>
+                    <div class="relative">
+                        <input type="password" name="password" id="passwordField" class="form-control auth-password-input" placeholder="••••••••" required>
+                        <i class="fa-solid fa-eye auth-eye-icon" id="togglePassword"></i>
                     </div>
                 </div>
                 <div class="form-group">

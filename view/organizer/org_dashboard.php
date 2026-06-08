@@ -215,13 +215,13 @@ $agenda = $data['agenda'];
                                         ?>
                                             <span class="org-pill org-pill-success">Disetujui</span>
                                         <?php elseif ($statusAksi === 'rejected'): ?>
-                                            <span class="org-pill org-pill-danger" style="background-color: #ffebee; color: #c62828; padding: 4px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: bold;">Ditolak</span>
+                                            <span class="org-pill org-pill-rejected">Ditolak</span>
                                         <?php else: ?>
                                             <span class="org-pill org-pill-warning">
                                                 <?= htmlspecialchars($statusAksi === 'locked' ? 'Pending' : ($event['status'] ?? 'Pending')) ?>
                                             </span>
                                             <?php if ($statusAksi === 'locked'): ?>
-                                                <div style="margin-top: 5px; font-size: 0.75rem; color: #d39c00;">
+                                                <div class="org-note-warning">
                                                     <strong>Catatan:</strong> Ditinjau ulang.
                                                 </div>
                                             <?php endif; ?>

@@ -56,11 +56,11 @@ if ($status === 'selesai') {
 
                         <div class="verif-card ticket-card">
 
-                            <div class="verif-icon-box ticket-qr" style="overflow: hidden;">
+                            <div class="verif-icon-box ticket-qr overflow-hidden">
                                 <?php if (!empty($tiket['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $tiket['poster'])): ?>
-                                    <img src="../../assets/poster/<?= htmlspecialchars($tiket['poster']); ?>" alt="Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <img src="../../assets/poster/<?= htmlspecialchars($tiket['poster']); ?>" alt="Poster" class="w-full h-full object-cover">
                                 <?php else: ?>
-                                    <img src="../../assets/poster/default.png" alt="Default Poster" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <img src="../../assets/poster/default.png" alt="Default Poster" class="w-full h-full object-cover">
                                 <?php endif; ?>
                             </div>
 

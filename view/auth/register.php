@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="login-page-v2">
 
     <div class="login-wrapper">
-        <div class="login-card-v2" style="max-width: 600px;"> <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
+        <div class="login-card-v2 login-card-v2-max"> <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
             <h2>Buat akun baru</h2>
             <p class="text-muted mb-3">Bergabung dengan kami di Evently</p>
 
@@ -94,16 +94,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Kata Sandi*</label>
-                        <div style="position: relative;">
-                            <input type="password" name="password" id="regPasswordField" class="form-control" placeholder="Min. 8 karakter" required style="padding-right: 40px;">
-                            <i class="fa-solid fa-eye" id="toggleRegPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;"></i>
+                        <div class="relative">
+                            <input type="password" name="password" id="regPasswordField" class="form-control auth-password-input" placeholder="Min. 8 karakter" required>
+                            <i class="fa-solid fa-eye auth-eye-icon" id="toggleRegPassword"></i>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Konfirmasi Sandi*</label>
-                        <div style="position: relative;">
-                            <input type="password" name="konfirmasi_password" id="regConfirmField" class="form-control" placeholder="Ulangi Sandi" required style="padding-right: 40px;">
-                            <i class="fa-solid fa-eye" id="toggleRegConfirm" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #64748b;"></i>
+                        <div class="relative">
+                            <input type="password" name="konfirmasi_password" id="regConfirmField" class="form-control auth-password-input" placeholder="Ulangi Sandi" required>
+                            <i class="fa-solid fa-eye auth-eye-icon" id="toggleRegConfirm"></i>
                         </div>
                     </div>
                 </div>

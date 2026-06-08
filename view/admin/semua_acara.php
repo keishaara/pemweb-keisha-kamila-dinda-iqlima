@@ -101,26 +101,26 @@ $semuaAcara = $controller->getAllEvents();
                                         $statusText = ucfirst($status);
                                     }
                                     ?>
-                                    <span class="status-pill <?= $statusClass; ?>" <?= $status === 'locked' ? 'style="background: #e2e8f0; color: #475569;"' : '' ?>>
+                                    <span class="status-pill <?= $statusClass; ?> <?= $status === 'locked' ? 'locked-pill' : '' ?>">
                                         <?= $statusText; ?>
                                     </span>
                                 </td>
                                 <td>
                                     <?php if ($status === 'approved'): ?>
-                                        <a href="semua_acara.php?action=lock&id=<?= $acara['id']; ?>" class="btn-table-action" style="background: #fef08a; color: #854d0e; text-decoration: none;" onclick="return confirm('Apakah Anda yakin ingin MENGUNCI (suspend) acara ini? Ini akan menyembunyikan acara dari mahasiswa.');">
+                                        <a href="semua_acara.php?action=lock&id=<?= $acara['id']; ?>" class="btn-table-action btn-lock" onclick="return confirm('Apakah Anda yakin ingin MENGUNCI (suspend) acara ini? Ini akan menyembunyikan acara dari mahasiswa.');">
                                             <i class="fas fa-lock"></i> Kunci
                                         </a>
                                     <?php elseif ($status === 'locked'): ?>
-                                        <div style="display: flex; gap: 5px;">
-                                            <a href="semua_acara.php?action=unlock_approve&id=<?= $acara['id']; ?>" class="btn-table-action" style="background: #dcfce7; color: #166534; text-decoration: none;" onclick="return confirm('Setujui kembali acara ini?');">
+                                        <div class="flex gap-5">
+                                            <a href="semua_acara.php?action=unlock_approve&id=<?= $acara['id']; ?>" class="btn-table-action btn-approve" onclick="return confirm('Setujui kembali acara ini?');">
                                                 <i class="fas fa-check"></i> Setujui
                                             </a>
-                                            <a href="semua_acara.php?action=unlock_reject&id=<?= $acara['id']; ?>" class="btn-table-action" style="background: #fee2e2; color: #991b1b; text-decoration: none;" onclick="return confirm('Tolak acara ini secara permanen?');">
+                                            <a href="semua_acara.php?action=unlock_reject&id=<?= $acara['id']; ?>" class="btn-table-action btn-reject" onclick="return confirm('Tolak acara ini secara permanen?');">
                                                 <i class="fas fa-times"></i> Tolak
                                             </a>
                                         </div>
                                     <?php else: ?>
-                                        <span style="color: #cbd5e1; font-size: 0.8rem;">-</span>
+                                        <span class="text-empty">-</span>
                                     <?php endif; ?>
                                 </td>
                             </tr>
