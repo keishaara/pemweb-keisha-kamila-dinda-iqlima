@@ -79,6 +79,7 @@ ul {
 }
 
 .page-header h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 1.5rem;
     font-weight: 700;
     color: #1e293b;
@@ -1387,7 +1388,6 @@ body {
 
 /* 1. Header & Deskripsi */
 .page-header h2 {
-    font-family: 'serif';
     font-size: 28px;
     color: #1a365d;
     margin-bottom: 5px;
@@ -1694,14 +1694,15 @@ body {
 }
 
 .org-logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #2E4C82;
+    margin-bottom: 40px;
     display: flex;
-    align-items: center;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    color: #335485;
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 32px;
 }
 
 .org-logo img,
@@ -1713,29 +1714,43 @@ body {
 }
 
 .org-menu-category {
-    font-size: 11px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #9aa8b8;
-    margin: 22px 0 12px;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 .org-menu-item {
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 12px 16px;
+    color: #475569;
     text-decoration: none;
-    color: #44546a;
-    padding: 11px 14px;
-    border-radius: 14px;
-    margin-bottom: 6px;
-    font-size: 14px;
     font-weight: 600;
+    border-radius: 12px;
+    margin-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.org-menu-item i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.org-menu-item:hover {
+    background: #f8fafc;
+    color: #2563eb;
 }
 
 .org-menu-item.active {
-    background: #335485;
-    color: #ffffff;
+    background: #4A6CBE;
+    color: white;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
 .org-main {
@@ -2351,6 +2366,7 @@ body {
 }
 
 .page-header h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 26px;
     font-weight: 800;
     color: #1a1a2e;
@@ -4812,18 +4828,7 @@ a.btn-table-action {
 /* // ======================================================================= */
 /* // index.php (Public)                                                     */
 /* // ======================================================================= */
-.navbar .logo i {
-  background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    padding: 1rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+
 
 /* // ======================================================================= */
 /* // kegiatan.php (Public)                                                   */

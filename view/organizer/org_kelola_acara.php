@@ -35,8 +35,9 @@ $keyword = $_GET['search'] ?? '';
 <div class="org-layout">
 
     <aside class="org-sidebar">
-        <i class="fa-solid fa-calendar-check"></i>
-        <span>Evently</span>
+        <div class="org-logo">
+            <i class="fa-solid fa-calendar-check"></i> Evently
+        </div>
 
         <div class="org-menu-category">Menu Organisasi</div>
 
