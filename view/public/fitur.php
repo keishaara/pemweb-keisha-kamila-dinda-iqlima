@@ -25,7 +25,7 @@ function getKategoriStyle($kategori) {
 </head>
 <body>
     <div class="features-wrapper">
-        <a href="index.php" class="btn-back-floating"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+        <a href="index.php" class="btn-back-floating">Kembali</a>
         <main class="main-content">
             <div class="content-header">
                 <span class="sub-title">FITUR UNGGULAN</span>

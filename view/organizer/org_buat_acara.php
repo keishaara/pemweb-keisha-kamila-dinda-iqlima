@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="org-layout">
         <aside class="org-sidebar">
-            <a href="index.php" class="org-logo">
             <i class="fa-solid fa-calendar-check"></i>
             <span>Evently</span>
         </a>

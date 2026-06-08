@@ -41,7 +41,7 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
 </head>
 <body>
     <div class="features-wrapper" style="min-height: 100vh; padding-top: 20px;">
-        <a href="index.php" class="btn-back-floating"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+        <a href="index.php" class="btn-back-floating">Kembali</a>
         <main class="main-content">
             <div class="page-header" style="margin-bottom: 30px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
                 <h2 style="font-size: 2.5rem; color: #1e293b; font-weight: 800; margin-bottom: 10px;">Jelajahi Event</h2>

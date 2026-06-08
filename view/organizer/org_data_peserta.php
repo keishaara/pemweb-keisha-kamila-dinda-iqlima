@@ -29,10 +29,8 @@ $eventsList = $controller->getEvents();
 <body>
     <div class="org-layout">
         <aside class="org-sidebar">
-            <a href="index.php" class="org-logo">
             <i class="fa-solid fa-calendar-check"></i>
             <span>Evently</span>
-        </a>
 
             <div class="org-menu-category">Menu Organisasi</div>
 
