@@ -1,47 +1,6 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
-
-if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
-    $target = '../admin/dashboard.php';
-    header("Location: $target");
-    exit;
-}
-
-$error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $identifier = trim($_POST['identifier']);
-    $password   = $_POST['password'];
-    $role       = 'admin';
-
-    if (!empty($identifier) && !empty($password)) {
-        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun, status FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
-        mysqli_stmt_bind_param($stmt, "sss", $identifier, $identifier, $role);
-        mysqli_stmt_execute($stmt);
-        $res  = mysqli_stmt_get_result($stmt);
-        
-        if ($user = mysqli_fetch_assoc($res)) {
-            if (($user['status'] ?? 'Aktif') === 'Nonaktif') {
-                $error = "Akun Anda telah dinonaktifkan.";
-            } elseif (password_verify($password, $user['password'])) {
-                $_SESSION['user_id']      = $user['id'];
-                $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
-                $_SESSION['email']        = $user['email'];
-                $_SESSION['role']         = 'admin';
-                $_SESSION['last_activity'] = time();
-
-                header("Location: ../admin/dashboard.php");
-                exit;
-                } else {
-                    $error = "Akun tidak ditemukan atau role tidak sesuai.";
-                }
-            } else {
-                $error = "Akun tidak ditemukan atau role tidak sesuai.";
-            }
-    } else {
-        $error = "Semua field wajib diisi.";
-    }    
-}
+// Variables such as $error are passed from AdminController
+$error = $error ?? '';
 ?>
 
 <!DOCTYPE html>

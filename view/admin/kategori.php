@@ -1,24 +1,4 @@
-<?php
-session_start();
-require_once __DIR__ . '/../../controllers/AdminController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-$controller = new AdminController();
-$controller->prosesHapusKategori();
-$controller->prosesTambahKategori();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
-    $id_edit = intval($_POST['id_kategori']);
-    $controller->prosesEditKategori($id_edit);
-}
-
-$kategori = $controller->getKategori();
-?>
+<?php if (!isset($kategori)) { header('Location: index.php?page=kategori'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -42,33 +22,33 @@ $kategori = $controller->getKategori();
 
             <div class="menu-category">Manajemen</div>
 
-            <a href="dashboard.php" class="menu-item">
+            <a href="index.php?page=dashboard" class="menu-item">
                 <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
 
-            <a href="verifikasi.php" class="menu-item">
+            <a href="index.php?page=verifikasi" class="menu-item">
                 <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
-            <a href="semua_acara.php" class="menu-item">
+            <a href="index.php?page=semua_acara" class="menu-item">
                 <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
 
-            <a href="pengguna.php" class="menu-item">
+            <a href="index.php?page=pengguna" class="menu-item">
                 <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
 
-            <a href="kategori.php" class="menu-item active">
+            <a href="index.php?page=kategori" class="menu-item active">
                 <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
 
             <div class="menu-category">Sistem</div>
 
-            <a href="../auth/logout.php" class="menu-item">
+            <a href="index.php?page=logout" class="menu-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
@@ -134,7 +114,7 @@ $kategori = $controller->getKategori();
                                     onclick="bukaModalEdit(<?= $kat['id']; ?>, <?= htmlspecialchars(json_encode($kat['nama_kategori'])); ?>, <?= htmlspecialchars(json_encode($kat['deskripsi'] ?? '')); ?>)">
                                 Edit
                             </button>
-                            <a href="kategori.php?action=hapus&id=<?= $kat['id']; ?>" class="btn-delete-kat" onclick="return confirm('Hapus kategori ini?')">Hapus</a>
+                            <a href="index.php?page=kategori&action=hapus&id=<?= $kat['id']; ?>" class="btn-delete-kat" onclick="return confirm('Hapus kategori ini?')">Hapus</a>
                         </div>
                     </div>
                     <?php endforeach; ?>

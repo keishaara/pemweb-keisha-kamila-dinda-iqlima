@@ -1,22 +1,4 @@
-<?php
-session_start();
-require_once __DIR__ . '/../../controllers/AdminController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-$controller = new AdminController();
-$totalUsersData = $controller->getTotalUsers(); 
-$latestEvents = $controller->getLatestEvents();
-$totalOrgData = $controller->getTotalOrganisasi(); 
-$latestUsers = $controller->getLatestUsers();
-$verifikasiAcara = $controller->getVerifikasiAcara();
-$semuaAcara = $controller->getAllEvents();
-$totalMahasiswa = $controller->getTotalMahasiswa();
-?>
+<?php if (!isset($totalUsersData)) { header('Location: index.php?page=dashboard'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -34,28 +16,28 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                 Evently
             </div>
             <div class="menu-category">Manajemen</div>
-            <a href="dashboard.php" class="menu-item active">
+            <a href="index.php?page=dashboard" class="menu-item active">
                 <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
-            <a href="verifikasi.php" class="menu-item">
+            <a href="index.php?page=verifikasi" class="menu-item">
                 <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
-            <a href="semua_acara.php" class="menu-item">
+            <a href="index.php?page=semua_acara" class="menu-item">
                 <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
-            <a href="pengguna.php" class="menu-item">
+            <a href="index.php?page=pengguna" class="menu-item">
                 <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
-            <a href="kategori.php" class="menu-item">
+            <a href="index.php?page=kategori" class="menu-item">
                 <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
             <div class="menu-category">Sistem</div>
-            <a href="../auth/logout.php" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+            <a href="index.php?page=logout" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
@@ -68,7 +50,7 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
             </div>
 
             <div class="org-stats">
-                <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?page=pengguna'">
                     <div class="org-stat-icon"><i class="fa-solid fa-users"></i></div>
                     <div class="org-stat-info">
                         <h3><?= $totalUsersData; ?></h3>
@@ -76,26 +58,26 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                     </div>
                 </div>
 
-                <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?page=pengguna'">
                     <div class="org-stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
                     <div class="org-stat-info">
-                        <h3><?= $totalMahasiswa; ?></h3>
+                        <h3><?= htmlspecialchars($totalMahasiswa ?? 0); ?></h3>
                         <p>Mahasiswa Aktif</p>
                     </div>
                 </div>
 
-                <div class="org-stat-card clickable-card" onclick="window.location.href='pengguna.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?page=pengguna'">
                     <div class="org-stat-icon"><i class="fa-solid fa-building"></i></div>
                     <div class="org-stat-info">
-                        <h3><?= $totalOrgData; ?></h3>
+                        <h3><?= htmlspecialchars($totalOrgData ?? 0); ?></h3>
                         <p>Organisasi Aktif</p>
                     </div>
                 </div>
 
-                <div class="org-stat-card clickable-card" onclick="window.location.href='verifikasi.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?page=verifikasi'">
                     <div class="org-stat-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                     <div class="org-stat-info">
-                        <h3><?= count(array_filter($verifikasiAcara, fn($e) => strtolower($e['status']) == 'pending')); ?></h3>
+                        <h3><?= htmlspecialchars(count(array_filter($verifikasiAcara ?? [], function($e) { return strtolower($e['status'] ?? '') === 'pending'; }))); ?></h3>
                         <p>Menunggu Verifikasi</p>
                     </div>
                 </div>
@@ -112,9 +94,9 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach(array_slice($semuaAcara, 0, 3) as $event): ?>
+                            <?php foreach(array_slice($semuaAcara ?? [], 0, 3) as $event): ?>
                             <tr>
-                                <td><?= htmlspecialchars($event['judul_event']); ?></td>
+                                <td><?= htmlspecialchars($event['judul_event'] ?? ''); ?></td>
                                 <td>
                                     <?php
                                         $eventStatus = strtolower($event['status'] ?? 'pending');
@@ -150,10 +132,10 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($latestUsers as $user): ?>
+                            <?php foreach($latestUsers ?? [] as $user): ?>
                             <tr>
-                                <td><?= htmlspecialchars($user['nama_lengkap']); ?></td>
-                                <td><?= ucfirst($user['tipe_akun']); ?></td>
+                                <td><?= htmlspecialchars($user['nama_lengkap'] ?? ''); ?></td>
+                                <td><?= ucfirst($user['tipe_akun'] ?? ''); ?></td>
                                 <td><span class="status-pill aktif">Aktif</span></td>
                             </tr>
                             <?php endforeach; ?>
@@ -171,7 +153,7 @@ $totalMahasiswa = $controller->getTotalMahasiswa();
             const yakinLogout = confirm("Apakah Anda ingin logout?");
             
             if (yakinLogout) {
-                window.location.href = '../auth/logout.php'; 
+                window.location.href = 'index.php?page=logout'; 
             } else {
                 history.pushState(null, null, window.location.href);
             }

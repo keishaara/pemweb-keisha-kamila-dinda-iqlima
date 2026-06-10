@@ -1,18 +1,4 @@
-<?php
-session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
-require_once __DIR__ . '/../../controllers/AdminController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../auth/login.php");
-    exit;
-}
-
-$controller = new AdminController();
-$controller->prosesVerifikasiAcara();
-$verifikasiAcara = $controller->getVerifikasiAcara();
-?>
+<?php if (!isset($verifikasiAcara)) { header('Location: index.php?page=verifikasi'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -30,28 +16,28 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                 Evently
             </div>
             <div class="menu-category">Manajemen</div>
-            <a href="dashboard.php" class="menu-item">
+            <a href="index.php?page=dashboard" class="menu-item">
                 <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
-            <a href="verifikasi.php" class="menu-item active">
+            <a href="index.php?page=verifikasi" class="menu-item active">
                 <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
-            <a href="semua_acara.php" class="menu-item">
+            <a href="index.php?page=semua_acara" class="menu-item">
                 <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
-            <a href="pengguna.php" class="menu-item">
+            <a href="index.php?page=pengguna" class="menu-item">
                 <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
-            <a href="kategori.php" class="menu-item">
+            <a href="index.php?page=kategori" class="menu-item">
                 <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
             <div class="menu-category">Sistem</div>
-            <a href="../auth/logout.php" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+            <a href="index.php?page=logout" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
@@ -137,7 +123,7 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
                                Tolak
                             </a>
                             
-                            <a href="verifikasi.php?id=<?= $acara['id']; ?>&action=setuju" 
+                            <a href="index.php?page=verifikasi&id=<?= $acara['id']; ?>&action=setuju" 
                                class="btn-verif btn-setujui" 
                                onclick="return confirm('Apakah Anda yakin ingin MENYETUJUI acara ini?')">
                                Setujui
@@ -153,7 +139,7 @@ $verifikasiAcara = $controller->getVerifikasiAcara();
     function tolakDenganAlasan(id) {
         let alasan = prompt("Masukkan alasan penolakan acara ini:");
         if (alasan !== null && alasan.trim() !== "") {
-            window.location.href = "verifikasi.php?action=tolak&id=" + id + "&alasan=" + encodeURIComponent(alasan);
+            window.location.href = "index.php?page=verifikasi&action=tolak&id=" + id + "&alasan=" + encodeURIComponent(alasan);
         } else if (alasan !== null) {
             alert("Alasan harus diisi!");
         }

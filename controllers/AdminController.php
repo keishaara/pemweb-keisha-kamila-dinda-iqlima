@@ -48,33 +48,90 @@ class AdminController {
         return $this->model->getKategori();
     }
 
+    public function login() {
+        if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin') {
+            header("Location: index.php?page=dashboard");
+            exit;
+        }
+
+        $error = '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $identifier = trim($_POST['identifier']);
+            $password   = $_POST['password'];
+            $role       = 'admin';
+
+            if (!empty($identifier) && !empty($password)) {
+                $res = $this->model->login($identifier, $role);
+                
+                if ($user = mysqli_fetch_assoc($res)) {
+                    if (($user['status'] ?? 'Aktif') === 'Nonaktif') {
+                        $error = "Akun Anda telah dinonaktifkan.";
+                    } elseif (password_verify($password, $user['password'])) {
+                        $_SESSION['user_id']      = $user['id'];
+                        $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+                        $_SESSION['email']        = $user['email'];
+                        $_SESSION['role']         = 'admin';
+                        $_SESSION['last_activity'] = time();
+
+                        header("Location: index.php?page=dashboard");
+                        exit;
+                    } else {
+                        $error = "Akun tidak ditemukan atau role tidak sesuai.";
+                    }
+                } else {
+                    $error = "Akun tidak ditemukan atau role tidak sesuai.";
+                }
+            } else {
+                $error = "Semua field wajib diisi.";
+            }    
+        }
+        
+        require_once __DIR__ . '/../view/admin/login_admin.php';
+    }
+
     public function dashboard() {
-        $totalUsers = $this->getTotalUsers();
-        $totalOrganisasi = $this->getTotalOrganisasi();
-        $totalMahasiswa = $this->getTotalMahasiswa();
+        $totalUsersData = $this->getTotalUsers(); 
+        $totalOrgData = $this->getTotalOrganisasi(); 
         $latestUsers = $this->getLatestUsers();
         $verifikasiAcara = $this->getVerifikasiAcara();
+        $semuaAcara = $this->getAllEvents();
+        $totalMahasiswa = $this->getTotalMahasiswa();
 
         require_once __DIR__ . '/../view/admin/dashboard.php';
     }
 
+    public function semua_acara() {
+        $this->prosesLockEvent();
+        $semuaAcara = $this->getAllEvents();
+        require_once __DIR__ . '/../view/admin/semua_acara.php';
+    }
+
     public function pengguna() {
+        $this->prosesToggleStatusPengguna();
         $keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
         $role = isset($_GET['role']) ? trim($_GET['role']) : '';
         $status = isset($_GET['status']) ? trim($_GET['status']) : '';
         
         $allUsers = $this->model->getAllUsers($keyword, $role, $status);
-        $totalUsers = $this->getTotalUsers();
+        $totalUsersCount = $this->getTotalUsers();
+        $hasStatusColumn = $this->usersHaveStatusColumn();
         
         require_once __DIR__ . '/../view/admin/pengguna.php';
     }
 
     public function kategori() {
+        $this->prosesHapusKategori();
+        $this->prosesTambahKategori();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_edit'])) {
+            $id_edit = intval($_POST['id_kategori']);
+            $this->prosesEditKategori($id_edit);
+        }
         $kategori = $this->model->getKategori();
         require_once __DIR__ . '/../view/admin/kategori.php';
     }
 
     public function verifikasi() {
+        $this->prosesVerifikasiAcara();
         $verifikasiAcara = $this->getVerifikasiAcara();
         require_once __DIR__ . '/../view/admin/verifikasi.php';
     }
@@ -86,7 +143,7 @@ class AdminController {
             
             if (empty($nama) || empty($deskripsi)) {
                 $_SESSION['kat_error'] = "Semua kolom kategori wajib diisi.";
-                header("Location: kategori.php");
+                header("Location: index.php?page=kategori");
                 exit;
             }
             $conn = $GLOBALS['conn']; 
@@ -95,11 +152,11 @@ class AdminController {
             
             if (mysqli_num_rows($check) > 0) {
                 $_SESSION['kat_error'] = "Kategori dengan nama '$nama' sudah ada di platform Evently.";
-                header("Location: kategori.php");
+                header("Location: index.php?page=kategori");
                 exit;
             }
             $this->model->insertKategori($nama, $deskripsi);
-            header("Location: kategori.php?status=success");
+            header("Location: index.php?page=kategori&status=success");
             exit;
         }
     }
@@ -115,7 +172,7 @@ class AdminController {
             
             if (empty($nama) || empty($deskripsi)) {
                 $_SESSION['kat_error'] = "Semua kolom perubahan kategori wajib diisi.";
-                header("Location: kategori.php");
+                header("Location: index.php?page=kategori");
                 exit;
             }
 
@@ -126,12 +183,12 @@ class AdminController {
             $check = mysqli_query($conn, "SELECT id FROM categories WHERE nama_kategori = '$nama_clean' AND id != $id");            
             if (mysqli_num_rows($check) > 0) {
                 $_SESSION['kat_error'] = "Gagal memperbarui! Nama kategori '$nama' sudah digunakan oleh kategori lain.";
-                header("Location: kategori.php");
+                header("Location: index.php?page=kategori");
                 exit;
             }
 
             $this->model->updateKategori($id, $nama, $deskripsi);
-            header("Location: kategori.php?status=updated");
+            header("Location: index.php?page=kategori&status=updated");
             exit;
         }
     }
@@ -140,7 +197,7 @@ class AdminController {
         if (isset($_GET['action']) && $_GET['action'] === 'hapus' && isset($_GET['id'])) {
             $id = intval($_GET['id']);
             $this->model->deleteKategori($id);
-            header("Location: kategori.php?status=deleted");
+            header("Location: index.php?page=kategori&status=deleted");
             exit;
         }
     }
@@ -154,7 +211,7 @@ class AdminController {
             if (!$eksekusi) {
                 die("Gagal memperbarui status di database! Kemungkinan nama kolom salah atau koneksi terputus.");
             }
-            header("Location: pengguna.php");
+            header("Location: index.php?page=pengguna");
             exit;
         }
     }
@@ -176,12 +233,12 @@ class AdminController {
             if (!$eksekusi) {
                 $dbError = isset($GLOBALS['conn']) ? mysqli_error($GLOBALS['conn']) : 'Query gagal dieksekusi';
                 $_SESSION['db_error'] = "Gagal Update! Pesan Error: " . $dbError;
-                header("Location: verifikasi.php");
+                header("Location: index.php?page=verifikasi");
                 exit;
             }
             
             unset($_SESSION['db_error']);
-            header("Location: verifikasi.php?status=success");
+            header("Location: index.php?page=verifikasi&status=success");
             exit;
         }
     }
@@ -198,7 +255,7 @@ class AdminController {
                 } else {
                     $_SESSION['action_success'] = "Acara berhasil dikunci dan ditangguhkan.";
                 }
-                header("Location: semua_acara.php");
+                header("Location: index.php?page=semua_acara");
                 exit;
             } elseif ($action === 'unlock_approve') {
                 $eksekusi = $this->model->updateStatusEvent($id, 'approved');
@@ -207,7 +264,7 @@ class AdminController {
                 } else {
                     $_SESSION['action_success'] = "Acara berhasil disetujui kembali.";
                 }
-                header("Location: semua_acara.php");
+                header("Location: index.php?page=semua_acara");
                 exit;
             } elseif ($action === 'unlock_reject') {
                 $eksekusi = $this->model->updateStatusEvent($id, 'rejected');
@@ -216,7 +273,7 @@ class AdminController {
                 } else {
                     $_SESSION['action_success'] = "Acara berhasil ditolak secara permanen.";
                 }
-                header("Location: semua_acara.php");
+                header("Location: index.php?page=semua_acara");
                 exit;
             }
         }

@@ -16,7 +16,7 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 if ($role === 'admin') {
-    header("Location: ../admin/login_admin.php");
+    header("Location: ../admin/index.php?page=login");
 } else {
     header("Location: ../public/index.php");
 }

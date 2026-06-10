@@ -1,25 +1,4 @@
-<?php
-session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
-require_once __DIR__ . '/../../controllers/AdminController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: ../auth/login.php");
-    exit;
-}
-
-$controller = new AdminController();
-$controller->prosesToggleStatusPengguna();
-
-$keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
-$role = isset($_GET['role']) ? trim($_GET['role']) : '';
-$status = isset($_GET['status']) ? trim($_GET['status']) : '';
-
-$allUsers = $controller->getAllUsers($keyword, $role, $status);
-$hasStatusColumn = $controller->usersHaveStatusColumn();
-$totalUsersCount = $controller->getTotalUsers();
-?>
+<?php if (!isset($allUsers)) { header('Location: index.php?page=pengguna'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -46,26 +25,26 @@ $totalUsersCount = $controller->getTotalUsers();
                 Manajemen
             </div>
 
-            <a href="dashboard.php" class="menu-item">
+            <a href="index.php?page=dashboard" class="menu-item">
                 <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
 
-            <a href="verifikasi.php" class="menu-item">
+            <a href="index.php?page=verifikasi" class="menu-item">
                 <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
-            <a href="semua_acara.php" class="menu-item">
+            <a href="index.php?page=semua_acara" class="menu-item">
                 <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
 
-            <a href="pengguna.php" class="menu-item active">
+            <a href="index.php?page=pengguna" class="menu-item active">
                 <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
 
-            <a href="kategori.php" class="menu-item">
+            <a href="index.php?page=kategori" class="menu-item">
                 <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
@@ -74,7 +53,7 @@ $totalUsersCount = $controller->getTotalUsers();
                 Sistem
             </div>
 
-            <a href="../auth/logout.php" class="menu-item">
+            <a href="index.php?page=logout" class="menu-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
@@ -92,7 +71,8 @@ $totalUsersCount = $controller->getTotalUsers();
                 </p>
             </div>
 
-            <form method="GET" action="" class="user-controls">
+            <form method="GET" action="index.php" class="user-controls">
+                <input type="hidden" name="page" value="pengguna">
 
                 <div class="search-wrapper">
                     <button type="submit" class="btn btn-primary">
@@ -165,7 +145,7 @@ $totalUsersCount = $controller->getTotalUsers();
                                 <?php endif; ?>
                                 <td align="center">
                                     <?php if ($hasStatusColumn): ?>
-                                        <a href="pengguna.php?action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>"
+                                        <a href="index.php?page=pengguna&action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>"
                                            class="btn-table-action btn-nonaktif <?= !$isAktif ? 'btn-aktifkan' : ''; ?>" 
                                            onclick="return confirm('Apakah Anda yakin ingin <?= $isAktif ? 'menonaktifkan' : 'mengaktifkan kembali'; ?> pengguna ini?')">
                                             <?= $isAktif ? 'Nonaktifkan' : 'Aktifkan'; ?>
