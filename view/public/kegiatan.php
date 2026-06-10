@@ -91,9 +91,9 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
                         }
                     ?>
                     <div class="event-card">
-                        <?php if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../' . $ev['poster'])): ?>
+                        <?php if (!empty($ev['poster']) && $ev['poster'] !== 'default.png' && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): ?>
                             <div class="event-banner public-event-banner">
-                                <img src="../../<?= htmlspecialchars($ev['poster']); ?>" alt="Poster" class="public-event-image">
+                                <img src="../../assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster" class="public-event-image">
                             </div>
                         <?php else: ?>
                             <div class="event-icon-box public-event-icon-box">

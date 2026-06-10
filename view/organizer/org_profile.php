@@ -93,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <section class="org-card org-profile-card">
                 <div class="org-profile-top">
-                    <div class="org-profile-avatar" style="overflow: hidden; padding: 15px; box-sizing: border-box; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa;">
+                    <div class="org-profile-avatar org-avatar-container">
                         <?php if (!empty($organizer['foto_profil'])): ?>
-                            <img id="previewImg" src="../../assets/profiles/<?= htmlspecialchars($organizer['foto_profil']); ?>" alt="Logo Organisasi" style="width: 100%; height: 100%; object-fit: contain;">
-                            <i id="defaultIcon" class="fa-solid fa-building-columns" style="display: none;"></i>
+                            <img id="previewImg" src="../../assets/profiles/<?= htmlspecialchars($organizer['foto_profil']); ?>" alt="Logo Organisasi" class="org-avatar-img-contain">
+                            <i id="defaultIcon" class="fa-solid fa-building-columns d-none"></i>
                         <?php else: ?>
-                            <img id="previewImg" src="" alt="Logo Organisasi" style="width: 100%; height: 100%; object-fit: contain; display: none;">
-                            <i id="defaultIcon" class="fa-solid fa-building-columns" style="font-size: 2rem; color: #555;"></i>
+                            <img id="previewImg" src="" alt="Logo Organisasi" class="org-avatar-img-contain d-none">
+                            <i id="defaultIcon" class="fa-solid fa-building-columns org-default-icon"></i>
                         <?php endif; ?>
                     </div>
                     <div class="org-profile-meta">
@@ -112,10 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <form method="POST" enctype="multipart/form-data">
                     
-                    <div class="org-form-group org-full" style="margin-bottom: 20px;">
+                    <div class="org-form-group org-full mb-20">
                         <label>Logo / Foto Profil Organisasi</label>
                         <input type="file" name="foto_profil" id="inputFoto" class="org-input" accept="image/png, image/jpeg, image/jpg">
-                        <small style="color: #666;">Format yang didukung: JPG, JPEG, PNG.</small>
+                        <small class="text-muted-666">Format yang didukung: JPG, JPEG, PNG.</small>
                     </div>
 
                     <div class="org-form-grid">

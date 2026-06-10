@@ -104,7 +104,7 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                                 elseif (strpos($kategori, 'KOMPETISI') !== false) $iconClass = 'fa-trophy';
                                 elseif (strpos($kategori, 'VOLUNTEER') !== false) $iconClass = 'fa-hand-holding-heart';
                             ?>
-                                <div style="width: 100%; height: 100%; min-height: 150px; display: flex; align-items: center; justify-content: center; background-color: #f0f4f8; color: #7f8c8d; font-size: 4rem;">
+                                <div class="mhs-event-empty-state">
                                     <i class="fa-solid <?= $iconClass; ?>"></i>
                                 </div>
                             <?php endif; ?>

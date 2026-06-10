@@ -207,7 +207,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="org-form-actions">
                             <button type="submit" class="org-btn org-btn-primary"><?= $is_edit ? 'Simpan Perubahan' : 'Kirim untuk Verifikasi' ?></button>
-                            <button type="button" class="org-btn org-btn-outline">Simpan Draft</button>
                         </div>
                     </form>
                 </section>
