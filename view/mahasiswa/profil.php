@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <img id="previewImg" src="../../assets/profiles/<?= htmlspecialchars($user['foto_profil']); ?>" alt="Foto" style="width: 100%; height: 100%; object-fit: cover;">
                         <div id="defaultAvatar" style="display: none;"><?= strtoupper(substr($user['nama_lengkap'], 0, 2)); ?></div>
                     <?php else: ?>
-                        <img id="previewImg" src="" alt="Foto" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                        <img id="previewImg" src="" alt="Foto" style="width: 100%; height: 100%; object-fit: fill; display: none;">
                         <div id="defaultAvatar"><?= strtoupper(substr($user['nama_lengkap'], 0, 2)); ?></div>
                     <?php endif; ?>
                 </div>

@@ -2,12 +2,6 @@
 
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    var_dump($_POST); 
-    var_dump($_FILES); 
-    die('Berhenti di sini untuk cek data');
-}
-
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
     header("Location: ../auth/index.php");
     exit;
@@ -99,12 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <section class="org-card org-profile-card">
                 <div class="org-profile-top">
-                    <div class="org-profile-avatar" style="overflow: hidden; padding: 0; display: flex; justify-content: center; align-items: center;">
+                    <div class="org-profile-avatar" style="overflow: hidden; padding: 15px; box-sizing: border-box; display: flex; justify-content: center; align-items: center; background-color: #f8f9fa;">
                         <?php if (!empty($organizer['foto_profil'])): ?>
-                            <img id="previewImg" src="../../assets/profiles/<?= htmlspecialchars($organizer['foto_profil']); ?>" alt="Logo Organisasi" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img id="previewImg" src="../../assets/profiles/<?= htmlspecialchars($organizer['foto_profil']); ?>" alt="Logo Organisasi" style="width: 100%; height: 100%; object-fit: contain;">
                             <i id="defaultIcon" class="fa-solid fa-building-columns" style="display: none;"></i>
                         <?php else: ?>
-                            <img id="previewImg" src="" alt="Logo Organisasi" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                            <img id="previewImg" src="" alt="Logo Organisasi" style="width: 100%; height: 100%; object-fit: contain; display: none;">
                             <i id="defaultIcon" class="fa-solid fa-building-columns" style="font-size: 2rem; color: #555;"></i>
                         <?php endif; ?>
                     </div>

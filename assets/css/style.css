@@ -3163,7 +3163,7 @@ body {
 .payment-grid {
     display: grid;
     grid-template-columns: 1fr 1fr; 
-    gap: 30px;
+    gap: 50px;
     margin-bottom: 30px;
     align-items: start;
 }
@@ -3171,6 +3171,7 @@ body {
 .payment-grid .card {
     background: white;
     border-radius: 20px;
+    margin: 15px;
     padding: 30px;
     border: 1px solid #edf2f7;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
@@ -3194,6 +3195,7 @@ body {
     align-items: center;
     gap: 16px;
     padding: 16px;
+    margin-bottom: 12px;
     border-radius: 14px;
     border: 1.5px solid #edf2f7;
     background: #f8fafc;

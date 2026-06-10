@@ -92,11 +92,21 @@ $res_event = $controller->getUpcomingEventsDashboard($user_id);
                     <div class="mhs-event-card <?= ($ev['status'] ?? '') === 'locked' ? 'event-locked-grayscale' : '' ?>">
                         <div class="mhs-event-banner overflow-hidden relative">
                             <?php 
-                            if (!empty($ev['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
+                            if (!empty($ev['poster']) && $ev['poster'] !== 'default.png' && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): 
                             ?>
                                 <img src="../../assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster <?= htmlspecialchars($ev['judul_event']); ?>">
-                            <?php else: ?>
-                                <img src="../../assets/poster/default.png" alt="Default Poster">
+                            <?php else: 
+                                $kategori = strtoupper($ev['nama_kategori'] ?? 'UMUM');
+                                $iconClass = 'fa-calendar-days';
+                                if (strpos($kategori, 'MUSIK') !== false) $iconClass = 'fa-music';
+                                elseif (strpos($kategori, 'SEMINAR') !== false) $iconClass = 'fa-chalkboard-user';
+                                elseif (strpos($kategori, 'WORKSHOP') !== false) $iconClass = 'fa-tools';
+                                elseif (strpos($kategori, 'KOMPETISI') !== false) $iconClass = 'fa-trophy';
+                                elseif (strpos($kategori, 'VOLUNTEER') !== false) $iconClass = 'fa-hand-holding-heart';
+                            ?>
+                                <div style="width: 100%; height: 100%; min-height: 150px; display: flex; align-items: center; justify-content: center; background-color: #f0f4f8; color: #7f8c8d; font-size: 4rem;">
+                                    <i class="fa-solid <?= $iconClass; ?>"></i>
+                                </div>
                             <?php endif; ?>
                             <span class="mhs-event-tag"><?= htmlspecialchars(strtoupper($ev['nama_kategori'] ?? 'UMUM')); ?></span>
                         </div>
