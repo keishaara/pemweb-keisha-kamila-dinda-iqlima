@@ -1,11 +1,11 @@
-<?php if (!isset($semuaAcara)) { header('Location: index.php?page=semua_acara'); exit; } ?>
+<?php if (!isset($semuaAcara)) { header('Location: index.php?module=admin&action=semua_acara'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Daftar Semua Acara - Admin Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -18,34 +18,34 @@
     
           <div class="menu-category">Manajemen</div>
     
-           <a href="index.php?page=dashboard" class="menu-item">
+           <a href="index.php?module=admin&action=dashboard" class="menu-item">
                <i class="fa-solid fa-chart-line"></i>
                Dashboard
            </a>
 
-           <a href="index.php?page=verifikasi" class="menu-item">
+           <a href="index.php?module=admin&action=verifikasi" class="menu-item">
                <i class="fa-solid fa-ticket"></i>
                Verifikasi Acara
            </a>
 
-           <a href="index.php?page=semua_acara" class="menu-item active">
+           <a href="index.php?module=admin&action=semua_acara" class="menu-item active">
                <i class="fa-solid fa-calendar-days"></i>
                Semua Acara
            </a>
 
-           <a href="index.php?page=pengguna" class="menu-item">
+           <a href="index.php?module=admin&action=pengguna" class="menu-item">
                <i class="fa-solid fa-users"></i>
                Pengguna
            </a>
 
-           <a href="index.php?page=kategori" class="menu-item">
+           <a href="index.php?module=admin&action=kategori" class="menu-item">
                <i class="fa-solid fa-layer-group"></i>
                Kategori
            </a>
 
           <div class="menu-category">Sistem</div>
     
-           <a href="index.php?page=logout" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin logout?')">
+           <a href="index.php?module=auth&action=logout" class="menu-item" onclick="return confirm('Apakah Anda yakin ingin logout?')">
                <i class="fa-solid fa-right-from-bracket"></i>
                Keluar
            </a>
@@ -94,15 +94,15 @@
                                 </td>
                                 <td>
                                     <?php if ($status === 'approved'): ?>
-                                        <a href="index.php?page=semua_acara&action=lock&id=<?= $acara['id']; ?>" class="btn-table-action btn-lock" onclick="return confirm('Apakah Anda yakin ingin MENGUNCI (suspend) acara ini? Ini akan menyembunyikan acara dari mahasiswa.');">
+                                        <a href="index.php?module=admin&action=semua_acara&act=lock&id=<?= $acara['id']; ?>" class="btn-table-action btn-lock" onclick="return confirm('Apakah Anda yakin ingin MENGUNCI (suspend) acara ini? Ini akan menyembunyikan acara dari mahasiswa.');">
                                             <i class="fas fa-lock"></i> Kunci
                                         </a>
                                     <?php elseif ($status === 'locked'): ?>
                                         <div class="flex gap-5">
-                                            <a href="index.php?page=semua_acara&action=unlock_approve&id=<?= $acara['id']; ?>" class="btn-table-action btn-approve" onclick="return confirm('Setujui kembali acara ini?');">
+                                            <a href="index.php?module=admin&action=semua_acara&act=unlock_approve&id=<?= $acara['id']; ?>" class="btn-table-action btn-approve" onclick="return confirm('Setujui kembali acara ini?');">
                                                 <i class="fas fa-check"></i> Setujui
                                             </a>
-                                            <a href="index.php?page=semua_acara&action=unlock_reject&id=<?= $acara['id']; ?>" class="btn-table-action btn-reject" onclick="return confirm('Tolak acara ini secara permanen?');">
+                                            <a href="index.php?module=admin&action=semua_acara&act=unlock_reject&id=<?= $acara['id']; ?>" class="btn-table-action btn-reject" onclick="return confirm('Tolak acara ini secara permanen?');">
                                                 <i class="fas fa-times"></i> Tolak
                                             </a>
                                         </div>

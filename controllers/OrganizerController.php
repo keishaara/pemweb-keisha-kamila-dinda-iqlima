@@ -10,40 +10,54 @@ class OrganizerController {
         $this->model = new OrganizerModel();
     }
 
-    public function dashboard()
+    public function action_dashboard()
     {
         $organizerId = $_SESSION['user_id'] ?? 0;
 
-        return [
-            'organizer' => $this->model->getOrganizerById($organizerId),
-            'statistik' => $this->model->getStatistik($organizerId),
-            'events'    => $this->model->getEventTerbaru($organizerId),
-            'agenda'    => $this->model->getAgendaTerdekat($organizerId)
-        ];
+        $organizer = $this->model->getOrganizerById($organizerId);
+        $statistik = $this->model->getStatistik($organizerId);
+        $events    = $this->model->getEventTerbaru($organizerId);
+        $agenda    = $this->model->getAgendaTerdekat($organizerId);
+
+        require_once __DIR__ . '/../view/organizer/org_dashboard.php';
     }
 
-    public function getKelolaAcara()
+    public function action_kelola_acara()
     {
         $organizerId = $_SESSION['user_id'] ?? 0;
-        return $this->model->getKelolaAcara($organizerId);
+        $organizer = $this->model->getOrganizerById($organizerId);
+        $events = $this->model->getKelolaAcara($organizerId);
+        $keyword = $_GET['search'] ?? '';
+        require_once __DIR__ . '/../view/organizer/org_kelola_acara.php';
     }
 
-    public function dataPeserta($keyword = '', $eventId = '')
+    public function action_data_peserta()
     {
+        $keyword = $_GET['search'] ?? '';
+        $eventId = $_GET['event_id'] ?? '';
         $organizerId = $_SESSION['user_id'] ?? 0;
-        return $this->model->getPesertaByOrganizer($organizerId, $keyword, $eventId);
+        $pesertaList = $this->model->getPesertaByOrganizer($organizerId, $keyword, $eventId);
+        $eventsList = $this->model->getEventsByOrganizer($organizerId);
+        require_once __DIR__ . '/../view/organizer/org_data_peserta.php';
     }
 
+    // deprecated
     public function getEvents()
     {
         $organizerId = $_SESSION['user_id'] ?? 0;
         return $this->model->getEventsByOrganizer($organizerId);
     }
 
-    public function profile()
+    public function action_profile()
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->prosesEditProfil($_POST, $_FILES['foto_profil'] ?? null, $_POST['old_foto'] ?? null);
+            header("Location: index.php?module=organizer&action=profile&status=updated");
+            exit;
+        }
         $organizerId = $_SESSION['user_id'] ?? 0;
-        return $this->model->getOrganizerById($organizerId);
+        $organizer = $this->model->getOrganizerById($organizerId);
+        require_once __DIR__ . '/../view/organizer/org_profile.php';
     }
 
     public function prosesTambahAcara($post, $files)
@@ -122,24 +136,45 @@ class OrganizerController {
         return $this->model->insertEvent($dataDB);
     }
 
-   public function hapusAcara() {
-        if (isset($_GET['action']) && $_GET['action'] === 'hapus' && isset($_GET['id'])) {
+    public function action_hapus_acara() {
+        if (isset($_GET['action']) && $_GET['action'] === 'hapus_acara' && isset($_GET['id'])) {
             $event_id = intval($_GET['id']);
             $user_id = $_SESSION['user_id'] ?? 0;
 
             if ($this->model->deleteEvent($event_id, $user_id)) {
-                header("Location: org_kelola_acara.php?status=deleted");
+                header("Location: index.php?module=organizer&action=kelola_acara&status=deleted");
                 exit();
             } else {
-                header("Location: org_kelola_acara.php?status=failed");
+                header("Location: index.php?module=organizer&action=kelola_acara&status=failed");
                 exit();
             }
         }
     }
 
-    public function detailAcara($eventId) {
-        $userId = $_SESSION['user_id'] ?? 0;
-        return $this->model->getEventById($eventId, $userId);
+    public function action_buat_acara() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $eventId = $_GET['id'] ?? null;
+            if ($eventId) {
+                $this->prosesEditAcara($eventId);
+            } else {
+                if ($this->prosesTambahAcara($_POST, $_FILES)) {
+                    header("Location: index.php?module=organizer&action=kelola_acara&status=success");
+                    exit;
+                }
+            }
+        }
+        
+        $eventId = $_GET['id'] ?? null;
+        $is_edit = ($eventId !== null);
+        $event = null;
+        if ($eventId) {
+            $userId = $_SESSION['user_id'] ?? 0;
+            $event = $this->model->getEventById($eventId, $userId);
+        }
+        
+        $categories = $this->model->getAllCategories();
+        
+        require_once __DIR__ . '/../view/organizer/org_buat_acara.php';
     }
 
     public function prosesEditAcara($eventId) {
@@ -151,7 +186,7 @@ class OrganizerController {
             $status = strtolower($event['status'] ?? 'pending');
             if ($status === 'approved' || $status === 'disetujui') {
                 $_SESSION['form_errors'] = ["Acara ini sudah disetujui oleh admin dan tidak boleh diubah lagi."];
-                header("Location: org_kelola_acara.php?status=action_blocked");
+                header("Location: index.php?module=organizer&action=kelola_acara&status=action_blocked");
                 exit();
             }
 
@@ -175,7 +210,7 @@ class OrganizerController {
 
             if (!empty($errors)) {
                 $_SESSION['form_errors'] = $errors;
-                header("Location: org_buat_acara.php?id=" . $eventId);
+                header("Location: index.php?module=organizer&action=buat_acara&id=" . $eventId);
                 exit();
             }
             
@@ -193,10 +228,10 @@ class OrganizerController {
             ];
 
             if ($this->model->updateEvent($eventId, $userId, $dataInput)) {
-                header("Location: org_kelola_acara.php?status=updated");
+                header("Location: index.php?module=organizer&action=kelola_acara&status=updated");
                 exit();
             } else {
-                header("Location: org_kelola_acara.php?status=update_failed");
+                header("Location: index.php?module=organizer&action=kelola_acara&status=update_failed");
                 exit();
             }
         }

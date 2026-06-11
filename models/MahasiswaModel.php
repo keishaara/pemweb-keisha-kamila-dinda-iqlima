@@ -96,7 +96,8 @@ class MahasiswaModel {
         $stmt->bind_param("i", $userId);
         $stmt->execute();
 
-        return $stmt->get_result();
+        $result = $stmt->get_result();
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
     public function getUserById(int $id)
@@ -208,6 +209,7 @@ class MahasiswaModel {
         $sql = "
             SELECT
                 b.kode_booking,
+                b.user_id,
                 b.status AS status_booking,
                 b.event_id,
                 e.judul_event,

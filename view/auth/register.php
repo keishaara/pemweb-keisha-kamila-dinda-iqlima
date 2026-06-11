@@ -1,57 +1,22 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
-
-if (isset($_SESSION['user_id'])) {
-    header("Location: ../mahasiswa/profil.php"); exit;
-}
-
-$msg = ''; $msgType = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tipe  = $_POST['tipe'];
-    $nama  = trim($_POST['nama']);
-    $npm   = trim($_POST['npm']);
-    $email = trim($_POST['email']);
-    $program_studi = trim($_POST['program_studi']);
-    $wa    = trim($_POST['wa']);
-    $pass  = $_POST['password'];
-    $pass2 = $_POST['konfirmasi_password'];
-
-    if (empty($nama) || empty($npm) || empty($email) || empty($pass)) {
-        $msg = "Data bertanda (*) wajib diisi."; $msgType = 'error';
-    } elseif ($pass !== $pass2) {
-        $msg = "Konfirmasi kata sandi tidak cocok."; $msgType = 'error';
-    } else {
-        $cek = mysqli_prepare($conn, "SELECT id FROM users WHERE email = ? OR npm = ?");
-        mysqli_stmt_bind_param($cek, "ss", $email, $npm);
-        mysqli_stmt_execute($cek); mysqli_stmt_store_result($cek);
-        if (mysqli_stmt_num_rows($cek) > 0) {
-            $msg = "Email atau NPM sudah terdaftar."; $msgType = 'error';
-        } else {
-            $hash = password_hash($pass, PASSWORD_DEFAULT);
-            $ins  = mysqli_prepare($conn, "INSERT INTO users (tipe_akun, nama_lengkap, npm, email, program_studi, no_whatsapp, password) VALUES (?,?,?,?,?,?,?)");
-            mysqli_stmt_bind_param($ins, "sssssss", $tipe, $nama, $npm, $email, $program_studi, $wa, $hash);
-            if (mysqli_stmt_execute($ins)) {
-                $msg = "Registrasi berhasil! Silakan login."; $msgType = 'success';
-            } else {
-                $msg = "Gagal mendaftar: " . mysqli_error($conn); $msgType = 'error';
-            }
-        }
-    }
-}
+/**
+ * @var string $msg
+ * @var string $msgType
+ */
+// Logic has been moved to AuthController
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Daftar - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="login-page-v2">
 
     <div class="login-wrapper">
-        <div class="login-card-v2 login-card-v2-max"> <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
+        <div class="login-card-v2 login-card-v2-max"> <a href="index.php?module=public&action=index" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
             <h2>Buat akun baru</h2>
             <p class="text-muted mb-3">Bergabung dengan kami di Evently</p>
 
@@ -59,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="auth-message <?= ($msgType === 'success' ? 'auth-success' : 'auth-error'); ?>"><?= htmlspecialchars($msg); ?></div>
             <?php endif; ?>
 
-            <form id="registerForm" method="POST" action="">
+            <form id="registerForm" method="POST" action="index.php?module=auth&action=register">
                 <div class="form-group">
                     <label class="form-label">Pilih Tipe Akun</label>
                     <select name="tipe" class="form-control" required>
@@ -109,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <button type="submit" class="btn btn-primary btn-block">Buat Akun</button>
-                <p class="auth-footer">Sudah punya akun? <a href="login.php">Masuk</a></p>
+                <p class="auth-footer">Sudah punya akun? <a href="index.php?module=auth&action=login">Masuk</a></p>
             </form>
         </div>
     </div>

@@ -1,21 +1,11 @@
-<?php
-session_start();
-
-require_once __DIR__ . '/../../controllers/OrganizerController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-$keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
-$eventId = isset($_GET['event_id']) ? trim($_GET['event_id']) : '';
-
-$controller = new OrganizerController();
-$pesertaList = $controller->dataPeserta($keyword, $eventId);
-$eventsList = $controller->getEvents();
-?>
+<?php 
+/**
+ * @var array $pesertaList
+ * @var array $eventsList
+ * @var string $keyword
+ * @var string $eventId
+ */
+if (!isset($pesertaList)) { header('Location: index.php?module=organizer&action=data_peserta'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -23,7 +13,7 @@ $eventsList = $controller->getEvents();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Peserta - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -35,30 +25,30 @@ $eventsList = $controller->getEvents();
 
             <div class="org-menu-category">Menu Organisasi</div>
 
-            <a href="org_dashboard.php" class="org-menu-item">
+            <a href="index.php?module=organizer&action=dashboard" class="org-menu-item">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
         </a>
-            <a href="org_kelola_acara.php" class="org-menu-item">
+            <a href="index.php?module=organizer&action=kelola_acara" class="org-menu-item">
             <i class="fa-solid fa-ticket"></i>
             <span>Kelola Acara</span>
         </a>
-            <a href="org_data_peserta.php" class="org-menu-item active">
+            <a href="index.php?module=organizer&action=data_peserta" class="org-menu-item active">
             <i class="fa-solid fa-users"></i>
             <span>Data Peserta</span>
         </a>
-            <a href="org_buat_acara.php" class="org-menu-item">
+            <a href="index.php?module=organizer&action=buat_acara" class="org-menu-item">
             <i class="fa-solid fa-layer-group"></i>
             <span>Buat Acara</span>
         </a>
 
             <div class="org-menu-category">Akun</div>
 
-            <a href="org_profile.php" class="org-menu-item">
+            <a href="index.php?module=organizer&action=profile" class="org-menu-item">
             <i class="fa-solid fa-user-tie"></i>
             <span>Profil Organisasi</span>
         </a>
-            <a href="../auth/logout.php" class="org-menu-item">
+            <a href="index.php?module=auth&action=logout" class="org-menu-item">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Keluar</span>
         </a>
@@ -72,7 +62,9 @@ $eventsList = $controller->getEvents();
                 </div>
 
                 <section class="org-card">
-                    <form action="" method="GET" class="org-table-top">
+                    <form action="index.php" method="GET" class="org-table-top">
+                        <input type="hidden" name="module" value="organizer">
+                        <input type="hidden" name="action" value="data_peserta">
                         <div class="org-search-box">
                             <input type="text" name="search" placeholder="Cari peserta..." value="<?= htmlspecialchars($keyword); ?>">
                         </div>

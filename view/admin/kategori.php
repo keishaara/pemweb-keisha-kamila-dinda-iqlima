@@ -1,4 +1,4 @@
-<?php if (!isset($kategori)) { header('Location: index.php?page=kategori'); exit; } ?>
+<?php if (!isset($kategori)) { header('Location: index.php?module=admin&action=kategori'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Kelola Kategori - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -22,33 +22,33 @@
 
             <div class="menu-category">Manajemen</div>
 
-            <a href="index.php?page=dashboard" class="menu-item">
+            <a href="index.php?module=admin&action=dashboard" class="menu-item">
                 <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
 
-            <a href="index.php?page=verifikasi" class="menu-item">
+            <a href="index.php?module=admin&action=verifikasi" class="menu-item">
                 <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
-            <a href="index.php?page=semua_acara" class="menu-item">
+            <a href="index.php?module=admin&action=semua_acara" class="menu-item">
                 <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
 
-            <a href="index.php?page=pengguna" class="menu-item">
+            <a href="index.php?module=admin&action=pengguna" class="menu-item">
                 <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
 
-            <a href="index.php?page=kategori" class="menu-item active">
+            <a href="index.php?module=admin&action=kategori" class="menu-item active">
                 <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
 
             <div class="menu-category">Sistem</div>
 
-            <a href="index.php?page=logout" class="menu-item">
+            <a href="index.php?module=auth&action=logout" class="menu-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
@@ -114,7 +114,7 @@
                                     onclick="bukaModalEdit(<?= $kat['id']; ?>, <?= htmlspecialchars(json_encode($kat['nama_kategori'])); ?>, <?= htmlspecialchars(json_encode($kat['deskripsi'] ?? '')); ?>)">
                                 Edit
                             </button>
-                            <a href="index.php?page=kategori&action=hapus&id=<?= $kat['id']; ?>" class="btn-delete-kat" onclick="return confirm('Hapus kategori ini?')">Hapus</a>
+                            <a href="index.php?module=admin&action=kategori&act=hapus&id=<?= $kat['id']; ?>" class="btn-delete-kat" onclick="return confirm('Hapus kategori ini?')">Hapus</a>
                         </div>
                     </div>
                     <?php endforeach; ?>

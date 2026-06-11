@@ -1,34 +1,11 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
-
-$search  = isset($_GET['q']) ? trim($_GET['q']) : '';
-$cat_id  = isset($_GET['cat_id']) ? trim($_GET['cat_id']) : '';
-$is_free = isset($_GET['free']) ? true : false;
-
-$sql = "SELECT e.*, c.nama_kategori 
-        FROM events e 
-        LEFT JOIN categories c ON e.kategori_id = c.id 
-        WHERE e.status = 'approved'";
-
-if ($search) {
-    $search_safe = mysqli_real_escape_string($conn, $search);
-    $sql .= " AND (e.judul_event LIKE '%$search_safe%' OR e.penyelenggara LIKE '%$search_safe%')";
-}
-
-if ($cat_id) {
-    $cat_id_safe = mysqli_real_escape_string($conn, $cat_id);
-    $sql .= " AND e.kategori_id = '$cat_id_safe'";
-}
-
-if ($is_free) {
-    $sql .= " AND e.harga = 0";
-}
-
-$sql .= " ORDER BY e.tanggal DESC";
-
-$res    = mysqli_query($conn, $sql);
-$events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
+/**
+ * @var array $events
+ * @var string $search
+ * @var string $cat_id
+ * @var bool $is_free
+ */
+// Logic has been moved to PublicController
 ?>
 
 <!DOCTYPE html>
@@ -36,30 +13,32 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
 <head>
     <meta charset="UTF-8">
     <title>Kegiatan - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="features-wrapper features-wrapper-min">
-        <a href="index.php" class="btn-back-floating">Kembali</a>
+        <a href="index.php?module=public&action=index" class="btn-back-floating">Kembali</a>
         <main class="main-content">
             <div class="page-header public-page-header">
                 <h2 class="public-h2-title">Jelajahi Event</h2>
                 <p class="public-p-subtitle">Temukan kegiatan sesuai minatmu</p>
             </div>
             <div class="search-bar public-search-container">
-                <form method="GET" action="" class="flex gap-8 w-full m-0">
+                <form method="GET" action="index.php" class="flex gap-8 w-full m-0">
+                    <input type="hidden" name="module" value="public">
+                    <input type="hidden" name="action" value="kegiatan">
                     <input type="text" name="q" placeholder="Ketik nama event atau penyelenggara..." value="<?= htmlspecialchars($search); ?>" class="public-search-input">
                     <button type="submit" class="public-btn-search">Cari</button>
                 </form>
             </div>
 
             <div class="filter-tags public-filter-tags">
-                <a href="kegiatan.php" class="btn-filter <?= (!$cat_id && !$is_free) ? 'active' : ''; ?>">Semua</a>
-                <a href="?cat_id=2" class="btn-filter <?= $cat_id == '2' ? 'active' : ''; ?>">Workshop</a>
-                <a href="?cat_id=4" class="btn-filter <?= $cat_id == '4' ? 'active' : ''; ?>">Musik</a>
-                <a href="?cat_id=5" class="btn-filter <?= $cat_id == '5' ? 'active' : ''; ?>">Volunteer</a>
-                <a href="?free=1" class="btn-filter <?= $is_free ? 'active' : ''; ?>">Gratis</a>
+                <a href="index.php?module=public&action=kegiatan" class="btn-filter <?= (!$cat_id && !$is_free) ? 'active' : ''; ?>">Semua</a>
+                <a href="index.php?module=public&action=kegiatan&cat_id=2" class="btn-filter <?= $cat_id == '2' ? 'active' : ''; ?>">Workshop</a>
+                <a href="index.php?module=public&action=kegiatan&cat_id=4" class="btn-filter <?= $cat_id == '4' ? 'active' : ''; ?>">Musik</a>
+                <a href="index.php?module=public&action=kegiatan&cat_id=5" class="btn-filter <?= $cat_id == '5' ? 'active' : ''; ?>">Volunteer</a>
+                <a href="index.php?module=public&action=kegiatan&free=1" class="btn-filter <?= $is_free ? 'active' : ''; ?>">Gratis</a>
             </div>
 
             <div class="card-grid">
@@ -93,7 +72,7 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
                     <div class="event-card">
                         <?php if (!empty($ev['poster']) && $ev['poster'] !== 'default.png' && file_exists(__DIR__ . '/../../assets/poster/' . $ev['poster'])): ?>
                             <div class="event-banner public-event-banner">
-                                <img src="../../assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster" class="public-event-image">
+                                <img src="assets/poster/<?= htmlspecialchars($ev['poster']); ?>" alt="Poster" class="public-event-image">
                             </div>
                         <?php else: ?>
                             <div class="event-icon-box public-event-icon-box">
@@ -105,7 +84,7 @@ $events = $res ? mysqli_fetch_all($res, MYSQLI_ASSOC) : [];
                             <h4><?= htmlspecialchars($ev['judul_event']); ?></h4>
                             <p class="organizer"><?= htmlspecialchars($ev['penyelenggara']); ?></p>
                             <div class="event-footer">
-                                <a href="../auth/login.php" class="btn">Detail</a>
+                                <a href="index.php?module=auth&action=login" class="btn">Detail</a>
                                 <span class="price <?= $ev['harga'] == 0 ? 'free' : ''; ?>">
                                     <?= $ev['harga'] == 0 ? 'Gratis' : 'Rp '.number_format($ev['harga'],0,',','.'); ?>
                                 </span>

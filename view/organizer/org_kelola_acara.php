@@ -1,33 +1,10 @@
-<?php
-
-session_start();
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-require_once __DIR__ . '/../../controllers/OrganizerController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-$controller = new OrganizerController();
-
-$controller->hapusAcara();
-
-$data = $controller->dashboard();
-$organizer = $data['organizer'];
-$events = $controller->getKelolaAcara() ?? [];
-$keyword = $_GET['search'] ?? '';
-
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola Acara - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -41,34 +18,34 @@ $keyword = $_GET['search'] ?? '';
 
         <div class="org-menu-category">Menu Organisasi</div>
 
-        <a href="org_dashboard.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=dashboard" class="org-menu-item">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
         </a>
 
-        <a href="org_kelola_acara.php" class="org-menu-item active">
+        <a href="index.php?module=organizer&action=kelola_acara" class="org-menu-item active">
             <i class="fa-solid fa-ticket"></i>
             <span>Kelola Acara</span>
         </a>
 
-        <a href="org_data_peserta.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=data_peserta" class="org-menu-item">
             <i class="fa-solid fa-users"></i>
             <span>Data Peserta</span>
         </a>
 
-        <a href="org_buat_acara.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=buat_acara" class="org-menu-item">
             <i class="fa-solid fa-layer-group"></i>
             <span>Buat Acara</span>
         </a>
 
         <div class="org-menu-category">Akun</div>
 
-        <a href="org_profile.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=profile" class="org-menu-item">
             <i class="fa-solid fa-user-tie"></i>
             <span>Profil Organisasi</span>
         </a>
 
-        <a href="../auth/logout.php" class="org-menu-item">
+        <a href="index.php?module=auth&action=logout" class="org-menu-item">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Keluar</span>
         </a>
@@ -103,11 +80,11 @@ $keyword = $_GET['search'] ?? '';
                             type="text"
                             name="search"
                             placeholder="Cari acara..."
-                            value="<?= htmlspecialchars($keyword) ?>"
+                            value="<?= htmlspecialchars($keyword ?? '') ?>"
                         >
                     </form>
 
-                    <a href="org_buat_acara.php" class="org-btn org-btn-primary">+ Buat Acara</a>
+                    <a href="index.php?module=organizer&action=buat_acara" class="org-btn org-btn-primary">+ Buat Acara</a>
                 </div>
 
                 <table class="org-table">
@@ -132,7 +109,7 @@ $keyword = $_GET['search'] ?? '';
                             <?php foreach ($events as $event): ?>
                                 <?php
                                 $namaEvent = $event['judul_event'] ?? $event['nama_event'] ?? 'Tanpa Judul';
-                                if ($keyword && stripos($namaEvent, $keyword) === false) {
+                                if (!empty($keyword) && stripos($namaEvent, $keyword) === false) {
                                     continue;
                                 }
                                 ?>
@@ -175,11 +152,11 @@ $keyword = $_GET['search'] ?? '';
                                         ?>
                                             <span></span>
                                         <?php else: ?>
-                                            <a href="org_buat_acara.php?id=<?= $event['id'] ?? '' ?>" class="org-btn org-btn-small org-btn-outline">Edit</a>
+                                            <a href="index.php?module=organizer&action=buat_acara&id=<?= $event['id'] ?? '' ?>" class="org-btn org-btn-small org-btn-outline">Edit</a>
                                         <?php endif; ?>
                                         
                                         <?php if ($statusAksi !== 'locked'): ?>
-                                        <a href="org_kelola_acara.php?action=hapus&id=<?= $event['id'] ?? '' ?>"
+                                        <a href="index.php?module=organizer&action=hapus_acara&id=<?= $event['id'] ?? '' ?>"
                                            class="org-btn org-btn-small org-btn-danger"
                                            onclick="return confirm('Yakin ingin menghapus event ini?')">
                                            Hapus

@@ -1,45 +1,19 @@
-<?php
-
-session_start();
-
-require_once __DIR__ . '/../../controllers/OrganizerController.php';
-require_once __DIR__ . '/../../models/OrganizerModel.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
-    header("Location: ../auth/login.php");
-    exit;
-}
-$organizerModel = new OrganizerModel();
-$dataAkun = $organizerModel->getOrganizerById($_SESSION['user_id']);
-
-if (($dataAkun['status'] ?? 'Aktif') === 'Nonaktif') {
-    session_destroy();
-    header("Location: ../auth/login.php");
-    exit;
-}
-
-$controller = new OrganizerController();
-
-$data = $controller->dashboard();
-
-$organizer = $data['organizer'];
-
-$statistik = $data['statistik'];
-
-$events = $data['events'];
-
-$agenda = $data['agenda'];
-
-?>
-
 <!DOCTYPE html>
 <html lang="id">
+<?php
+/**
+ * @var int $organizerId
+ * @var array $organizer
+ * @var array $statistik
+ * @var array $events
+ * @var array $agenda
+ */
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Organisasi - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -56,22 +30,22 @@ $agenda = $data['agenda'];
             Menu Organisasi
         </div>
 
-        <a href="org_dashboard.php" class="org-menu-item active">
+        <a href="index.php?module=organizer&action=dashboard" class="org-menu-item active">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
         </a>
 
-        <a href="org_kelola_acara.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=kelola_acara" class="org-menu-item">
             <i class="fa-solid fa-ticket"></i>
             <span>Kelola Acara</span>
         </a>
 
-        <a href="org_data_peserta.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=data_peserta" class="org-menu-item">
             <i class="fa-solid fa-users"></i>
             <span>Data Peserta</span>
         </a>
 
-        <a href="org_buat_acara.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=buat_acara" class="org-menu-item">
             <i class="fa-solid fa-layer-group"></i>
             <span>Buat Acara</span>
         </a>
@@ -80,12 +54,12 @@ $agenda = $data['agenda'];
             Akun
         </div>
 
-        <a href="org_profile.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=profile" class="org-menu-item">
             <i class="fa-solid fa-user-tie"></i>
             <span>Profil Organisasi</span>
         </a>
 
-        <a href="../auth/logout.php" class="org-menu-item">
+        <a href="index.php?module=auth&action=logout" class="org-menu-item">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Keluar</span>
         </a>
@@ -117,7 +91,7 @@ $agenda = $data['agenda'];
 
             <div class="org-stats">
 
-                <div class="org-stat-card clickable-card" onclick="window.location.href='org_data_peserta.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?module=organizer&action=data_peserta'">
 
                     <div class="org-stat-icon">
                         <i class="fa-solid fa-users"></i>
@@ -132,7 +106,7 @@ $agenda = $data['agenda'];
 
                 </div>
 
-                <div class="org-stat-card clickable-card" onclick="window.location.href='org_kelola_acara.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?module=organizer&action=kelola_acara'">
 
                     <div class="org-stat-icon">
                         <i class="fa-solid fa-calendar-day"></i>
@@ -147,7 +121,7 @@ $agenda = $data['agenda'];
 
                 </div>
 
-                <div class="org-stat-card clickable-card" onclick="window.location.href='org_kelola_acara.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?module=organizer&action=kelola_acara'">
 
                     <div class="org-stat-icon">
                         <i class="fa-solid fa-clock-rotate-left"></i>
@@ -162,7 +136,7 @@ $agenda = $data['agenda'];
 
                 </div>
 
-                <div class="org-stat-card clickable-card" onclick="window.location.href='org_kelola_acara.php'">
+                <div class="org-stat-card clickable-card" onclick="window.location.href='index.php?module=organizer&action=kelola_acara'">
 
                     <div class="org-stat-icon">
                         <i class="fa-solid fa-calendar-check"></i>
@@ -248,7 +222,7 @@ $agenda = $data['agenda'];
                         </div>
                     <?php endforeach; ?>
 
-                    <a href="org_kelola_acara.php"
+                    <a href="index.php?module=organizer&action=kelola_acara"
                        class="org-btn org-btn-outline org-btn-full">
                         Lihat Semua
                     </a>
@@ -264,7 +238,7 @@ $agenda = $data['agenda'];
             const yakinLogout = confirm("Apakah Anda ingin logout?");
             
             if (yakinLogout) {
-                window.location.href = '../auth/logout.php'; 
+                window.location.href = 'index.php?module=auth&action=logout'; 
             } else {
                 history.pushState(null, null, window.location.href);
             }

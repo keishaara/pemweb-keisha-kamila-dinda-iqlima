@@ -1,16 +1,13 @@
-<?php
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<a href="index.php" class="btn-back-floating"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
+<a href="index.php?module=public&action=index" class="btn-back-floating"><i class="fa-solid fa-arrow-left"></i> Kembali</a>
 <div class="about-container">
     <section class="about-hero">
         <h1>Tentang Evently</h1>
@@ -39,7 +36,7 @@
         <div class="team-grid">
             <div class="team-card">
                 <a href="https://github.com/keishaara" target="_blank" rel="noopener noreferrer" class="team-link">
-                <img src="../../assets/img/img-keisha.JPG" alt="Foto Profil Keisha Aurel Ratu Assyifa">
+                <img src="assets/img/img-keisha.JPG" alt="Foto Profil Keisha Aurel Ratu Assyifa">
                 <h3>Keisha Aurel Ratu Assyifa</h3>
                 <p class="npm">2417051015</p>
                 </a>
@@ -47,7 +44,7 @@
 
             <div class="team-card">
                 <a href="https://github.com/Kamilaa8" target="_blank" rel="noopener noreferrer" class="team-link">
-                <img src="../../assets/img/img-kamila.jpeg" alt="Kamila">
+                <img src="assets/img/img-kamila.jpeg" alt="Kamila">
                 <h3>Kamila Putri Hasan</h3>
                 <p class="npm">2417051026</p>
                 </a>
@@ -55,7 +52,7 @@
 
             <div class="team-card">
                 <a href="https://github.com/dindasha" target="_blank" rel="noopener noreferrer" class="team-link">
-                    <img src="../../assets/img/img-dinda.jpeg" alt="Dinda">
+                    <img src="assets/img/img-dinda.jpeg" alt="Dinda">
                     <h3>Dinda Shaumi Salsabila</h3>
                     <p class="npm">2417051033</p>
                 </a>
@@ -63,7 +60,7 @@
 
             <div class="team-card">
                 <a href="https://github.com/iqlimajuliana" target="_blank" rel="noopener noreferrer" class="team-link">
-                <img src="../../assets/img/img-iqlima.jpeg" alt="Iqlima">
+                <img src="assets/img/img-iqlima.jpeg" alt="Iqlima">
                 <h3>Iqlima Juliana</h3>
                 <p class="npm">2417051048</p>
                 </a>

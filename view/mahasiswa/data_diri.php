@@ -1,66 +1,19 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../controllers/MahasiswaController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-$controller = new MahasiswaController();
-$data = $controller->dataDiri();
-$user  = $data['user'];
-$event = $data['event'];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_data_diri'])) {
-    $_SESSION['alasan'] = $_POST['alasan'];
-    $_SESSION['pengalaman'] = $_POST['pengalaman'];
-    header("Location: pembayaran.php?id=" . $event['id']);
-    exit;
-}
-
-// Generate dynamic labels based on event name & category
-$namaEvent    = htmlspecialchars($event['judul_event'] ?? 'Event');
-$namaKategori = strtolower($event['nama_kategori'] ?? '');
-
-// Label pertanyaan alasan
-$labelAlasan = "Alasan mengikuti " . $namaEvent;
-
-// Label pertanyaan pengalaman — disesuaikan per kategori
-if (strpos($namaKategori, 'desain') !== false || strpos($namaKategori, 'design') !== false) {
-    $labelPengalaman = "Pengalaman desain sebelumnya";
-} elseif (strpos($namaKategori, 'musik') !== false || strpos($namaKategori, 'music') !== false) {
-    $labelPengalaman = "Pengalaman bermusik sebelumnya";
-} elseif (strpos($namaKategori, 'olahraga') !== false || strpos($namaKategori, 'sport') !== false) {
-    $labelPengalaman = "Pengalaman olahraga sebelumnya";
-} elseif (strpos($namaKategori, 'teknologi') !== false || strpos($namaKategori, 'tech') !== false || strpos($namaKategori, 'it') !== false) {
-    $labelPengalaman = "Pengalaman di bidang teknologi sebelumnya";
-} elseif (strpos($namaKategori, 'seni') !== false || strpos($namaKategori, 'art') !== false) {
-    $labelPengalaman = "Pengalaman seni sebelumnya";
-} elseif (strpos($namaKategori, 'bisnis') !== false || strpos($namaKategori, 'business') !== false) {
-    $labelPengalaman = "Pengalaman bisnis sebelumnya";
-} elseif (strpos($namaKategori, 'pendidikan') !== false || strpos($namaKategori, 'seminar') !== false) {
-    $labelPengalaman = "Pengalaman mengikuti seminar sebelumnya";
-} elseif (strpos($namaKategori, 'kesehatan') !== false || strpos($namaKategori, 'health') !== false) {
-    $labelPengalaman = "Pengalaman di bidang kesehatan sebelumnya";
-} elseif (strpos($namaKategori, 'volunteer') !== false || strpos($namaKategori, 'relawan') !== false) {
-    $labelPengalaman = "Pengalaman menjadi relawan sebelumnya";
-} elseif (strpos($namaKategori, 'workshop') !== false) {
-    $labelPengalaman = "Pengalaman workshop sebelumnya";
-} else {
-    $labelPengalaman = "Pengalaman terkait " . $namaEvent . " sebelumnya";
-}
-
+/**
+ * @var array $event
+ * @var array $user
+ * @var string $labelAlasan
+ * @var string $labelPengalaman
+ */
+// Logic has been moved to MahasiswaController
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Diri - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -69,12 +22,12 @@ if (strpos($namaKategori, 'desain') !== false || strpos($namaKategori, 'design')
     <aside class="sidebar">
         <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
         <div class="menu-category">Menu</div>
-        <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
-        <a href="kegiatan_mhs.php" class="menu-item active"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
-        <a href="e-tiket.php" class="menu-item"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
+        <a href="index.php?module=mahasiswa&action=dashboard" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
+        <a href="index.php?module=mahasiswa&action=kegiatan" class="menu-item active"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
+        <a href="index.php?module=mahasiswa&action=etiket" class="menu-item"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
         <div class="menu-category">Akun</div>
-        <a href="profil.php" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
-        <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+        <a href="index.php?module=mahasiswa&action=profil" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
+        <a href="view/auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
     </aside>
 
     <main class="content">
@@ -97,7 +50,7 @@ if (strpos($namaKategori, 'desain') !== false || strpos($namaKategori, 'design')
             </div>
         </div>
 
-        <form method="POST" action="pembayaran.php?id=<?= $event['id'] ?>">
+        <form method="POST" action="index.php?module=mahasiswa&action=dataDiri&id=<?= $event['id'] ?>">
             <div class="form-grid">
                 <div class="card">
                     <h3>Data Peserta</h3>

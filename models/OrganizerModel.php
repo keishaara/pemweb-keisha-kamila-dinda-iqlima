@@ -17,6 +17,11 @@ class OrganizerModel {
         return mysqli_fetch_assoc($result);
     }
 
+    public function getAllCategories() {
+        $query = mysqli_query($this->conn, "SELECT * FROM categories ORDER BY id ASC");
+        return mysqli_fetch_all($query, MYSQLI_ASSOC);
+    }
+
     public function getStatistik($id)
     {
         $query = mysqli_query($this->conn, "

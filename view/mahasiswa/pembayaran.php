@@ -1,78 +1,17 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../controllers/MahasiswaController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-$controller = new MahasiswaController();
-$data = $controller->dataDiri();
-$user  = $data['user'];
-$event = $data['event'];
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran'])) {
-
-    $metode = $_POST['metode_pembayaran'] ?? '';
-    $buktiTransfer = '';
-
-    if (
-        isset($_FILES['bukti_transfer']) &&
-        $_FILES['bukti_transfer']['error'] === 0
-    ) {
-
-        $namaFile =
-            time() . '_' .
-            $_FILES['bukti_transfer']['name'];
-
-        $tmpFile =
-            $_FILES['bukti_transfer']['tmp_name'];
-
-        $folderUpload =
-            '../../assets/uploads/';
-
-        if (!is_dir($folderUpload)) {
-            mkdir($folderUpload, 0777, true);
-        }
-
-        move_uploaded_file(
-            $tmpFile,
-            $folderUpload . $namaFile
-        );
-
-        $buktiTransfer = $namaFile;
-    }
-
-    $kodeBooking =
-        'EVT-' .
-        strtoupper(substr(md5(time()), 0, 8));
-
-    $success = $controller->createBooking(
-        $event['id'],
-        $user['id'],
-        $kodeBooking,
-        $metode,
-        $buktiTransfer
-    );
-
-    if ($success) {
-
-        header("Location: e-tiket.php");
-        exit;
-    }
-}
-
+/**
+ * @var array $event
+ * @var array $user
+ */
+// Logic has been moved to MahasiswaController
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pembayaran - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -82,12 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
         <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
         
         <div class="menu-category">Menu</div>
-        <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
-        <a href="kegiatan_mhs.php" class="menu-item active"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
-        <a href="e-tiket.php" class="menu-item"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
+        <a href="index.php?module=mahasiswa&action=dashboard" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
+        <a href="index.php?module=mahasiswa&action=kegiatan" class="menu-item active"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
+        <a href="index.php?module=mahasiswa&action=etiket" class="menu-item"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
         <div class="menu-category">Akun</div>
-        <a href="profil.php" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
-        <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+        <a href="index.php?module=mahasiswa&action=profil" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
+        <a href="view/auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
     </aside>
     
     <main class="content">
@@ -110,7 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
             </div>
         </div>
 
-        <form method="POST" enctype="multipart/form-data">
+        <?php if (!empty($error)): ?>
+            <div class="profile-message profile-error" style="background-color: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" action="index.php?module=mahasiswa&action=pembayaran&id=<?= $event['id'] ?>" enctype="multipart/form-data">
             <div class="etiket-preview">
                 <div class="etiket-preview-info">
                     <p class="etiket-label">Preview E-Tiket</p>
@@ -184,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
                     <div class="qris-box" id="qris-box">
                         <p class="qris-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Klik gambar untuk perbesar & unduh</p>
                         <img
-                            src="../../assets/img/qriss.jpg"
+                            src="assets/img/qriss.jpg"
                             alt="QRIS"
                             class="qris-img-clickable"
                             onclick="bukaLightboxQris()"
@@ -198,9 +143,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_pembayaran']))
                             <button class="qris-lightbox-close" onclick="tutupLightboxQris()" title="Tutup">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
-                            <img src="../../assets/img/qriss.jpg" alt="QRIS Besar" class="qris-lightbox-img">
+                            <img src="assets/img/qriss.jpg" alt="QRIS Besar" class="qris-lightbox-img">
                             <a
-                                href="../../assets/img/qriss.jpg"
+                                href="assets/img/qriss.jpg"
                                 download="QRIS-Evently.jpg"
                                 class="qris-download-btn"
                                 onclick="event.stopPropagation()">

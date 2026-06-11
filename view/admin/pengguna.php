@@ -1,4 +1,13 @@
-<?php if (!isset($allUsers)) { header('Location: index.php?page=pengguna'); exit; } ?>
+<?php 
+/** 
+ * @var array $allUsers 
+ * @var string $keyword 
+ * @var string $role 
+ * @var string $status 
+ * @var bool $hasStatusColumn 
+ * @var int $totalUsersCount 
+ */
+if (!isset($allUsers)) { header('Location: index.php?module=admin&action=pengguna'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -6,7 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Manajemen Pengguna - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -25,26 +34,26 @@
                 Manajemen
             </div>
 
-            <a href="index.php?page=dashboard" class="menu-item">
+            <a href="index.php?module=admin&action=dashboard" class="menu-item">
                 <i class="fa-solid fa-chart-line"></i>
                 Dashboard
             </a>
 
-            <a href="index.php?page=verifikasi" class="menu-item">
+            <a href="index.php?module=admin&action=verifikasi" class="menu-item">
                 <i class="fa-solid fa-ticket"></i>
                 Verifikasi Acara
             </a>
-            <a href="index.php?page=semua_acara" class="menu-item">
+            <a href="index.php?module=admin&action=semua_acara" class="menu-item">
                 <i class="fa-solid fa-calendar-days"></i>
                 Semua Acara
             </a>
 
-            <a href="index.php?page=pengguna" class="menu-item active">
+            <a href="index.php?module=admin&action=pengguna" class="menu-item active">
                 <i class="fa-solid fa-users"></i>
                 Pengguna
             </a>
 
-            <a href="index.php?page=kategori" class="menu-item">
+            <a href="index.php?module=admin&action=kategori" class="menu-item">
                 <i class="fa-solid fa-layer-group"></i>
                 Kategori
             </a>
@@ -53,7 +62,7 @@
                 Sistem
             </div>
 
-            <a href="index.php?page=logout" class="menu-item">
+            <a href="index.php?module=auth&action=logout" class="menu-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Keluar
             </a>
@@ -71,8 +80,9 @@
                 </p>
             </div>
 
-            <form method="GET" action="index.php" class="user-controls">
-                <input type="hidden" name="page" value="pengguna">
+            <form method="GET" action="index.php">
+                <input type="hidden" name="module" value="admin">
+                <input type="hidden" name="action" value="pengguna">
 
                 <div class="search-wrapper">
                     <button type="submit" class="btn btn-primary">
@@ -145,7 +155,7 @@
                                 <?php endif; ?>
                                 <td align="center">
                                     <?php if ($hasStatusColumn): ?>
-                                        <a href="index.php?page=pengguna&action=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>"
+                                        <a href="index.php?module=admin&action=pengguna&act=toggle_status&id=<?= $user['id']; ?>&current=<?= $isAktif ? 'Aktif' : 'Nonaktif'; ?>"
                                            class="btn-table-action btn-nonaktif <?= !$isAktif ? 'btn-aktifkan' : ''; ?>" 
                                            onclick="return confirm('Apakah Anda yakin ingin <?= $isAktif ? 'menonaktifkan' : 'mengaktifkan kembali'; ?> pengguna ini?')">
                                             <?= $isAktif ? 'Nonaktifkan' : 'Aktifkan'; ?>

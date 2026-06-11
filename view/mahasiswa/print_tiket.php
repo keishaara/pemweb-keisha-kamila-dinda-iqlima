@@ -1,30 +1,15 @@
 <?php
-session_start();
-
-require_once __DIR__ . '/../../controllers/MahasiswaController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-$kode = $_GET['kode'] ?? '';
-
-$controller = new MahasiswaController();
-$tiket = $controller->getTicketByKode($kode);
-
-if (!$tiket) {
-    die('Tiket tidak ditemukan.');
-}
+/**
+ * @var array $tiket
+ */
+// Logic has been moved to MahasiswaController
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <title>E-Ticket <?= htmlspecialchars($tiket['kode_booking'] ?? '') ?></title>
-<link rel="stylesheet" href="../../assets/css/style.css?v=2">
+<link rel="stylesheet" href="assets/css/style.css?v=2">
 </head>
 
 <body class="ticket-print-body">

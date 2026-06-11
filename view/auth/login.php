@@ -1,60 +1,8 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../config/koneksi.php';
-
-if (isset($_SESSION['user_id'])) {
-    if ($_SESSION['role'] === 'admin') {
-        $target = '../admin/dashboard.php';
-    } elseif ($_SESSION['role'] === 'organisasi') {
-        $target = '../organizer/org_dashboard.php';
-    } else {
-        $target = '../mahasiswa/user_dashboard.php';
-    }
-    header("Location: $target");
-    exit;
-}
-
-$error = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $identifier = trim($_POST['identifier']);
-    $password   = $_POST['password'];
-    $role       = $_POST['role'];
-
-    if (!empty($identifier) && !empty($password) && !empty($role)) {
-        $stmt = mysqli_prepare($conn, "SELECT id, nama_lengkap, email, npm, password, tipe_akun, status FROM users WHERE (email = ? OR npm = ?) AND tipe_akun = ?");
-        mysqli_stmt_bind_param($stmt, "sss", $identifier, $identifier, $role);
-        mysqli_stmt_execute($stmt);
-        $res  = mysqli_stmt_get_result($stmt);
-        
-        if ($user = mysqli_fetch_assoc($res)) {
-            if (($user['status'] ?? 'Aktif') === 'Nonaktif') {
-                $error = "Akun Anda telah dinonaktifkan oleh admin.";
-            } elseif (password_verify($password, $user['password'])) {
-                $_SESSION['user_id']      = $user['id'];
-                $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
-                $_SESSION['email']        = $user['email'];
-                $_SESSION['role']         = $user['tipe_akun'];
-                $_SESSION['last_activity'] = time();
-
-                if ($user['tipe_akun'] === 'admin') {
-                    $target = '../admin/dashboard.php';
-                } elseif ($user['tipe_akun'] === 'organisasi') {
-                    $target = '../organizer/org_dashboard.php';
-                } else {
-                    $target = '../mahasiswa/user_dashboard.php';
-                }
-                header("Location: $target");
-                exit;
-            } else {
-                $error = "Akun tidak ditemukan atau role tidak sesuai.";
-            }
-        } else {
-            $error = "Akun tidak ditemukan atau role tidak sesuai.";
-        }
-    } else {
-        $error = "Semua field wajib diisi.";
-    }
-}
+/**
+ * @var string $error
+ */
+// Logic has been moved to AuthController
 ?>
 
 <!DOCTYPE html>
@@ -62,21 +10,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Login - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="login-page">
 
     <div class="login-wrapper">
         <div class="login-card">
-            <a href="../public/index.php" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
+            <a href="index.php?module=public&action=index" class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</a>
             <h2>Selamat Datang Kembali</h2>
             <p class="text-muted mb-3">Masuk ke akun kamu untuk menemukan kegiatan kampus terbaru.</p>
 
             <?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error); ?></div><?php endif; ?>
             <div id="clientError" class="auth-error"></div>
 
-            <form id="loginForm" method="POST" action="">
+            <form id="loginForm" method="POST" action="index.php?module=auth&action=login">
                 <div class="form-group">
                     <label class="form-label">Email atau NPM</label>
                     <input type="text" name="identifier" class="form-control" placeholder="npm@unila.ac.id / NPM" required>
@@ -98,11 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <div class="auth-remember">
-                    <a href="forgot_password.php" class="auth-forgot">Lupa kata sandi?</a>
+                    <a href="index.php?module=auth&action=forgotPassword" class="auth-forgot">Lupa kata sandi?</a>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block login-submit-btn">Masuk</button>
-                <p class="auth-footer">Belum punya akun? <a href="register.php">Daftar gratis</a></p>
+                <p class="auth-footer">Belum punya akun? <a href="index.php?module=auth&action=register">Daftar gratis</a></p>
             </form>
         </div>
     </div>

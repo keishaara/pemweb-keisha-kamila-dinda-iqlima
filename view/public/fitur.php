@@ -1,10 +1,4 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../controllers/MahasiswaController.php';
-
-$controller = new MahasiswaController();
-$events = $controller->indexFeatures();
-
 function getKategoriStyle($kategori) {
     $kat = strtolower($kategori);
     if (strpos($kat, 'seminar') !== false) return ['bg' => 'card-bg-blue', 'tag' => 'tag-blue', 'emoji' => '🎤'];
@@ -20,12 +14,12 @@ function getKategoriStyle($kategori) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitur & Layanan - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="features-wrapper">
-        <a href="index.php" class="btn-back-floating">Kembali</a>
+        <a href="index.php?module=public&action=index" class="btn-back-floating">Kembali</a>
         <main class="main-content">
             <div class="content-header">
                 <span class="sub-title">FITUR UNGGULAN</span>
@@ -101,7 +95,7 @@ function getKategoriStyle($kategori) {
                             <div class="event-card">
                                 <div class="event-banner <?= $style['bg']; ?>">
                                     <?php if (!empty($event['poster']) && $event['poster'] !== 'default.png' && file_exists(__DIR__ . '/../../assets/poster/' . $event['poster'])): ?>
-                                        <img src="../../assets/poster/<?= htmlspecialchars($event['poster']); ?>" alt="Poster" class="w-full h-full object-cover">
+                                        <img src="assets/poster/<?= htmlspecialchars($event['poster']); ?>" alt="Poster" class="w-full h-full object-cover">
                                     <?php else: ?>
                                         <span class="emoji-icon"><?= $style['emoji']; ?></span>
                                     <?php endif; ?>
@@ -123,7 +117,7 @@ function getKategoriStyle($kategori) {
                 </div>
 
                 <div class="action-center">
-                    <a href="kegiatan.php" class="btn-view-all">Lihat Semua Kegiatan →</a>
+                    <a href="index.php?module=public&action=kegiatan" class="btn-view-all">Lihat Semua Kegiatan →</a>
                 </div>
             </div>
         </section>
@@ -145,7 +139,7 @@ function getKategoriStyle($kategori) {
                             <li><span class="check-icon">✓</span> Simpan E-Tiket di profil</li>
                             <li><span class="check-icon">✓</span> Akses info terpusat</li>
                         </ul>
-                        <a href="../auth/register.php" class="btn-role btn-blue-dark">Daftar Mahasiswa</a>
+                        <a href="index.php?module=auth&action=register" class="btn-role btn-blue-dark">Daftar Mahasiswa</a>
                     </div>
 
                     <div class="role-card role-organisasi">
@@ -157,7 +151,7 @@ function getKategoriStyle($kategori) {
                             <li><span class="check-icon">✓</span> Download data Excel/CSV</li>
                             <li><span class="check-icon">✓</span> Jangkauan promosi lebih luas</li>
                         </ul>
-                        <a href="../auth/register.php" class="btn-role btn-blue-dark">Daftar Organisasi</a>
+                        <a href="index.php?module=auth&action=register" class="btn-role btn-blue-dark">Daftar Organisasi</a>
                     </div>
 
                     <div class="role-card role-admin">

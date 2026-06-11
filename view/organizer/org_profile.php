@@ -1,32 +1,3 @@
-<?php
-
-session_start();
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-require_once __DIR__ . '/../../controllers/OrganizerController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-$controller = new OrganizerController();
-$organizer = $controller->profile();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($controller->prosesEditProfil($_POST, $_FILES['foto_profil'] ?? null, $organizer['foto_profil'] ?? null)) {
-        echo "<script>
-                alert('Profil berhasil diperbarui!'); 
-                window.location.href='org_profile.php';
-              </script>";
-        exit;
-    } else {
-        echo "<script>alert('Gagal memperbarui profil.');</script>";
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -34,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Organisasi - Evently</title>
 
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -48,34 +19,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="org-menu-category">Menu Organisasi</div>
 
-        <a href="org_dashboard.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=dashboard" class="org-menu-item">
             <i class="fa-solid fa-house"></i>
             <span>Dashboard</span>
         </a>
 
-        <a href="org_kelola_acara.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=kelola_acara" class="org-menu-item">
             <i class="fa-solid fa-ticket"></i>
             <span>Kelola Acara</span>
         </a>
 
-        <a href="org_data_peserta.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=data_peserta" class="org-menu-item">
             <i class="fa-solid fa-users"></i>
             <span>Data Peserta</span>
         </a>
 
-        <a href="org_buat_acara.php" class="org-menu-item">
+        <a href="index.php?module=organizer&action=buat_acara" class="org-menu-item">
             <i class="fa-solid fa-layer-group"></i>
             <span>Buat Acara</span>
         </a>
 
         <div class="org-menu-category">Akun</div>
 
-        <a href="org_profile.php" class="org-menu-item active">
+        <a href="index.php?module=organizer&action=profile" class="org-menu-item active">
             <i class="fa-solid fa-user-tie"></i>
             <span>Profil Organisasi</span>
         </a>
 
-        <a href="../auth/logout.php" class="org-menu-item">
+        <a href="index.php?module=auth&action=logout" class="org-menu-item">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Keluar</span>
         </a>
@@ -91,11 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Atur identitas organisasi kamu di sini.</p>
             </div>
 
+            <?php if (isset($_GET['status']) && $_GET['status'] === 'updated'): ?>
+                <div class="org-alert org-alert-success">
+                    <strong>Sukses!</strong> Profil berhasil diperbarui.
+                </div>
+            <?php endif; ?>
+
             <section class="org-card org-profile-card">
                 <div class="org-profile-top">
                     <div class="org-profile-avatar org-avatar-container">
                         <?php if (!empty($organizer['foto_profil'])): ?>
-                            <img id="previewImg" src="../../assets/profiles/<?= htmlspecialchars($organizer['foto_profil']); ?>" alt="Logo Organisasi" class="org-avatar-img-contain">
+                            <img id="previewImg" src="assets/profiles/<?= htmlspecialchars($organizer['foto_profil']); ?>" alt="Logo Organisasi" class="org-avatar-img-contain">
                             <i id="defaultIcon" class="fa-solid fa-building-columns d-none"></i>
                         <?php else: ?>
                             <img id="previewImg" src="" alt="Logo Organisasi" class="org-avatar-img-contain d-none">
@@ -110,7 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
-                <form method="POST" enctype="multipart/form-data">
+                <form action="index.php?module=organizer&action=profile" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="old_foto" value="<?= htmlspecialchars($organizer['foto_profil'] ?? '') ?>">
                     
                     <div class="org-form-group org-full mb-20">
                         <label>Logo / Foto Profil Organisasi</label>

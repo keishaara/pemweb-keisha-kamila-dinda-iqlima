@@ -1,63 +1,19 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'organisasi') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-require_once __DIR__ . '/../../controllers/OrganizerController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-$controller = new OrganizerController();
-$event_id = isset($_GET['id']) ? intval($_GET['id']) : null;
-$is_edit = ($event_id !== null);
-
-$controller = new OrganizerController();
-$event_id = isset($_GET['id']) ? intval($_GET['id']) : null;
-$is_edit = ($event_id !== null);
-
-if ($is_edit) {
-    $event = $controller->detailAcara($event_id);
-
-    if (!$event) {
-        header("Location: org_kelola_acara.php");
-        exit();
-    }
-
-    $statusAcara = strtolower($event['status'] ?? 'pending');
-    if ($statusAcara === 'approved' || $statusAcara === 'disetujui') {
-        header("Location: org_kelola_acara.php?status=action_blocked");
-        exit();
-    }
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo '<pre>';
-    print_r($_POST);
-    echo '</pre>';   
-    if ($is_edit) {
-        $controller->prosesEditAcara($event_id);
-    } else {
-        if ($controller->prosesTambahAcara($_POST, $_FILES)) {
-            header("Location: org_kelola_acara.php?status=success"); 
-            exit();
-        } else {
-            if (!isset($_SESSION['form_errors'])) {
-                $_SESSION['form_errors'] = ["Gagal menambahkan acara. Silakan periksa kembali data Anda."];
-            }
-        }
-    }
-}
-?>
+<?php if (!isset($is_edit)) { header('Location: index.php?module=organizer&action=buat_acara'); exit; } ?>
 
 <!DOCTYPE html>
 <html lang="id">
+<?php
+/**
+ * @var bool $is_edit
+ * @var array $categories
+ * @var array $event
+ */
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $is_edit ? 'Edit Acara' : 'Buat Acara' ?> - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -69,30 +25,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="org-menu-category">Menu Organisasi</div>
 
-            <a href="org_dashboard.php" class="org-menu-item">
+            <a href="index.php?module=organizer&action=dashboard" class="org-menu-item">
                 <i class="fa-solid fa-house"></i>
                 <span>Dashboard</span>
             </a>
-            <a href="org_kelola_acara.php" class="org-menu-item <?= $is_edit ? 'active' : '' ?>">
+            <a href="index.php?module=organizer&action=kelola_acara" class="org-menu-item <?= $is_edit ? 'active' : '' ?>">
                 <i class="fa-solid fa-ticket"></i>
                 <span>Kelola Acara</span>
             </a>
-            <a href="org_data_peserta.php" class="org-menu-item">
+            <a href="index.php?module=organizer&action=data_peserta" class="org-menu-item">
                 <i class="fa-solid fa-users"></i>
                 <span>Data Peserta</span>
             </a>
-            <a href="org_buat_acara.php" class="org-menu-item <?= !$is_edit ? 'active' : '' ?>">
+            <a href="index.php?module=organizer&action=buat_acara" class="org-menu-item <?= !$is_edit ? 'active' : '' ?>">
                 <i class="fa-solid fa-layer-group"></i>
                 <span>Buat Acara</span>
             </a>
 
             <div class="org-menu-category">Akun</div>
 
-            <a href="org_profile.php" class="org-menu-item">
+            <a href="index.php?module=organizer&action=profile" class="org-menu-item">
                 <i class="fa-solid fa-user-tie"></i>
                 <span>Profil Organisasi</span>
             </a>
-            <a href="../auth/logout.php" class="org-menu-item">
+            <a href="index.php?module=auth&action=logout" class="org-menu-item">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Keluar</span>
             </a>
@@ -130,10 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                               <?php
                                 $selectedKategori = $_POST['kategori_id']
                                     ?? ($is_edit ? ($event['kategori_id'] ?? '') : '');
-                                
-                                global $conn;
-                                $cat_query = mysqli_query($conn, "SELECT * FROM categories ORDER BY id ASC");
-                                $categories = mysqli_fetch_all($cat_query, MYSQLI_ASSOC);
                                 ?>
 
                                 <select name="kategori_id" class="org-select" required>

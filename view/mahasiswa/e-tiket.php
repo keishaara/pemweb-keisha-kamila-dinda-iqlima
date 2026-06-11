@@ -1,32 +1,9 @@
-<?php
-session_start();
-require_once __DIR__ . '/../../controllers/MahasiswaController.php';
-require_once __DIR__ . '/../../config/session.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'mahasiswa') {
-    header("Location: ../auth/index.php");
-    exit;
-}
-
-$controller = new MahasiswaController();
-$user_id = $_SESSION['user_id'];
-$status = $_GET['status'] ?? '';
-
-$tiketList = $controller->getTicketsByUser($user_id, $status);
-if ($status === 'selesai') {
-    $judul = 'Event Selesai';
-} elseif ($status === 'mendatang') {
-    $judul = 'Event Mendatang';
-} else {
-    $judul = 'Event Terdaftar';
-}
-?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>E-Tiket Saya - Evently</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -34,17 +11,17 @@ if ($status === 'selesai') {
         <aside class="sidebar-mhs">
             <div class="logo"><i class="fa-solid fa-calendar-check"></i> Evently</div>
             <div class="menu-category">Menu</div>
-            <a href="user_dashboard.php" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
-            <a href="kegiatan_mhs.php" class="menu-item"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
-            <a href="e-tiket.php" class="menu-item active"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
+            <a href="index.php?module=mahasiswa&action=dashboard" class="menu-item"><i class="fa-solid fa-house"></i> Beranda</a>
+            <a href="index.php?module=mahasiswa&action=kegiatan" class="menu-item"><i class="fa-solid fa-layer-group"></i> Kegiatan</a>
+            <a href="index.php?module=mahasiswa&action=etiket" class="menu-item active"><i class="fa-solid fa-ticket"></i> E-Tiket</a>
             <div class="menu-category">Akun</div>
-            <a href="profil.php" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
-            <a href="../auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
+            <a href="index.php?module=mahasiswa&action=profil" class="menu-item"><i class="fa-solid fa-user"></i> Profil Saya</a>
+            <a href="view/auth/logout.php" class="menu-item"><i class="fa-solid fa-right-from-bracket"></i> Keluar</a>
         </aside>
 
         <main class="main-content-mhs">
             <div class="page-header">
-                <h2><?= $judul ?></h2>
+                <h2><?= htmlspecialchars($judul ?? 'E-Tiket Saya') ?></h2>
                 <p>Tunjukkan tiket ini saat melakukan registrasi di lokasi acara.</p>
             </div>
 
@@ -58,9 +35,9 @@ if ($status === 'selesai') {
 
                             <div class="verif-icon-box ticket-qr overflow-hidden">
                                 <?php if (!empty($tiket['poster']) && file_exists(__DIR__ . '/../../assets/poster/' . $tiket['poster'])): ?>
-                                    <img src="../../assets/poster/<?= htmlspecialchars($tiket['poster']); ?>" alt="Poster" class="w-full h-full object-cover">
+                                    <img src="assets/poster/<?= htmlspecialchars($tiket['poster']); ?>" alt="Poster" class="w-full h-full object-cover">
                                 <?php else: ?>
-                                    <img src="../../assets/poster/default.png" alt="Default Poster" class="w-full h-full object-cover">
+                                    <img src="assets/poster/default.png" alt="Default Poster" class="w-full h-full object-cover">
                                 <?php endif; ?>
                             </div>
 
@@ -114,13 +91,13 @@ if ($status === 'selesai') {
                             </div>
 
                            <div class="verif-actions">
-                                <a href="print_tiket.php?kode=<?= urlencode($tiket['kode_booking']) ?>"
+                                <a href="index.php?module=mahasiswa&action=printTiket&kode=<?= urlencode($tiket['kode_booking']) ?>"
                                 target="_blank"
                                 class="btn btn-primary btn-small">
                                     Unduh PDF
                                 </a>
 
-                                <a href="detail.php?id=<?= $tiket['event_id'] ?>&from=ticket&kode=<?= urlencode($tiket['kode_booking']) ?>"
+                                <a href="index.php?module=mahasiswa&action=detail&id=<?= $tiket['event_id'] ?>&from=ticket&kode=<?= urlencode($tiket['kode_booking']) ?>"
                                 class="btn btn-outline btn-small">
                                     Lihat Detail
                                 </a>
