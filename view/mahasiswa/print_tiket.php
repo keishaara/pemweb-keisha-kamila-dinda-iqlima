@@ -67,13 +67,7 @@
             </div>
 
         </div>
-         <script>
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    window.print();
-                }, 300);
-            });
-        </script>
+         <script src="assets/js/mahasiswa_print_tiket.js"></script>
 
     </body>
 </html>

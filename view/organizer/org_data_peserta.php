@@ -66,7 +66,7 @@ if (!isset($pesertaList)) { header('Location: index.php?module=organizer&action=
                         <input type="hidden" name="module" value="organizer">
                         <input type="hidden" name="action" value="data_peserta">
                         <div class="org-search-box">
-                            <input type="text" name="search" placeholder="Cari peserta..." value="<?= htmlspecialchars($keyword); ?>">
+                            <input type="text" name="search" placeholder="Cari..." value="<?= htmlspecialchars($keyword); ?>">
                         </div>
 
                         <select name="event_id" class="org-select" onchange="this.form.submit()">

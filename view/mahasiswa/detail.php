@@ -241,23 +241,6 @@ $event = $event ?? [];
         </div>
     </main>
 </div>
-    <script>
-        function copyLink() {
-
-            const tempInput = document.createElement("input");
-
-            tempInput.value = window.location.href;
-
-            document.body.appendChild(tempInput);
-
-            tempInput.select();
-
-            document.execCommand("copy");
-
-            document.body.removeChild(tempInput);
-
-            alert("Link event berhasil disalin!");
-        }
-    </script>
+    <script src="assets/js/mahasiswa_detail.js"></script>
 </body>
 </html>

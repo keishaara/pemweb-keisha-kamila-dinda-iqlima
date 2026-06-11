@@ -80,7 +80,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Semester</label>
-                            <input type="number" name="semester" class="form-control" value="<?= htmlspecialchars($user['semester'] ?? ''); ?>">
+                            <input type="number" name="semester" class="form-control" value="<?= htmlspecialchars($user['semester'] ?? ''); ?>" min="1" max="14">
                         </div>
                     </div>
                     <div class="form-actions">
@@ -114,24 +114,6 @@
         </main>
     </div>
 
-    <script>
-    document.getElementById('inputFoto').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const previewImg = document.getElementById('previewImg');
-                const defaultAvatar = document.getElementById('defaultAvatar');
-                
-                previewImg.src = e.target.result;
-                previewImg.style.display = 'block'; 
-                if (defaultAvatar) {
-                    defaultAvatar.style.display = 'none'; 
-                }
-            }
-            reader.readAsDataURL(file);
-        }
-    });
-    </script>
+    <script src="assets/js/mahasiswa_profil.js"></script>
 </body>
 </html>
