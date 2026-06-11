@@ -382,8 +382,10 @@ class MahasiswaController {
                 $isSaved = $this->cekEventDisimpan($userId, $eventId);
                 if ($isSaved) {
                     $this->removeSavedEvent($userId, $eventId);
+                    $_SESSION['success'] = "Event berhasil dihapus dari daftar simpanan!";
                 } else {
                     $this->simpanEvent($userId, $eventId);
+                    $_SESSION['success'] = "Event berhasil disimpan!";
                 }
             }
         }

@@ -35,9 +35,9 @@
 
             <div class="filter-tags public-filter-tags">
                 <a href="index.php?module=public&action=kegiatan" class="btn-filter <?= (!$cat_id && !$is_free) ? 'active' : ''; ?>">Semua</a>
-                <a href="index.php?module=public&action=kegiatan&cat_id=2" class="btn-filter <?= $cat_id == '2' ? 'active' : ''; ?>">Workshop</a>
-                <a href="index.php?module=public&action=kegiatan&cat_id=4" class="btn-filter <?= $cat_id == '4' ? 'active' : ''; ?>">Musik</a>
-                <a href="index.php?module=public&action=kegiatan&cat_id=5" class="btn-filter <?= $cat_id == '5' ? 'active' : ''; ?>">Volunteer</a>
+                <a href="index.php?module=public&action=kegiatan&cat_id=1" class="btn-filter <?= $cat_id == '1' ? 'active' : ''; ?>">Workshop</a>
+                <a href="index.php?module=public&action=kegiatan&cat_id=8" class="btn-filter <?= $cat_id == '8' ? 'active' : ''; ?>">Musik</a>
+                <a href="index.php?module=public&action=kegiatan&cat_id=3" class="btn-filter <?= $cat_id == '3' ? 'active' : ''; ?>">Volunteer</a>
                 <a href="index.php?module=public&action=kegiatan&free=1" class="btn-filter <?= $is_free ? 'active' : ''; ?>">Gratis</a>
             </div>
 

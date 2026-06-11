@@ -60,11 +60,11 @@
             <div class="filter-tags">
                 <a href="index.php?module=mahasiswa&action=kegiatan" class="btn-filter <?= (!$cat_id && !$is_free) ? 'active' : ''; ?>">Semua</a>
                 
-                <a href="index.php?module=mahasiswa&action=kegiatan&cat_id=2<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '2' ? 'active' : ''; ?>">Workshop</a>
+                <a href="index.php?module=mahasiswa&action=kegiatan&cat_id=1<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '1' ? 'active' : ''; ?>">Workshop</a>
                 
-                <a href="index.php?module=mahasiswa&action=kegiatan&cat_id=4<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '4' ? 'active' : ''; ?>">Musik</a>
+                <a href="index.php?module=mahasiswa&action=kegiatan&cat_id=8<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '8' ? 'active' : ''; ?>">Musik</a>
                 
-                <a href="index.php?module=mahasiswa&action=kegiatan&cat_id=5<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '5' ? 'active' : ''; ?>">Volunteer</a>
+                <a href="index.php?module=mahasiswa&action=kegiatan&cat_id=3<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $cat_id == '3' ? 'active' : ''; ?>">Volunteer</a>
                 
                 <a href="index.php?module=mahasiswa&action=kegiatan&free=1<?= $search ? '&q='.urlencode($search) : ''; ?>" class="btn-filter <?= $is_free ? 'active' : ''; ?>">Gratis</a>
             </div>

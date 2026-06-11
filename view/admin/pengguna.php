@@ -80,24 +80,25 @@ if (!isset($allUsers)) { header('Location: index.php?module=admin&action=penggun
                 </p>
             </div>
 
-            <form method="GET" action="index.php">
+            <form method="GET" action="index.php" style="display: flex; gap: 15px; align-items: center; margin-bottom: 25px;">
                 <input type="hidden" name="module" value="admin">
                 <input type="hidden" name="action" value="pengguna">
 
-                <div class="search-wrapper">
-                    <button type="submit" class="btn btn-primary">
-                        Cari
-                    </button>
+                <div class="search-wrapper" style="flex: 2; display: flex; gap: 10px; margin: 0;">
                     <input 
                         type="text"
                         name="search"
                         class="search-input"
                         placeholder="Cari pengguna..."
                         value="<?= htmlspecialchars($keyword); ?>"
+                        style="flex: 1; box-sizing: border-box; padding: 12px 15px; height: 100%;"
                     >
+                    <button type="submit" class="btn btn-primary" style="padding: 0 25px; border-radius: 8px; margin: 0; display: flex; align-items: center; justify-content: center; width: auto; flex-shrink: 0;">
+                        Cari
+                    </button>
                 </div>
 
-                <select name="role" class="filter-select" onchange="this.form.submit()">
+                <select name="role" class="filter-select" onchange="this.form.submit()" style="flex: 1; margin: 0; height: 100%;">
                     <option value="">Semua Role</option>
                     <option value="admin" <?= $role === 'admin' ? 'selected' : ''; ?>>Admin</option>
                     <option value="organisasi" <?= $role === 'organisasi' ? 'selected' : ''; ?>>Organisasi</option>
@@ -105,13 +106,12 @@ if (!isset($allUsers)) { header('Location: index.php?module=admin&action=penggun
                 </select>
 
                 <?php if ($hasStatusColumn): ?>
-                    <select name="status" class="filter-select" onchange="this.form.submit()">
+                    <select name="status" class="filter-select" onchange="this.form.submit()" style="flex: 1; margin: 0; height: 100%;">
                         <option value="">Semua Status</option>
                         <option value="Aktif" <?= $status === 'Aktif' ? 'selected' : ''; ?>>Aktif</option>
                         <option value="Nonaktif" <?= $status === 'Nonaktif' ? 'selected' : ''; ?>>Nonaktif</option>
                     </select>
                 <?php endif; ?>
-
             </form>
 
             <div class="user-table-card">

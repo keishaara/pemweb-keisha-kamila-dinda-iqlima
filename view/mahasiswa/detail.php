@@ -177,21 +177,21 @@ $event = $event ?? [];
                                 <div class="bar"></div>
                             </div>
 
+                            <?php 
+                                $isExpired = strtotime($event['tanggal']) < strtotime(date('Y-m-d'));
+                            ?>
                             <?php if($isRegistered): ?>
-
-                                <button
-                                    class="btn-primary btn-disabled"
-                                    disabled>
+                                <button class="btn-primary btn-disabled" disabled>
                                     Sudah Terdaftar
                                 </button>
-
+                            <?php elseif($isExpired): ?>
+                                <button class="btn-primary btn-disabled" disabled style="background: #e2e8f0; color: #64748b; cursor: not-allowed; opacity: 0.8;">
+                                    Event Telah Berakhir
+                                </button>
                             <?php else: ?>
-
-                                <a href="index.php?module=mahasiswa&action=dataDiri&id=<?= $event['id'] ?>"
-                                class="btn-primary">
+                                <a href="index.php?module=mahasiswa&action=dataDiri&id=<?= $event['id'] ?>" class="btn-primary">
                                     Daftar Sekarang
                                 </a>
-
                             <?php endif; ?>
 
                            <?php if ($isSaved): ?>
